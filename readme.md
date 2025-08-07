@@ -1,118 +1,159 @@
-# Developer Quick Guide
+Here is your updated **Developer Quick Guide**, revised to:
 
-## 🚨 **IMPORTANT RULE**
-**❌ NEVER work directly on the `master` branch!**  
-**✅ Always create a feature branch for your work.**
+* Eliminate confusion about forks vs collaboration
+* Match standard GitHub team workflows
+* Encourage Pull Request-based collaboration
+* Align with protected `master` branch setup
 
 ---
 
-## 📋 Quick Setup
+# 👨‍💻 Developer Quick Guide
 
-1. **Fork** the repository on GitHub
-2. **Clone** your fork:
+## 🚨 **IMPORTANT RULE**
+
+**❌ NEVER work directly on the `master` branch!**
+**✅ Always create a new branch for your feature or fix.**
+
+---
+
+## 📦 Setup (First Time Only)
+
+1. **Clone the main repository**:
+
    ```bash
-   git clone https://github.com/YOUR_USERNAME/REPO_NAME.git
+   git clone https://github.com/ORIGINAL_OWNER/REPO_NAME.git
    cd REPO_NAME
    ```
-3. **Add upstream** remote:
+
+2. **Configure your name and email (if not done):**
+
    ```bash
-   git remote add upstream https://github.com/ORIGINAL_OWNER/REPO_NAME.git
+   git config --global user.name "Your Name"
+   git config --global user.email "your@email.com"
+   ```
+
+3. **Check remotes (should be origin = main repo):**
+
+   ```bash
+   git remote -v
    ```
 
 ---
 
 ## 🔄 Daily Workflow
 
-### 1. Start Your Work
-```bash
-# Always sync first
-git checkout master
-git pull upstream master
-git push origin master
+### 1. Sync with Master
 
-# Create your feature branch
+```bash
+git checkout master
+git pull origin master
+```
+
+### 2. Create a New Branch
+
+```bash
 git checkout -b module/feature/your-feature-name
 ```
 
-### 2. Make Your Changes
-- Edit files
-- Test your changes
-- Commit regularly:
+### 3. Work on Your Feature
+
+* Make your changes
+* Test your code
+* Commit changes:
+
   ```bash
   git add .
   git commit -m "module/feature: What you did"
   ```
 
-### 3. Submit Your Work
-```bash
-# Push to your fork
-git push origin module/feature/your-feature-name
+### 4. Push Your Branch
 
-# Then create a Pull Request on GitHub
+```bash
+git push origin module/feature/your-feature-name
 ```
+
+### 5. Create a Pull Request
+
+* Go to GitHub
+* Open a PR **into `master`**
+* Add a title, description, and link to issue (if any)
+* Request review
 
 ---
 
 ## 🏷️ Branch Naming
 
-**Format:** `module/feature/description`
-
+**Pattern:** `module/type/short-description`
 **Examples:**
-- `auth/feature/login-form`
-- `ui/bugfix/mobile-menu`
-- `api/feature/user-endpoints`
-- `docs/update/readme-fix`
 
-**Modules:** `auth`, `ui`, `api`, `core`, `docs`  
+* `auth/feature/login-form`
+* `ui/bugfix/fix-mobile-menu`
+* `api/hotfix/user-token-expiry`
+* `docs/update/readme-contributing`
+
+**Modules:** `auth`, `ui`, `api`, `core`, `docs`, etc.
 **Types:** `feature`, `bugfix`, `hotfix`, `update`
 
 ---
 
 ## ⚠️ What NOT to Do
 
-- ❌ Don't push directly to `master`
-- ❌ Don't work on multiple features in one branch  
-- ❌ Don't commit without testing
-- ❌ Don't use unclear commit messages
+* ❌ Don’t push directly to `master`
+* ❌ Don’t skip testing your code
+* ❌ Don’t commit without a clear message
+* ❌ Don’t mix multiple features in one branch
 
 ---
 
 ## ✅ What TO Do
 
-- ✅ Always create a feature branch
-- ✅ Sync with upstream regularly
-- ✅ Write clear commit messages
-- ✅ Test before pushing
-- ✅ Create Pull Requests for review
+* ✅ Always create a separate feature branch
+* ✅ Sync with `origin/master` before starting
+* ✅ Use meaningful commit messages
+* ✅ Open a Pull Request for every change
+* ✅ Ask for feedback or code review
 
 ---
 
-## 🔧 Quick Commands
+## 🧰 Useful Git Commands
 
 ```bash
-# Sync with main repo
-git pull upstream master
-
-# Check which branch you're on
+# View branches
 git branch
 
-# Switch branches
+# Switch branch
 git checkout branch-name
 
-# See your changes
+# Create + switch branch
+git checkout -b module/feature/your-feature-name
+
+# View status
 git status
 
-# Undo local changes
-git checkout -- filename
+# See latest commits
+git log --oneline --graph
+
+# Undo file change
+git checkout -- path/to/file
+
+# Discard all local changes
+git reset --hard
 ```
 
 ---
 
 ## 🆘 Need Help?
 
-1. Check existing issues first
-2. Create a new issue with details
-3. Ask in discussions
-4. Contact: @your-username
+* Check existing issues
+* Open a new issue with clear details
+* Tag @repo-owner or your team lead in a comment
 
-**Remember: No direct work on master! Always use feature branches! 🚨**
+---
+
+### ✅ Reminder:
+
+**🔒 Master branch is protected — you must use feature branches + pull requests.**
+
+---
+
+Would you like me to generate this as a downloadable `.md` file (Markdown), or paste it into your GitHub repo's `CONTRIBUTING.md` or `README.md`?
