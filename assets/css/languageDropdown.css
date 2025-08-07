@@ -1,0 +1,119 @@
+/* -------------------------------- language dropdown ---------------------------- */
+.dk-translation-box {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+}
+
+.dk-language-select {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 7px;
+    padding: 9.5px 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+    flex: 1;
+    min-width: 151px;
+}
+
+.dk-language-select:hover {
+    border-color: #e78799;
+    box-shadow: 0 2px 8px rgba(231, 135, 153, 0.1);
+}
+
+
+.dk-language-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+}
+
+.dk-language-text {
+    font-size: 14px;
+    color: #606060;
+
+}
+
+.dk-arrow {
+    margin-left: auto;
+
+    transition: transform 0.2s ease;
+}
+
+.dk-language-select.dk-active .dk-arrow {
+    transform: rotate(180deg);
+}
+
+.dk-dropdown {
+    display: none;
+    position: absolute;
+    top: 120%;
+    left: 0;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    width: 100%;
+    /* padding: 0.5rem 0; */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.dk-dropdown.dk-show {
+    display: block;
+    animation: dkFadeIn 0.2s ease;
+}
+
+.dk-dropdown-item {
+    padding: 0.8rem 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.dk-dropdown-item:hover {
+    background-color: rgba(231, 135, 153, 0.1);
+}
+
+@keyframes dkFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dk-dropdown-item.dk-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #f0f0f0;
+}
+
+.dk-custom-language {
+    padding: 8px;
+    border-top: 1px solid #eee;
+}
+
+.dk-custom-input {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.dk-custom-input:focus {
+    outline: none;
+    border-color: #E24668;
+}

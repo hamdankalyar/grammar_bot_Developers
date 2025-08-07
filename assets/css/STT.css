@@ -1,0 +1,18 @@
+/* =============================== STT ====================== */
+.lucide-mic.listening-glow {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        filter: drop-shadow(0 0 5px #28a745);
+    }
+
+    50% {
+        filter: drop-shadow(0 0 15px #28a745);
+    }
+
+    100% {
+        filter: drop-shadow(0 0 5px #28a745);
+    }
+}

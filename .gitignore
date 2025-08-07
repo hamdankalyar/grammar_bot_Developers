@@ -1,0 +1,10 @@
+node_modules/
+assets/js/dist/
+*.log
+.DS_Store
+# Folders to ignore
+prompts/
+includes/
+
+# Specific file to ignore
+grammar-bot.php
