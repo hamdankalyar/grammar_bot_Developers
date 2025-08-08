@@ -1,6 +1,6 @@
 // textToSpeech.js
 
-import { getCurrentLanguage } from "./languageDropdown";
+import { getCurrentLanguage } from './languageDropdown';
 
 // TTS State variables
 let audio;
@@ -12,148 +12,148 @@ let currentFetch = null;
 
 // Initialize TTS system
 export function initializeTTS() {
-    console.log('TTS initialization starting...');
-    
-    // Make sure we have the read button
-    const readBtn = document.getElementById('readBtn');
-    if (!readBtn) {
-        console.error('Read button not found in the DOM');
-        return;
-    }
+  console.log('TTS initialization starting...');
 
-    console.log('Read button found:', readBtn);
+  // Make sure we have the read button
+  const readBtn = document.getElementById('readBtn');
+  if (!readBtn) {
+    console.error('Read button not found in the DOM');
+    return;
+  }
 
-    // Create gender selection dropdown
-    createGenderSelector();
+  console.log('Read button found:', readBtn);
 
-    // Create audio controls
-    createAudioControls();
+  // Create gender selection dropdown
+  createGenderSelector();
 
-    // Remove any existing click listeners to avoid duplicates
-    const newReadBtn = readBtn.cloneNode(true);
-    readBtn.parentNode.replaceChild(newReadBtn, readBtn);
+  // Create audio controls
+  createAudioControls();
 
-    // Add click event listener to the read button
-    newReadBtn.addEventListener('click', function (e) {
-        console.log('Read button clicked');
+  // Remove any existing click listeners to avoid duplicates
+  const newReadBtn = readBtn.cloneNode(true);
+  readBtn.parentNode.replaceChild(newReadBtn, readBtn);
 
-        if (isLoading) {
-            console.log('Currently loading - canceling fetch');
-            cancelFetch();
-        } else if (isSpeaking) {
-            console.log('Currently speaking - pausing playback');
-            pauseSpeaking();
-        } else if (audioBlob) {
-            console.log('Audio already fetched - resuming playback');
-            resumeSpeaking();
-        } else {
-            console.log('Showing gender selection dropdown');
-            showGenderSelector();
+  // Add click event listener to the read button
+  newReadBtn.addEventListener('click', function (e) {
+    console.log('Read button clicked');
 
-            // Ensure the dropdown is visible
-            setTimeout(() => {
-                const selector = document.getElementById('genderSelector');
-                if (selector) {
-                    console.log('Gender selector display state:', selector.style.display);
+    if (isLoading) {
+      console.log('Currently loading - canceling fetch');
+      cancelFetch();
+    } else if (isSpeaking) {
+      console.log('Currently speaking - pausing playback');
+      pauseSpeaking();
+    } else if (audioBlob) {
+      console.log('Audio already fetched - resuming playback');
+      resumeSpeaking();
+    } else {
+      console.log('Showing gender selection dropdown');
+      showGenderSelector();
 
-                    // Force show if needed
-                    if (selector.style.display !== 'block') {
-                        selector.style.display = 'block';
-                    }
+      // Ensure the dropdown is visible
+      setTimeout(() => {
+        const selector = document.getElementById('genderSelector');
+        if (selector) {
+          console.log('Gender selector display state:', selector.style.display);
 
-                    // Make the options clickable
-                    const maleOption = document.getElementById('maleOption');
-                    const femaleOption = document.getElementById('femaleOption');
+          // Force show if needed
+          if (selector.style.display !== 'block') {
+            selector.style.display = 'block';
+          }
 
-                    if (maleOption) {
-                        console.log('Found male option, ensuring click handler');
-                        maleOption.onclick = function (event) {
-                            console.log('Male option clicked');
-                            event.stopPropagation();
-                            selectedGender = 'male';
-                            hideGenderSelector();
-                            safeTextToSpeech();
-                        };
-                    }
+          // Make the options clickable
+          const maleOption = document.getElementById('maleOption');
+          const femaleOption = document.getElementById('femaleOption');
 
-                    if (femaleOption) {
-                        console.log('Found female option, ensuring click handler');
-                        femaleOption.onclick = function (event) {
-                            console.log('Female option clicked');
-                            event.stopPropagation();
-                            selectedGender = 'female';
-                            hideGenderSelector();
-                            safeTextToSpeech();
-                        };
-                    }
-                }
-            }, 100);
+          if (maleOption) {
+            console.log('Found male option, ensuring click handler');
+            maleOption.onclick = function (event) {
+              console.log('Male option clicked');
+              event.stopPropagation();
+              selectedGender = 'male';
+              hideGenderSelector();
+              safeTextToSpeech();
+            };
+          }
+
+          if (femaleOption) {
+            console.log('Found female option, ensuring click handler');
+            femaleOption.onclick = function (event) {
+              console.log('Female option clicked');
+              event.stopPropagation();
+              selectedGender = 'female';
+              hideGenderSelector();
+              safeTextToSpeech();
+            };
+          }
         }
-    });
+      }, 100);
+    }
+  });
 
-    // Add page unload and visibility change handlers
-    setupPageEventHandlers();
+  // Add page unload and visibility change handlers
+  setupPageEventHandlers();
 
-    console.log('TTS initialization complete');
+  console.log('TTS initialization complete');
 }
 
 // Export stop function for external use
 export function stopSpeaking() {
-    if (audio) {
-        audio.pause();
-        audio.currentTime = 0;
-        audio = null;
-    }
+  if (audio) {
+    audio.pause();
+    audio.currentTime = 0;
+    audio = null;
+  }
 
-    isSpeaking = false;
-    toggleIcons('idle');
-    hideAudioControls();
-    audioBlob = null;
+  isSpeaking = false;
+  toggleIcons('idle');
+  hideAudioControls();
+  audioBlob = null;
 }
 
-// Export manual stop function for external use  
+// Export manual stop function for external use
 export function manualStopSpeaking() {
-    stopSpeaking();
+  stopSpeaking();
 }
 
 // Create gender selection dropdown
 function createGenderSelector() {
-    // Remove any existing selector first to avoid duplicates
-    const existingSelector = document.getElementById('genderSelector');
-    if (existingSelector) {
-        existingSelector.remove();
-    }
+  // Remove any existing selector first to avoid duplicates
+  const existingSelector = document.getElementById('genderSelector');
+  if (existingSelector) {
+    existingSelector.remove();
+  }
 
-    // Create the dropdown container
-    const genderSelector = document.createElement('div');
-    genderSelector.id = 'genderSelector';
-    genderSelector.className = 'gender-selector';
-    genderSelector.style.display = 'none';
-    genderSelector.style.position = 'absolute';
-    genderSelector.style.backgroundColor = '#fff';
-    genderSelector.style.border = '1px solid #B3B3B3';
-    genderSelector.style.borderRadius = '4px';
-    genderSelector.style.zIndex = '1000';
-    genderSelector.style.top = '100%'; // Position right below the parent element
-    genderSelector.style.left = '50%'; // Center horizontally
-    genderSelector.style.transform = 'translateX(-50%)'; // Adjust to center precisely
-    genderSelector.style.marginTop = '5px'; // Small gap between button and dropdown
+  // Create the dropdown container
+  const genderSelector = document.createElement('div');
+  genderSelector.id = 'genderSelector';
+  genderSelector.className = 'gender-selector';
+  genderSelector.style.display = 'none';
+  genderSelector.style.position = 'absolute';
+  genderSelector.style.backgroundColor = '#fff';
+  genderSelector.style.border = '1px solid #B3B3B3';
+  genderSelector.style.borderRadius = '4px';
+  genderSelector.style.zIndex = '1000';
+  genderSelector.style.top = '100%'; // Position right below the parent element
+  genderSelector.style.left = '50%'; // Center horizontally
+  genderSelector.style.transform = 'translateX(-50%)'; // Adjust to center precisely
+  genderSelector.style.marginTop = '5px'; // Small gap between button and dropdown
 
-    // Create the male option with ID for easier selection
-    const maleOption = document.createElement('div');
-    maleOption.id = 'maleOption'; // Add explicit ID
-    maleOption.className = 'gender-option';
-    maleOption.style.padding = '8px 15px';
-    maleOption.style.cursor = 'pointer';
-    maleOption.style.display = 'flex';
-    maleOption.style.alignItems = 'center';
-    maleOption.style.justifyContent = 'space-between';
-    maleOption.style.backgroundColor = '#CDE5FF';
-    maleOption.style.marginBottom = '8px';
+  // Create the male option with ID for easier selection
+  const maleOption = document.createElement('div');
+  maleOption.id = 'maleOption'; // Add explicit ID
+  maleOption.className = 'gender-option';
+  maleOption.style.padding = '8px 15px';
+  maleOption.style.cursor = 'pointer';
+  maleOption.style.display = 'flex';
+  maleOption.style.alignItems = 'center';
+  maleOption.style.justifyContent = 'space-between';
+  maleOption.style.backgroundColor = '#CDE5FF';
+  maleOption.style.marginBottom = '8px';
 
-    const maleIcon = document.createElement('span');
-    maleIcon.className = 'gender-icon-divs';
-    maleIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 327.54 512">
+  const maleIcon = document.createElement('span');
+  maleIcon.className = 'gender-icon-divs';
+  maleIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 327.54 512">
                         <path fill="#bcbc50" d="M199.17,340.98c1.63.31,3.26.66,4.84,1.14s3.11.97,4.52,1.71c21.22,11.18,42.48,22.42,63.43,34.08,12.64,7.04,25.15,14.25,37.4,21.95,7.29,4.58,20.58,23.21,17.81,32.12-30.31,39.21-72.06,65.4-120.81,75.68l-24.19,4.31h-3c-1.58-.79-3.41-.8-5,0h-2c-1.58-.79-3.41-.8-5,0h-12c-2.24-.84-4.76-.84-7,0-.98-.07-2.02.09-3,0-56.19-5.33-111.08-36.41-145-81-1.18-5.77,4.24-13.64,7.74-18.64,4.46-6.39,9.76-12.06,16.27-16.44l102.97-56.09,2.02,1.18,2.05,1.36c-2.46,52.93,68.51,52.88,65.69-.04l2.26-1.32Z"/>
                         <path fill="#343c4a" d="M188.17,0c4.08,1.59,8.31,2.35,12.36,4.14,29.91,13.24,28.98,50.96,75.13,46.84,8.01-.72,31.17-9.42,36.25-7.25,9.92,4.25.02,24.41-3.56,30.93-6.01,10.95-19.64,27.3-29.17,35.33l-1.63,3.9c-42.23,33.93-96.92,15.5-140.65-4.52-27.62-13.47-54.43-7.2-71.06,19.22-2.71,4.08-5.6,5.55-8.66,4.39-2.49,1.13-7.36-2.4-7.73-4.45-.11-.6,2.58.26-.27,1.45C-5.06,81.12,38.96-10.7,112.37,3.3c7.8,1.49,20.63,8.82,26.31,8.79,5.19-.03,10.01-4.68,14.97-6.11l19.52-5.98h15Z"/>
                         <path fill="#dbd69c" d="M155.17,511.97h-7c1.26-1.65,5.74-1.65,7,0Z"/>
@@ -174,25 +174,25 @@ function createGenderSelector() {
                         <path fill="#feb09e" d="M188.82,245.28c6.44-.35,9.14,6.1,6.84,11.69-5.63,13.69-24.96,21.13-38.85,17.97-9.06-2.06-30.01-14.28-23.69-25.5,6.54-11.62,16.27,6.1,22.36,8.74,8.17,3.54,16.79,1.88,23.23-4.14,3.17-2.96,4.92-8.47,10.11-8.75Z"/>
                         </svg>`;
 
-    const maleText = document.createElement('span');
-    maleText.textContent = 'Mads';
+  const maleText = document.createElement('span');
+  maleText.textContent = 'Mads';
 
-    maleOption.appendChild(maleIcon);
-    maleOption.appendChild(maleText);
+  maleOption.appendChild(maleIcon);
+  maleOption.appendChild(maleText);
 
-    // Create the female option with ID for easier selection
-    const femaleOption = document.createElement('div');
-    femaleOption.id = 'femaleOption'; // Add explicit ID
-    femaleOption.className = 'gender-option';
-    femaleOption.style.padding = '8px 15px';
-    femaleOption.style.cursor = 'pointer';
-    femaleOption.style.display = 'flex';
-    femaleOption.style.alignItems = 'center';
-    femaleOption.style.justifyContent = 'space-between';
-    femaleOption.style.backgroundColor = '#FFCED9';
+  // Create the female option with ID for easier selection
+  const femaleOption = document.createElement('div');
+  femaleOption.id = 'femaleOption'; // Add explicit ID
+  femaleOption.className = 'gender-option';
+  femaleOption.style.padding = '8px 15px';
+  femaleOption.style.cursor = 'pointer';
+  femaleOption.style.display = 'flex';
+  femaleOption.style.alignItems = 'center';
+  femaleOption.style.justifyContent = 'space-between';
+  femaleOption.style.backgroundColor = '#FFCED9';
 
-    const femaleIcon = document.createElement('span');
-    femaleIcon.innerHTML = `<svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 244 383.39">
+  const femaleIcon = document.createElement('span');
+  femaleIcon.innerHTML = `<svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 244 383.39">
                                     <g>
                                         <path fill="#6c7fd7" d="M51.65,265.87c.62-.41,1.26-.78,1.94-1.06,3.53-1.45,20.39-.72,25.57-.36,1.41.1,2.71.76,3.93,1.43l-1.76,1.82c-8.96.38-17.91.61-26.87.7l18.15,53.93,1.49,1.36c10.56,2.05,12.16,6.88,5.66,15.35l-.2,2,23.1,40.84-.87,1.51H10.48l-.03-79.75c1.23-18.76,16.66-35.05,35.21-37.77.18-.67.43-.65.75,0,1.69.55,3.56.66,5.24,0Z"/>
                                         <path fill="#6c7fd7" d="M216.33,383.39h-74.11l-.97-1.33,23.22-41.1-.32-2.15c-7.26-9.45-3.55-12.8,6.5-15.53,5.67-16.59,11.55-33.2,17.63-49.81l2.59-4.6c5.36-1.01,12.1,5.2,15.75,9.2,6.76,7.4,10.5,17.04,11.22,26.99l-.02,77.43-1.5.91Z"/>
@@ -223,419 +223,426 @@ function createGenderSelector() {
                                     </g>
                                     </svg>`;
 
-    const femaleText = document.createElement('span');
-    femaleText.textContent = 'Sofie';
+  const femaleText = document.createElement('span');
+  femaleText.textContent = 'Sofie';
 
-    femaleOption.appendChild(femaleIcon);
-    femaleOption.appendChild(femaleText);
+  femaleOption.appendChild(femaleIcon);
+  femaleOption.appendChild(femaleText);
 
-    // Add options to selector
-    genderSelector.appendChild(maleOption);
-    genderSelector.appendChild(femaleOption);
+  // Add options to selector
+  genderSelector.appendChild(maleOption);
+  genderSelector.appendChild(femaleOption);
 
-    // Create a container that will hold both the read button and the dropdown
-    const readBtn = document.getElementById('readBtn');
-    if (readBtn) {
-        // Make the read button's parent position relative
-        const parentElement = readBtn.parentNode;
-        parentElement.style.position = 'relative';
+  // Create a container that will hold both the read button and the dropdown
+  const readBtn = document.getElementById('readBtn');
+  if (readBtn) {
+    // Make the read button's parent position relative
+    const parentElement = readBtn.parentNode;
+    parentElement.style.position = 'relative';
 
-        // Add the gender selector to the parent
-        parentElement.appendChild(genderSelector);
-    } else {
-        document.body.appendChild(genderSelector);
+    // Add the gender selector to the parent
+    parentElement.appendChild(genderSelector);
+  } else {
+    document.body.appendChild(genderSelector);
+  }
+
+  // Add event listeners AFTER appending to DOM
+  maleOption.onclick = function (e) {
+    console.log('Male option clicked');
+    e.stopPropagation(); // Prevent the click from bubbling up
+    selectedGender = 'male';
+    hideGenderSelector();
+    safeTextToSpeech();
+  };
+
+  femaleOption.onclick = function (e) {
+    console.log('Female option clicked');
+    e.stopPropagation(); // Prevent the click from bubbling up
+    selectedGender = 'female';
+    hideGenderSelector();
+    safeTextToSpeech();
+  };
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function (event) {
+    const selector = document.getElementById('genderSelector');
+    const readButton = document.getElementById('readBtn');
+
+    if (
+      selector &&
+      selector.style.display === 'block' &&
+      event.target !== selector &&
+      event.target !== readButton &&
+      !selector.contains(event.target) &&
+      !readButton.contains(event.target)
+    ) {
+      hideGenderSelector();
     }
-
-    // Add event listeners AFTER appending to DOM
-    maleOption.onclick = function (e) {
-        console.log('Male option clicked');
-        e.stopPropagation(); // Prevent the click from bubbling up
-        selectedGender = 'male';
-        hideGenderSelector();
-        safeTextToSpeech();
-    };
-
-    femaleOption.onclick = function (e) {
-        console.log('Female option clicked');
-        e.stopPropagation(); // Prevent the click from bubbling up
-        selectedGender = 'female';
-        hideGenderSelector();
-        safeTextToSpeech();
-    };
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function (event) {
-        const selector = document.getElementById('genderSelector');
-        const readButton = document.getElementById('readBtn');
-
-        if (selector && selector.style.display === 'block' &&
-            event.target !== selector &&
-            event.target !== readButton &&
-            !selector.contains(event.target) &&
-            !readButton.contains(event.target)) {
-            hideGenderSelector();
-        }
-    });
+  });
 }
 
 function createAudioControls() {
-    // Create audio controls container
-    const audioControls = document.createElement('div');
-    audioControls.id = 'audioControls';
-    audioControls.className = 'audio-controls';
-    audioControls.style.display = 'none';
-    audioControls.style.justifyContent = 'center';
-    audioControls.style.alignItems = 'center';
-    audioControls.style.backgroundColor = '#F6F6F6';
-    audioControls.style.borderRadius = '7px';
+  // Create audio controls container
+  const audioControls = document.createElement('div');
+  audioControls.id = 'audioControls';
+  audioControls.className = 'audio-controls';
+  audioControls.style.display = 'none';
+  audioControls.style.justifyContent = 'center';
+  audioControls.style.alignItems = 'center';
+  audioControls.style.backgroundColor = '#F6F6F6';
+  audioControls.style.borderRadius = '7px';
 
-    // Pause/Play button
-    const pausePlayBtn = document.createElement('button');
-    pausePlayBtn.id = 'pausePlayBtn';
-    pausePlayBtn.className = 'control-btn';
-    pausePlayBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 30.46 37.79">
+  // Pause/Play button
+  const pausePlayBtn = document.createElement('button');
+  pausePlayBtn.id = 'pausePlayBtn';
+  pausePlayBtn.className = 'control-btn';
+  pausePlayBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 30.46 37.79">
                                 <rect fill="#7b7b7b" x="0" y="0" width="10.57" height="37.79" rx="5.09" ry="5.09"/>
                                 <rect fill="#7b7b7b" x="19.89" y="0" width="10.57" height="37.79" rx="5.09" ry="5.09"/>
                                 </svg>`;
-    pausePlayBtn.style.border = 'none';
-    pausePlayBtn.style.width = '40px';
-    pausePlayBtn.style.height = '40px';
-    pausePlayBtn.style.cursor = 'pointer';
-    pausePlayBtn.style.display = 'flex';
-    pausePlayBtn.style.justifyContent = 'center';
-    pausePlayBtn.style.alignItems = 'center';
+  pausePlayBtn.style.border = 'none';
+  pausePlayBtn.style.width = '40px';
+  pausePlayBtn.style.height = '40px';
+  pausePlayBtn.style.cursor = 'pointer';
+  pausePlayBtn.style.display = 'flex';
+  pausePlayBtn.style.justifyContent = 'center';
+  pausePlayBtn.style.alignItems = 'center';
 
-    // Stop button
-    const stopBtn = document.createElement('button');
-    stopBtn.id = 'stopBtn';
-    stopBtn.className = 'control-btn';
-    stopBtn.innerHTML = '<svg width="13" height="14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 278.25 278.25"><g> <rect width="278.25" height="278.25" rx="40" ry="40" style="fill: #7b7b7b;"/></g></svg>';
+  // Stop button
+  const stopBtn = document.createElement('button');
+  stopBtn.id = 'stopBtn';
+  stopBtn.className = 'control-btn';
+  stopBtn.innerHTML =
+    '<svg width="13" height="14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 278.25 278.25"><g> <rect width="278.25" height="278.25" rx="40" ry="40" style="fill: #7b7b7b;"/></g></svg>';
 
-    stopBtn.style.border = 'none';
-    stopBtn.style.width = '40px';
-    stopBtn.style.height = '40px';
-    stopBtn.style.cursor = 'pointer';
-    stopBtn.style.display = 'flex';
-    stopBtn.style.justifyContent = 'center';
-    stopBtn.style.alignItems = 'center';
+  stopBtn.style.border = 'none';
+  stopBtn.style.width = '40px';
+  stopBtn.style.height = '40px';
+  stopBtn.style.cursor = 'pointer';
+  stopBtn.style.display = 'flex';
+  stopBtn.style.justifyContent = 'center';
+  stopBtn.style.alignItems = 'center';
 
-    // Download button
-    const downloadBtn = document.createElement('button');
-    downloadBtn.id = 'downloadBtn';
-    downloadBtn.className = 'control-btn';
-    downloadBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 383.22 381.87">
+  // Download button
+  const downloadBtn = document.createElement('button');
+  downloadBtn.id = 'downloadBtn';
+  downloadBtn.className = 'control-btn';
+  downloadBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 383.22 381.87">
   <polyline points="283.37 180.62 191.09 272.9 98.81 180.62" fill="none" stroke="#7b7b7b" stroke-linecap="round" stroke-linejoin="round" stroke-width="42px"/>
   <line x1="190.75" y1="262.04" x2="190.75" y2="21" fill="none" stroke="#7b7b7b" stroke-linecap="round" stroke-miterlimit="10" stroke-width="42px"/>
   <path d="M362.22,276.13v20.07c0,35.72-28.96,64.68-64.68,64.68H85.68c-35.72,0-64.68-28.96-64.68-64.68v-20.07" fill="none" stroke="#7b7b7b" stroke-linecap="round" stroke-linejoin="round" stroke-width="42px"/>
 </svg>`;
 
-    downloadBtn.style.border = 'none';
-    downloadBtn.style.width = '40px';
-    downloadBtn.style.height = '40px';
-    downloadBtn.style.cursor = 'pointer';
-    downloadBtn.style.display = 'flex';
-    downloadBtn.style.justifyContent = 'center';
-    downloadBtn.style.alignItems = 'center';
+  downloadBtn.style.border = 'none';
+  downloadBtn.style.width = '40px';
+  downloadBtn.style.height = '40px';
+  downloadBtn.style.cursor = 'pointer';
+  downloadBtn.style.display = 'flex';
+  downloadBtn.style.justifyContent = 'center';
+  downloadBtn.style.alignItems = 'center';
 
-    // Add event listeners
-    pausePlayBtn.addEventListener('click', function () {
-        if (isSpeaking) {
-            pauseSpeaking();
-        } else {
-            resumeSpeaking();
-        }
-    });
-
-    stopBtn.addEventListener('click', function () {
-        stopSpeaking();
-    });
-
-    downloadBtn.addEventListener('click', function () {
-        downloadAudio();
-    });
-
-    // Add buttons to controls
-    audioControls.appendChild(pausePlayBtn);
-    audioControls.appendChild(stopBtn);
-    audioControls.appendChild(downloadBtn);
-
-    // Add controls to document near the read button - we'll replace the read button with this
-    const readBtn = document.getElementById('readBtn');
-    if (readBtn && readBtn.parentNode) {
-        // Adding at the same level as the read button
-        readBtn.parentNode.appendChild(audioControls);
+  // Add event listeners
+  pausePlayBtn.addEventListener('click', function () {
+    if (isSpeaking) {
+      pauseSpeaking();
     } else {
-        document.body.appendChild(audioControls);
+      resumeSpeaking();
     }
+  });
+
+  stopBtn.addEventListener('click', function () {
+    stopSpeaking();
+  });
+
+  downloadBtn.addEventListener('click', function () {
+    downloadAudio();
+  });
+
+  // Add buttons to controls
+  audioControls.appendChild(pausePlayBtn);
+  audioControls.appendChild(stopBtn);
+  audioControls.appendChild(downloadBtn);
+
+  // Add controls to document near the read button - we'll replace the read button with this
+  const readBtn = document.getElementById('readBtn');
+  if (readBtn && readBtn.parentNode) {
+    // Adding at the same level as the read button
+    readBtn.parentNode.appendChild(audioControls);
+  } else {
+    document.body.appendChild(audioControls);
+  }
 }
 
 function showGenderSelector() {
-    const genderSelector = document.getElementById('genderSelector');
+  const genderSelector = document.getElementById('genderSelector');
 
-    if (genderSelector) {
-        // Simply display the dropdown that's already properly positioned
-        genderSelector.style.display = 'block';
-        console.log('Gender selector shown with display:', genderSelector.style.display);
-    } else {
-        console.error('Gender selector not found');
-    }
+  if (genderSelector) {
+    // Simply display the dropdown that's already properly positioned
+    genderSelector.style.display = 'block';
+    console.log('Gender selector shown with display:', genderSelector.style.display);
+  } else {
+    console.error('Gender selector not found');
+  }
 }
 
 function hideGenderSelector() {
-    const genderSelector = document.getElementById('genderSelector');
-    if (genderSelector) {
-        genderSelector.style.display = 'none';
-    }
+  const genderSelector = document.getElementById('genderSelector');
+  if (genderSelector) {
+    genderSelector.style.display = 'none';
+  }
 }
 
 function showAudioControls() {
-    const audioControls = document.getElementById('audioControls');
-    const readBtn = document.getElementById('readBtn');
+  const audioControls = document.getElementById('audioControls');
+  const readBtn = document.getElementById('readBtn');
 
-    if (audioControls && readBtn) {
-        // Hide the read button and show audio controls
-        readBtn.style.display = 'none';
-        audioControls.style.display = 'flex';
-    }
+  if (audioControls && readBtn) {
+    // Hide the read button and show audio controls
+    readBtn.style.display = 'none';
+    audioControls.style.display = 'flex';
+  }
 }
 
 function hideAudioControls() {
-    const audioControls = document.getElementById('audioControls');
-    const readBtn = document.getElementById('readBtn');
+  const audioControls = document.getElementById('audioControls');
+  const readBtn = document.getElementById('readBtn');
 
-    if (audioControls && readBtn) {
-        // Show the read button and hide audio controls
-        audioControls.style.display = 'none';
-        readBtn.style.display = 'flex';
-    }
+  if (audioControls && readBtn) {
+    // Show the read button and hide audio controls
+    audioControls.style.display = 'none';
+    readBtn.style.display = 'flex';
+  }
 }
 
 function safeTextToSpeech() {
-    if (isLoading || isSpeaking) return;
+  if (isLoading || isSpeaking) return;
 
-    isLoading = true;
-    toggleIcons('loading'); // Show loading icon
+  isLoading = true;
+  toggleIcons('loading'); // Show loading icon
 
-    try {
-        if (!navigator.onLine) {
-            throw new Error("No internet connection");
-        }
-        textToSpeech();
-    } catch (error) {
-        handleError(error);
+  try {
+    if (!navigator.onLine) {
+      throw new Error('No internet connection');
     }
+    textToSpeech();
+  } catch (error) {
+    handleError(error);
+  }
 }
 
 function textToSpeech() {
-    // Get HTML content, apply removeHamDanTags, then extract text
-    const htmlContent = window.quill1.root.innerHTML;  
-    
-    // Use removeHamDanTags if available globally
-    const processedHtml = typeof window.removeHamDanTags === 'function' 
-        ? window.removeHamDanTags(htmlContent) 
-        : htmlContent;
-        
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = processedHtml;
-    const textInput = tempDiv.textContent || tempDiv.innerText || '';
-    const cleanTextInput = textInput.trim();
+  // Get HTML content, apply removeHamDanTags, then extract text
+  const htmlContent = window.quill1.root.innerHTML;
 
-    let lang;
-    
-    // Use getCurrentLanguage if available globally
-    const currentLang = getCurrentLanguage();
+  // Use removeHamDanTags if available globally
+  const processedHtml =
+    typeof window.removeHamDanTags === 'function'
+      ? window.removeHamDanTags(htmlContent)
+      : htmlContent;
 
-    if (currentLang === 'da') {
-        lang = 'Danish';
-    } else if (currentLang === 'en') {
-        lang = 'English';
-    } else if (currentLang === 'ge') {
-        lang = 'German';
-    } else if (currentLang === 'fr') {
-        lang = 'French';
-    } else if (currentLang === 'es') {
-        lang = "Spanish"
-    } else {
-        lang = 'English';
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = processedHtml;
+  const textInput = tempDiv.textContent || tempDiv.innerText || '';
+  const cleanTextInput = textInput.trim();
+
+  let lang;
+
+  // Use getCurrentLanguage if available globally
+  const currentLang = getCurrentLanguage();
+
+  if (currentLang === 'da') {
+    lang = 'Danish';
+  } else if (currentLang === 'en') {
+    lang = 'English';
+  } else if (currentLang === 'ge') {
+    lang = 'German';
+  } else if (currentLang === 'fr') {
+    lang = 'French';
+  } else if (currentLang === 'es') {
+    lang = 'Spanish';
+  } else {
+    lang = 'English';
+  }
+
+  // Create an AbortController to cancel the fetch if needed
+  const controller = new AbortController();
+  const signal = controller.signal;
+  currentFetch = controller;
+  console.log('selected gender', selectedGender);
+
+  jQuery.ajax({
+    url: window.SB_ajax_object.ajax_url,
+    type: 'POST',
+    data: {
+      action: 'hgf_grammar_bot_tts',
+      nonce: window.HGF_ajax_object.nonce,
+      text: cleanTextInput,
+      lang: lang,
+      gender: selectedGender // Make sure to send the selected gender
+    },
+    xhrFields: {
+      responseType: 'blob'
+    },
+    beforeSend: function (xhr) {
+      // Store the XHR object to potentially abort it
+      currentFetch.xhr = xhr;
+    },
+    success: function (audioData) {
+      currentFetch = null;
+      isLoading = false;
+      audioBlob = audioData;
+      playAudio(audioData);
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      if (textStatus === 'abort') {
+        console.log('Request was cancelled');
+        isLoading = false;
+        currentFetch = null;
+        toggleIcons('idle');
+      } else {
+        handleError(new Error('Speech synthesis failed: ' + textStatus));
+      }
     }
-
-    // Create an AbortController to cancel the fetch if needed
-    const controller = new AbortController();
-    const signal = controller.signal;
-    currentFetch = controller;
-    console.log("selected gender", selectedGender);
-    
-    jQuery.ajax({
-        url: window.SB_ajax_object.ajax_url,
-        type: 'POST',
-        data: {
-            action: 'hgf_grammar_bot_tts',
-            nonce: window.HGF_ajax_object.nonce,
-            text: cleanTextInput,
-            lang: lang,
-            gender: selectedGender // Make sure to send the selected gender
-        },
-        xhrFields: {
-            responseType: 'blob'
-        },
-        beforeSend: function (xhr) {
-            // Store the XHR object to potentially abort it
-            currentFetch.xhr = xhr;
-        },
-        success: function (audioData) {
-            currentFetch = null;
-            isLoading = false;
-            audioBlob = audioData;
-            playAudio(audioData);
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            if (textStatus === 'abort') {
-                console.log('Request was cancelled');
-                isLoading = false;
-                currentFetch = null;
-                toggleIcons('idle');
-            } else {
-                handleError(new Error("Speech synthesis failed: " + textStatus));
-            }
-        }
-    });
+  });
 }
 
 function cancelFetch() {
-    if (currentFetch && currentFetch.xhr) {
-        currentFetch.xhr.abort();
-        currentFetch = null;
-        isLoading = false;
-        toggleIcons('idle');
-    }
+  if (currentFetch && currentFetch.xhr) {
+    currentFetch.xhr.abort();
+    currentFetch = null;
+    isLoading = false;
+    toggleIcons('idle');
+  }
 }
 
 function playAudio(audioData) {
-    const audioUrl = URL.createObjectURL(audioData);
-    audio = new Audio(audioUrl);
+  const audioUrl = URL.createObjectURL(audioData);
+  audio = new Audio(audioUrl);
 
-    audio.onerror = handleError;
-    audio.onended = stopSpeaking;
+  audio.onerror = handleError;
+  audio.onended = stopSpeaking;
 
-    audio.play()
-        .then(() => {
-            isSpeaking = true;
-            toggleIcons('playing'); // Show pause icon
-            showAudioControls();
-            updatePausePlayButton();
-        })
-        .catch(handleError);
+  audio
+    .play()
+    .then(() => {
+      isSpeaking = true;
+      toggleIcons('playing'); // Show pause icon
+      showAudioControls();
+      updatePausePlayButton();
+    })
+    .catch(handleError);
 }
 
 function pauseSpeaking() {
-    if (audio) {
-        audio.pause();
-        isSpeaking = false;
-        updatePausePlayButton();
-        toggleIcons('paused');
-    }
+  if (audio) {
+    audio.pause();
+    isSpeaking = false;
+    updatePausePlayButton();
+    toggleIcons('paused');
+  }
 }
 
 function resumeSpeaking() {
-    if (audio) {
-        audio.play()
-            .then(() => {
-                isSpeaking = true;
-                updatePausePlayButton();
-                toggleIcons('playing');
-                showAudioControls(); // Make sure controls are visible
-            })
-            .catch(handleError);
-    } else if (audioBlob) {
-        playAudio(audioBlob);
-    }
+  if (audio) {
+    audio
+      .play()
+      .then(() => {
+        isSpeaking = true;
+        updatePausePlayButton();
+        toggleIcons('playing');
+        showAudioControls(); // Make sure controls are visible
+      })
+      .catch(handleError);
+  } else if (audioBlob) {
+    playAudio(audioBlob);
+  }
 }
 
 function downloadAudio() {
-    if (audioBlob) {
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(audioBlob);
-        a.download = 'text-to-speech.mp3';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-    }
+  if (audioBlob) {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(audioBlob);
+    a.download = 'text-to-speech.mp3';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
 }
 
 function updatePausePlayButton() {
-    const pausePlayBtn = document.getElementById('pausePlayBtn');
+  const pausePlayBtn = document.getElementById('pausePlayBtn');
 
-    if (pausePlayBtn) {
-        if (isSpeaking) {
-            // Show pause icon
-            pausePlayBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 30.46 37.79">
+  if (pausePlayBtn) {
+    if (isSpeaking) {
+      // Show pause icon
+      pausePlayBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 30.46 37.79">
   <rect fill="#7b7b7b" x="0" y="0" width="10.57" height="37.79" rx="5.09" ry="5.09"/>
   <rect fill="#7b7b7b" x="19.89" y="0" width="10.57" height="37.79" rx="5.09" ry="5.09"/>
 </svg>`;
-        } else {
-            // Show play icon
-            pausePlayBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="15" height="16"   viewBox="0 0 345.03 382.74">
+    } else {
+      // Show play icon
+      pausePlayBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="15" height="16"   viewBox="0 0 345.03 382.74">
   <path fill="#7b7b7b" d="M312.29,134.11L100.12,9.28C55.83-16.78,0,15.15,0,66.53v249.67c0,51.38,55.83,83.31,100.12,57.26l212.17-124.84c43.66-25.69,43.66-88.82,0-114.51Z"/>
 </svg>`;
-        }
     }
+  }
 }
 
 function handleError(error) {
-    console.error(error.message);
-    isLoading = false;
-    isSpeaking = false;
-    currentFetch = null;
-    toggleIcons('idle');
-    hideAudioControls();
+  console.error(error.message);
+  isLoading = false;
+  isSpeaking = false;
+  currentFetch = null;
+  toggleIcons('idle');
+  hideAudioControls();
 }
 
 function toggleIcons(state) {
-    const volumeIcon = document.querySelector('.lucide-volume-2');
-    const pauseIcon = document.querySelector('.lucide-pause');
-    const loader = document.querySelector('.loader');
-    const buttonText = document.querySelector('#readBtn span');
+  const volumeIcon = document.querySelector('.lucide-volume-2');
+  const pauseIcon = document.querySelector('.lucide-pause');
+  const loader = document.querySelector('.loader');
+  const buttonText = document.querySelector('#readBtn span');
 
-    switch (state) {
-        case 'loading':
-            if (loader) loader.style.display = 'inline-block';
-            if (volumeIcon) volumeIcon.style.display = 'none';
-            if (pauseIcon) pauseIcon.style.display = 'none';
-            if (buttonText) buttonText.textContent = ' Loader...';
-            break;
-        case 'playing':
-            if (loader) loader.style.display = 'none';
-            if (volumeIcon) volumeIcon.style.display = 'none';
-            if (pauseIcon) pauseIcon.style.display = 'inline';
-            if (buttonText) buttonText.textContent = ' Stop';
-            break;
-        case 'paused':
-            if (loader) loader.style.display = 'none';
-            if (volumeIcon) volumeIcon.style.display = 'inline';
-            if (pauseIcon) pauseIcon.style.display = 'none';
-            if (buttonText) buttonText.textContent = ' Continue';
-            break;
-        case 'idle':
-            if (loader) loader.style.display = 'none';
-            if (volumeIcon) volumeIcon.style.display = 'inline';
-            if (pauseIcon) pauseIcon.style.display = 'none';
-            if (buttonText) buttonText.textContent = 'Læs højt';
-            break;
-    }
+  switch (state) {
+    case 'loading':
+      if (loader) loader.style.display = 'inline-block';
+      if (volumeIcon) volumeIcon.style.display = 'none';
+      if (pauseIcon) pauseIcon.style.display = 'none';
+      if (buttonText) buttonText.textContent = ' Loader...';
+      break;
+    case 'playing':
+      if (loader) loader.style.display = 'none';
+      if (volumeIcon) volumeIcon.style.display = 'none';
+      if (pauseIcon) pauseIcon.style.display = 'inline';
+      if (buttonText) buttonText.textContent = ' Stop';
+      break;
+    case 'paused':
+      if (loader) loader.style.display = 'none';
+      if (volumeIcon) volumeIcon.style.display = 'inline';
+      if (pauseIcon) pauseIcon.style.display = 'none';
+      if (buttonText) buttonText.textContent = ' Continue';
+      break;
+    case 'idle':
+      if (loader) loader.style.display = 'none';
+      if (volumeIcon) volumeIcon.style.display = 'inline';
+      if (pauseIcon) pauseIcon.style.display = 'none';
+      if (buttonText) buttonText.textContent = 'Læs højt';
+      break;
+  }
 }
 
 function setupPageEventHandlers() {
-    // This will detect page unload/navigation events
-    window.addEventListener('beforeunload', function () {
-        console.log('Page is being unloaded - stopping TTS');
-        stopSpeaking(); // Stop any ongoing audio playback
-    });
+  // This will detect page unload/navigation events
+  window.addEventListener('beforeunload', function () {
+    console.log('Page is being unloaded - stopping TTS');
+    stopSpeaking(); // Stop any ongoing audio playback
+  });
 
-    // This handles cases when the browser tab becomes hidden
-    document.addEventListener('visibilitychange', function () {
-        if (document.visibilityState === 'hidden') {
-            console.log('Page visibility changed to hidden - stopping TTS');
-            stopSpeaking(); // Stop any ongoing audio playback
-        }
-    });
+  // This handles cases when the browser tab becomes hidden
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden') {
+      console.log('Page visibility changed to hidden - stopping TTS');
+      stopSpeaking(); // Stop any ongoing audio playback
+    }
+  });
 }

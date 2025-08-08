@@ -1,13 +1,12 @@
-
 /* ================================== text to speech ================================ */
 .lucide-pause {
-    display: none;
+  display: none;
 }
 
 #stopBtn:focus,
 #pausePlayBtn:focus,
 #downloadBtn:focus {
-    background-color: transparent !important;
+  background-color: transparent !important;
 }
 
 /* 
@@ -22,110 +21,108 @@
 } */
 
 .loader {
-    display: flex;
-    align-items: center;
-    margin-right: 6px;
+  display: flex;
+  align-items: center;
+  margin-right: 6px;
 }
 
 .dotted-loader {
-    position: relative;
-    width: 16px;
-    height: 20px;
-
+  position: relative;
+  width: 16px;
+  height: 20px;
 }
 
 .dotted-loader .dot {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    background-color: #888;
-    border-radius: 50%;
-    animation: fade 1s linear infinite;
-    transform-origin: 10px 10px;
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background-color: #888;
+  border-radius: 50%;
+  animation: fade 1s linear infinite;
+  transform-origin: 10px 10px;
 }
 
 /* Create 8 dots positioned in a circle */
 .dotted-loader .dot:nth-child(1) {
-    transform: rotate(0deg) translateX(8px);
-    animation-delay: 0s;
+  transform: rotate(0deg) translateX(8px);
+  animation-delay: 0s;
 }
 
 .dotted-loader .dot:nth-child(2) {
-    transform: rotate(45deg) translateX(8px);
-    animation-delay: 0.125s;
+  transform: rotate(45deg) translateX(8px);
+  animation-delay: 0.125s;
 }
 
 .dotted-loader .dot:nth-child(3) {
-    transform: rotate(90deg) translateX(8px);
-    animation-delay: 0.25s;
+  transform: rotate(90deg) translateX(8px);
+  animation-delay: 0.25s;
 }
 
 .dotted-loader .dot:nth-child(4) {
-    transform: rotate(135deg) translateX(8px);
-    animation-delay: 0.375s;
+  transform: rotate(135deg) translateX(8px);
+  animation-delay: 0.375s;
 }
 
 .dotted-loader .dot:nth-child(5) {
-    transform: rotate(180deg) translateX(8px);
-    animation-delay: 0.5s;
+  transform: rotate(180deg) translateX(8px);
+  animation-delay: 0.5s;
 }
 
 .dotted-loader .dot:nth-child(6) {
-    transform: rotate(225deg) translateX(8px);
-    animation-delay: 0.625s;
+  transform: rotate(225deg) translateX(8px);
+  animation-delay: 0.625s;
 }
 
 .dotted-loader .dot:nth-child(7) {
-    transform: rotate(270deg) translateX(8px);
-    animation-delay: 0.75s;
+  transform: rotate(270deg) translateX(8px);
+  animation-delay: 0.75s;
 }
 
 .dotted-loader .dot:nth-child(8) {
-    transform: rotate(315deg) translateX(8px);
-    animation-delay: 0.875s;
+  transform: rotate(315deg) translateX(8px);
+  animation-delay: 0.875s;
 }
 
 @keyframes fade {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
 
-    0%,
-    100% {
-        opacity: 0.3;
-    }
-
-    50% {
-        opacity: 1;
-    }
+  50% {
+    opacity: 1;
+  }
 }
 
 /* ---------------------------- new styling -------------------------------- */
 #genderSelector span {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #genderSelector {
-    padding: 7px;
+  padding: 7px;
 }
 
 .gender-option {
-    gap: 4px;
-    border-radius: 5px;
-    padding: 7px 9px !important;
+  gap: 4px;
+  border-radius: 5px;
+  padding: 7px 9px !important;
 }
 
 #stopBtn,
 #pausePlayBtn {
-    position: relative;
+  position: relative;
 }
 
 #stopBtn::after,
 #pausePlayBtn::after {
-    content: "";
-    position: absolute;
-    top: 27%;
-    right: 0;
-    height: 50%;
-    width: 0.7px;
-    background-color: #D6D6D6;
+  content: '';
+  position: absolute;
+  top: 27%;
+  right: 0;
+  height: 50%;
+  width: 0.7px;
+  background-color: #d6d6d6;
 }

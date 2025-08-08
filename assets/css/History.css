@@ -1,7 +1,8 @@
 .saved-response {
   background: rgba(248, 249, 250, 1);
   border: 1px solid rgba(222, 226, 230, 0.006);
-  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.06),
+  box-shadow:
+    0px 2px 8px 0px rgba(0, 0, 0, 0.06),
     0px 1px 3px 0px rgba(0, 0, 0, 0.04);
   font-family: Poppins;
   color: rgba(108, 117, 125, 1);
@@ -11,7 +12,7 @@
   margin-right: 10px;
 }
 
-.saved-response:hover{
+.saved-response:hover {
   box-shadow: none;
 }
 
@@ -26,7 +27,6 @@
   flex-direction: column;
 }
 
-
 .button-container {
   display: flex;
   justify-content: end;
@@ -39,7 +39,7 @@
 }
 
 .button-container.loading::after {
-  content: "";
+  content: '';
   display: inline-block;
   width: 16px;
   height: 16px;
@@ -98,8 +98,8 @@ textarea.no-min-height {
   cursor: pointer;
 }
 
-.del-history-text:hover{
-  color:rgba(213, 37, 75, 1);
+.del-history-text:hover {
+  color: rgba(213, 37, 75, 1);
 }
 
 .delete-all-history {
@@ -125,10 +125,11 @@ textarea.no-min-height {
   /* opacity: 1; */
 }
 
-.grammar-history-close:hover{
-    background: linear-gradient(138.61deg, #ffffff 12.36%, #f1f3f4 94.3%);
+.grammar-history-close:hover {
+  background: linear-gradient(138.61deg, #ffffff 12.36%, #f1f3f4 94.3%);
   border: 1px solid rgba(228, 228, 228, 1);
-  box-shadow: 0px 1px 1px 0px rgba(255, 255, 255, 0.9) inset,
+  box-shadow:
+    0px 1px 1px 0px rgba(255, 255, 255, 0.9) inset,
     0px 1px 3px 0px rgba(0, 0, 0, 0.15);
   border-radius: 4px;
 }
@@ -170,23 +171,23 @@ textarea.no-min-height {
   align-items: center;
 }
 
-.copy-btn1:hover, .delete-btns:hover {
-    background: linear-gradient(138.61deg, #ffffff 12.36%, #f1f3f4 94.3%);
-    /* border: 1px solid rgba(228, 228, 228, 1); */
-    box-shadow: 0px 1px 1px 0px rgba(255, 255, 255, 0.9) inset, 0px 1px 3px 0px rgba(0, 0, 0, 0.15);
-    border-radius: 4px;
-    /* padding: 3px !important; */
+.copy-btn1:hover,
+.delete-btns:hover {
+  background: linear-gradient(138.61deg, #ffffff 12.36%, #f1f3f4 94.3%);
+  /* border: 1px solid rgba(228, 228, 228, 1); */
+  box-shadow:
+    0px 1px 1px 0px rgba(255, 255, 255, 0.9) inset,
+    0px 1px 3px 0px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  /* padding: 3px !important; */
 }
- 
+
 .copy-btn1,
 .delete-btns {
   padding: 4px !important;
 }
 
-
-
 .saved-response:hover .button-container {
   visibility: visible !important;
-    opacity: 1 !important;
-
+  opacity: 1 !important;
 }
