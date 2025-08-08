@@ -89,7 +89,7 @@ function lottieLoadAnimation() {
     renderer: 'svg',
     loop: true,
     autoplay: true,
-    path: 'https://developskriv2.se/wp-content/uploads/2025/06/robot-wave.json'
+    path: 'https://developskriv.se/wp-content/uploads/2025/06/robot-wave.json'
   });
 }
 
@@ -104,7 +104,7 @@ function lottieLoadAnimationByAddress(div) {
     renderer: 'svg',
     loop: true,
     autoplay: true,
-    path: 'https://developskriv2.se/wp-content/uploads/2025/06/robot-wave.json'
+    path: 'https://developskriv.se/wp-content/uploads/2025/06/robot-wave.json'
   });
 }
 
@@ -391,16 +391,18 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ================================ toggle code =====================================
-document.getElementById('correction-toggle').addEventListener('change', e => {
-  if (e.target.checked) {
-    toggleState = true;
+document.getElementById('sidebar-toggle-btn').addEventListener('click', e => {
+  toggleState = !toggleState;
+
+  const button = e.target.closest('.sidebar-toggle-btn');
+  if (toggleState) {
+    button.classList.add('active');
   } else {
-    toggleState = false;
+    button.classList.remove('active');
   }
 
-  //console.log(toggleState);
   if (toggleState !== cookieToggleState) {
-    setCookie('korrektur-toggle', toggleState, 30); // Save for 30 days
+    setCookie('korrektur-toggle', toggleState, 30);
   }
   actionOnToggle(toggleState);
 });
@@ -423,15 +425,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function actionOnToggle(toggleState) {
   console.log('language is this ', getCurrentLanguage());
-  //console.log("toggleState in action", toggleState);
-  //console.log("toggle state element check ", document.getElementById('correction-toggle').checked);
-  document.getElementById('correction-toggle').checked = toggleState;
 
+  const toggleBtn = document.getElementById('sidebar-toggle-btn');
   const mainTextAreaToggle = document.querySelector('.main-textarea-section');
   const correctionSidebarToggle = document.querySelector('.correction-sidebar');
   const isMobileToggle = window.innerWidth <= 767;
+
+  if (toggleState) {
+    toggleBtn.classList.add('active');
+  } else {
+    toggleBtn.classList.remove('active');
+  }
+
   hideUnderlines(toggleState);
   callSidebar();
+
   if (!isMobileToggle) {
     if (toggleState) {
       mainTextAreaToggle.style.flexBasis = '74%';
@@ -439,18 +447,44 @@ function actionOnToggle(toggleState) {
       correctionSidebarToggle.style.maxWidth = '25%';
       correctionSidebarToggle.style.minWidth = '25%';
       correctionSidebarToggle.style.display = 'flex';
+      correctionSidebarToggle.classList.remove('collapsed');
     } else {
-      mainTextAreaToggle.style.flexBasis = '100%';
-      correctionSidebarToggle.style.display = 'none';
+      mainTextAreaToggle.style.flexBasis = '92%';
+      correctionSidebarToggle.style.flexBasis = '8%';
+      correctionSidebarToggle.style.maxWidth = '64px';
+      correctionSidebarToggle.style.minWidth = '64px';
+      correctionSidebarToggle.style.display = 'flex';
+      correctionSidebarToggle.classList.add('collapsed');
     }
-  } else {
-    mainTextAreaToggle.style.flexBasis = '100%';
-    correctionSidebarToggle.style.display = 'none';
   }
-  // ! later height
-  // requestAnimationFrame(syncContentHeights);
+
   adjustInputTextareaHeight();
 }
+
+// =================================== Sidebar Icons ========================================
+document.querySelectorAll('.sidebar-icon-btn').forEach(iconBtn => {
+  iconBtn.addEventListener('click', function () {
+    const sidebar = document.querySelector('.correction-sidebar');
+
+    // Expand the sidebar if collapsed
+    if (sidebar && sidebar.classList.contains('collapsed')) {
+      toggleState = true;
+      setCookie('korrektur-toggle', toggleState, 30);
+      actionOnToggle(toggleState);
+    }
+
+    // Find the corresponding dropdown option after expansion
+    setTimeout(() => {
+      const optionValue = this.getAttribute('data-option');
+      const dropdownOption = document.querySelector(
+        '.hk-dropdown-option[data-option="' + optionValue + '"]'
+      );
+      if (dropdownOption) {
+        updateSelectedOption(dropdownOption);
+      }
+    }, 100);
+  });
+});
 
 function hideUnderlines(flag) {
   //console.log("in the hideUnderlines value of flag", flag);
