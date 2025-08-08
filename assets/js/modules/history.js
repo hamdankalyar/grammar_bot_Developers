@@ -77,7 +77,7 @@ function deleteResponse(responseId) {
   const buttonContainer = deleteButton.closest(".button-container");
 
   // Show button loading state
-    historyLoader.showButtonLoading(buttonContainer); // NEW
+  historyLoader.showButtonLoading(buttonContainer); // NEW
 
   fetch(SB_ajax_object.ajax_url, {
     method: "POST",
@@ -104,8 +104,8 @@ function deleteResponse(responseId) {
     })
     .finally(() => {
       // Hide both loaders
-        historyLoader.hideButtonLoading(buttonContainer); // NEW
-        historyLoader.hideHistoryLoader('savedResponsesList'); // NEW (if needed)
+      historyLoader.hideButtonLoading(buttonContainer); // NEW
+      historyLoader.hideHistoryLoader("savedResponsesList"); // NEW (if needed)
     });
 }
 

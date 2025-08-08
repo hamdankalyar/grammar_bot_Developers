@@ -76,9 +76,9 @@ import {
 } from "./modules/languageDropdown.js";
 
 // ======================= Loader Imports ====================================
-import historyLoader from './modules/historyLoader.js';
-import textAreaLoader from './modules/textAreaLoader.js';
-import correctionSidebarLoader from './modules/correctionSidebarLoader.js';
+import historyLoader from "./modules/historyLoader.js";
+import textAreaLoader from "./modules/textAreaLoader.js";
+import correctionSidebarLoader from "./modules/correctionSidebarLoader.js";
 
 import {
   initializeTTS,
@@ -621,9 +621,12 @@ function onUpdateSelectOption(option) {
 
     if (lastCorrectedText != "" && isSmartCalled == false) {
       // ✅ Show loaders before calling analyzeTranslatedText
-      correctionSidebarLoader.showCorrectionLoader(".correction-message", "Analyzing...");
+      correctionSidebarLoader.showCorrectionLoader(
+        ".correction-message",
+        "Analyzing..."
+      );
       // NEW:
-correctionSidebarLoader.toggleSmartLoader(true);
+      correctionSidebarLoader.toggleSmartLoader(true);
       console.log("on update selection analyzeTranslatedText");
       analyzeTranslatedText();
       // console.log("calling in the smart-help")
@@ -635,7 +638,10 @@ correctionSidebarLoader.toggleSmartLoader(true);
   } else if (option.dataset.option === "improve-text") {
     // ✅ Show loader if explanations will be processed
     if (noOfChanges > 0 && !isExplanations) {
-      correctionSidebarLoader.showCorrectionLoader(".correction-message", "Analyzing...");
+      correctionSidebarLoader.showCorrectionLoader(
+        ".correction-message",
+        "Analyzing..."
+      );
     }
 
     callImproveSidebar();
@@ -657,7 +663,10 @@ function callSidebar() {
     if (dropDownValue === "Grammatik") {
       // ✅ Show loader if explanations will be processed
       if (noOfChanges > 0 && !isExplanations) {
-        correctionSidebarLoader.showCorrectionLoader(".correction-message", "Analyzing...");
+        correctionSidebarLoader.showCorrectionLoader(
+          ".correction-message",
+          "Analyzing..."
+        );
       }
       callImproveSidebar();
     } else if (dropDownValue === "Smart teksthjælp") {
@@ -666,9 +675,12 @@ function callSidebar() {
 
       if (lastCorrectedText != "" && isSmartCalled == false) {
         // ✅ Show loaders before calling analyzeTranslatedText
-        correctionSidebarLoader.showCorrectionLoader(".correction-message", "Analyzing...");
+        correctionSidebarLoader.showCorrectionLoader(
+          ".correction-message",
+          "Analyzing..."
+        );
         // NEW:
-correctionSidebarLoader.toggleSmartLoader(true);
+        correctionSidebarLoader.toggleSmartLoader(true);
         console.log("call sidebar analyzeTranslatedText");
         analyzeTranslatedText();
       } else {
@@ -687,7 +699,7 @@ function callImproveSidebar() {
     if (noOfChanges == 0) {
       correctionSidebarLoader.hideCorrectionLoader(".correction-message");
       // NEW:
-correctionSidebarLoader.showPerfectState();
+      correctionSidebarLoader.showPerfectState();
       correctionSidebarLoader.toggleSmartLoader(false);
       return;
     }
@@ -702,7 +714,10 @@ correctionSidebarLoader.showPerfectState();
       // (this prevents duplicate loader calls when switching tabs)
       const existingLoader = document.querySelector(".gradient-loader");
       if (!existingLoader) {
-        correctionSidebarLoader.showCorrectionLoader(".correction-message", "Analyzing...");
+        correctionSidebarLoader.showCorrectionLoader(
+          ".correction-message",
+          "Analyzing..."
+        );
       }
 
       // Check if we have multiple HTML parts (same logic as correction)
@@ -944,17 +959,20 @@ document.querySelector("#genBtn").addEventListener("click", async () => {
   manuallyCloseMicButton("micButton1");
   noOfChanges = 0;
   // NEW:
-correctionSidebarLoader.showReadyState();
+  correctionSidebarLoader.showReadyState();
   document.querySelector(".correction-options").style.display = "flex";
   isUndo = false;
   isSmartCalled = false;
   isExplanations = false;
   lastCorrectedText = "";
   // NEW:
-textAreaLoader.showTextAreaLoader(".textarea-wrapper", "Retter teksten...");
-  correctionSidebarLoader.showCorrectionLoader(".correction-message", "Analyzing...");
+  textAreaLoader.showTextAreaLoader(".textarea-wrapper", "Retter teksten...");
+  correctionSidebarLoader.showCorrectionLoader(
+    ".correction-message",
+    "Analyzing..."
+  );
   // NEW:
-correctionSidebarLoader.toggleSmartLoader(true);
+  correctionSidebarLoader.toggleSmartLoader(true);
 
   try {
     const clonedElement = quill1.root.cloneNode(true);
@@ -1073,7 +1091,7 @@ correctionSidebarLoader.toggleSmartLoader(true);
   } catch (error) {
     console.error("Processing error:", error);
     // NEW:
-textAreaLoader.hideTextAreaLoader(".textarea-wrapper");
+    textAreaLoader.hideTextAreaLoader(".textarea-wrapper");
     correctionSidebarLoader.hideCorrectionLoader(".correction-message");
     correctionSidebarLoader.toggleSmartLoader(false);
   }
@@ -1699,14 +1717,17 @@ function convertPSpanstoBr(htmlString) {
 function formatCallingWithLoader(language, userInputText, correctedText) {
   // Change loader text to indicate formatting stage
   // NEW:
-textAreaLoader.hideTextAreaLoader(".textarea-wrapper");
-  textAreaLoader.showTextAreaLoader(".textarea-wrapper", "Ordner opsætningen...");
+  textAreaLoader.hideTextAreaLoader(".textarea-wrapper");
+  textAreaLoader.showTextAreaLoader(
+    ".textarea-wrapper",
+    "Ordner opsætningen..."
+  );
 
   // Validate input
   if (!language || !userInputText || !correctedText) {
     console.error("Missing required parameters");
     // NEW:
-textAreaLoader.hideTextAreaLoader(".textarea-wrapper");
+    textAreaLoader.hideTextAreaLoader(".textarea-wrapper");
     return;
   }
   console.log(
@@ -1759,17 +1780,17 @@ textAreaLoader.hideTextAreaLoader(".textarea-wrapper");
         adjustInputTextareaHeight();
 
         // NEW:
-textAreaLoader.hideTextAreaLoader(".textarea-wrapper"); // ✅ Hide when formatting completes
+        textAreaLoader.hideTextAreaLoader(".textarea-wrapper"); // ✅ Hide when formatting completes
       } else {
         console.error("Formatting error:", response.data.message);
         // NEW:
-textAreaLoader.hideTextAreaLoader(".textarea-wrapper"); // ✅ Hide on error
+        textAreaLoader.hideTextAreaLoader(".textarea-wrapper"); // ✅ Hide on error
       }
     },
     error: function (xhr, status, error) {
       console.error("AJAX error:", error);
       // NEW:
-textAreaLoader.hideTextAreaLoader(".textarea-wrapper"); // ✅ Hide on error
+      textAreaLoader.hideTextAreaLoader(".textarea-wrapper"); // ✅ Hide on error
     },
   });
 }
@@ -1780,8 +1801,11 @@ function formatCallingParallelWithLoader(
   fallbackDiffHtml
 ) {
   // NEW:
-textAreaLoader.hideTextAreaLoader(".textarea-wrapper");
-  textAreaLoader.showTextAreaLoader(".textarea-wrapper", "Ordner opsætningen...");
+  textAreaLoader.hideTextAreaLoader(".textarea-wrapper");
+  textAreaLoader.showTextAreaLoader(
+    ".textarea-wrapper",
+    "Ordner opsætningen..."
+  );
 
   // ✅ CLEAN HAM-DAN TAGS FROM ALL PARTS
   const cleanedFormattingParts = formattingParts.map((part) => ({
@@ -1808,7 +1832,7 @@ textAreaLoader.hideTextAreaLoader(".textarea-wrapper");
       }
       adjustInputTextareaHeight();
       // NEW:
-textAreaLoader.hideTextAreaLoader(".textarea-wrapper");
+      textAreaLoader.hideTextAreaLoader(".textarea-wrapper");
     })
     .catch((error) => {
       console.error("Parallel formatting error:", error);
@@ -2354,7 +2378,7 @@ function sendStyleChangeRequest(text, promptNumber) {
     })
     .finally(() => {
       // NEW:
-textAreaLoader.hideTextAreaLoader(".textarea-wrapper");
+      textAreaLoader.hideTextAreaLoader(".textarea-wrapper");
     });
 }
 
@@ -2398,7 +2422,7 @@ function analyzeTranslatedText() {
   const smartLoader = document.querySelector(".gradient-loader-smart");
   if (smartLoader && smartLoader.style.display === "none") {
     // NEW:
-correctionSidebarLoader.toggleSmartLoader(true);
+    correctionSidebarLoader.toggleSmartLoader(true);
   }
 
   // Prepare form data
@@ -2671,7 +2695,7 @@ function improveText(improvementPrompt) {
     })
     .finally(() => {
       // NEW:
-textAreaLoader.hideTextAreaLoader(".textarea-wrapper");
+      textAreaLoader.hideTextAreaLoader(".textarea-wrapper");
     });
 }
 
@@ -2961,7 +2985,7 @@ function handleClear() {
   correctionOpts.style.display = "none";
 
   // NEW:
-correctionSidebarLoader.showReadyState();
+  correctionSidebarLoader.showReadyState();
   lastCorrectedText = "";
   // Force placeholder update
   updatePlaceholder(getLanguageName(getCurrentLanguage()));
@@ -3583,8 +3607,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }, 1000);
   initializeFileUpload({
-    showLoader: textAreaLoader.showTextAreaLoader,    // ✅ NEW
-    hideLoader: textAreaLoader.hideTextAreaLoader,    // ✅ NEW
+    showLoader: textAreaLoader.showTextAreaLoader, // ✅ NEW
+    hideLoader: textAreaLoader.hideTextAreaLoader, // ✅ NEW
     handleClear: handleClear,
     displayResponse: displayResponse,
     scrollAfterPaste: scrollAfterPaste,
@@ -3598,8 +3622,8 @@ document.addEventListener("DOMContentLoaded", function () {
   initializeRewriteSystem({
     displayResponse,
     onResponseGenerated,
-    sshowLoader: textAreaLoader.showTextAreaLoader,    // ✅ NEW
-    hideLoader: textAreaLoader.hideTextAreaLoader,    // ✅ NEW
+    sshowLoader: textAreaLoader.showTextAreaLoader, // ✅ NEW
+    hideLoader: textAreaLoader.hideTextAreaLoader, // ✅ NEW
     originalContent,
     languageMap,
     getCurrentLanguage,

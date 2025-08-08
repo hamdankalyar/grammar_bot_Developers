@@ -210,15 +210,14 @@
 /* Middle Controls - no background, just flex container */
 .middle-controls {
   display: flex;
-justify-content: center;
-align-items: center;
-border-radius: 100px;
-border: 1px solid var(--Text-Primary-Dark, #E4E4E4);
-background: linear-gradient(139deg, #FFF 12.36%, #F8F9FA 94.3%);
-box-shadow: 0 1px 1px 0 rgba(255, 255, 255, 0.90) inset, 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
+  border: 1px solid var(--Text-Primary-Dark, #e4e4e4);
+  background: linear-gradient(139deg, #fff 12.36%, #f8f9fa 94.3%);
+  box-shadow: 0 1px 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 1px 3px 0 rgba(0, 0, 0, 0.04);
 }
-
-
 
 /* Right Controls - no background, just flex container */
 .right-controls {
@@ -230,28 +229,30 @@ box-shadow: 0 1px 1px 0 rgba(255, 255, 255, 0.90) inset, 0 1px 3px 0 rgba(0, 0, 
 /* Base button styles */
 .control-btn {
   display: flex;
-padding: 5px;
-justify-content: center;
-align-items: center;
-gap: 10px;
-border-radius: 100px;
-border: 1px solid var(--Text-Primary-Dark, #E4E4E4);
-background: linear-gradient(139deg, #FFF 12.36%, #F8F9FA 94.3%);
-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 1px 0 rgba(255, 255, 255, 0.90) inset;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 100px;
+  border: 1px solid var(--Text-Primary-Dark, #e4e4e4);
+  background: linear-gradient(139deg, #fff 12.36%, #f8f9fa 94.3%);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04),
+    0 1px 1px 0 rgba(255, 255, 255, 0.9) inset;
 }
 
 .control-btn:hover:not(:disabled) {
   display: flex;
-padding: 5px;
-justify-content: center;
-align-items: center;
-gap: 10px;
-border-radius: 100px;
-border: 1px solid var(--Text-Primary-Dark, #E4E4E4);
-background: linear-gradient(139deg, #FFF 12.36%, #F1F3F4 94.3%);
-box-shadow: 0 1px 1px 0 rgba(255, 255, 255, 0.90) inset, 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 2px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 1px 0 rgba(255, 255, 255, 0.90) inset;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 100px;
+  border: 1px solid var(--Text-Primary-Dark, #e4e4e4);
+  background: linear-gradient(139deg, #fff 12.36%, #f1f3f4 94.3%);
+  box-shadow: 0 1px 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 3px 0 rgba(0, 0, 0, 0.04),
+    0 2px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 1px 0 rgba(255, 255, 255, 0.9) inset;
 }
-
 
 .control-btn:disabled {
   opacity: 0.4;
@@ -288,27 +289,27 @@ box-shadow: 0 1px 1px 0 rgba(255, 255, 255, 0.90) inset, 0 1px 3px 0 rgba(0, 0, 
 }
 
 #revertBack {
-    display: flex;
-padding: 5px;
-flex-direction: column;
-justify-content: center;
-align-items: flex-start;
-gap: 10px;
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
-    border-right: 0.5px solid var(--Text-Primary-Dark, #E4E4E4);
+  display: flex;
+  padding: 5px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  border-right: 0.5px solid var(--Text-Primary-Dark, #e4e4e4);
 }
 
 #redoBtn {
-    display: flex;
-padding: 5px;
-flex-direction: column;
-justify-content: center;
-align-items: flex-start;
-gap: 10px;
-border-left: 0.5px solid var(--Text-Primary-Dark, #E4E4E4);
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
+  display: flex;
+  padding: 5px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  border-left: 0.5px solid var(--Text-Primary-Dark, #e4e4e4);
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
 }
 /* Remove any old styling */
 .revert-clear-btn {
@@ -1029,8 +1030,8 @@ border-left: 0.5px solid var(--Text-Primary-Dark, #E4E4E4);
 
 .write-applicationDiv:hover {
   opacity: 1;
-border: 1px solid #E24668 !important;
-background: #CE3657 !important;
+  border: 1px solid #e24668 !important;
+  background: #ce3657 !important;
 }
 
 /* -------------------------------------- grammer highlighting code ---------------------------- */
@@ -2543,18 +2544,18 @@ mark.word-highlight * {
 
 .hamdan-speech-bubble {
   display: flex;
-width: 170px;
-padding: 16px 22px;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-gap: 23px;
-grid-row: 1 / span 1;
-grid-column: 1 / span 1;
-justify-self: center;
-border-radius: 48px;
-background: #FFF;
-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.15);
+  width: 170px;
+  padding: 12px 12px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 23px;
+  grid-row: 1 / span 1;
+  grid-column: 1 / span 1;
+  justify-self: center;
+  border-radius: 48px;
+  background: #fff;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.15);
 }
 
 .hamdan-speech-bubble::before {
