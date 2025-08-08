@@ -1,0 +1,56 @@
+/* ===================================== Correction Sidebar Loaders ================================ */
+
+/* Base loader backdrop for correction content */
+.correction-content .loader-backdrop {
+  background: transparent;
+  min-height: 200px;
+}
+
+/* Small gradient loader for correction messages */
+.gradient-loader {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-right: 6px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    90deg,
+    rgba(226, 70, 104, 0.2),
+    rgba(226, 70, 104, 1),
+    rgba(226, 70, 104, 0.2)
+  );
+  background-size: 200% 100%;
+  animation: gradient-move 1.5s ease-in-out infinite;
+}
+
+/* Smart help gradient loader */
+.gradient-loader-smart {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-right: 6px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    90deg,
+    rgba(226, 70, 104, 0.2),
+    rgba(226, 70, 104, 1),
+    rgba(226, 70, 104, 0.2)
+  );
+  background-size: 200% 100%;
+  animation: gradient-move 1.5s ease-in-out infinite;
+}
+
+/* Gradient movement animation */
+@keyframes gradient-move {
+  0% {
+    background-position: 100% 0;
+  }
+
+  100% {
+    background-position: -100% 0;
+  }
+}
