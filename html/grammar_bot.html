@@ -5,275 +5,84 @@
 <div class="new-korrektur">
   <!-- Color legend -->
 
-<div class="hamdan-header">
-  <div class="hamdan-header-left">
-    <p class="hamdan-header-title">Korrekturlæser</p>
-    <p class="hamdan-header-subtitle">Få styr på grammatikken.</p>
-    <button id="show-tutorial-btn">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="21"
-        height="14"
-        viewBox="0 0 21 14"
-        fill="none"
-        class="tutorial-icon"
-      >
-        <path 
-          d="M8.5 10L13.69 7L8.5 4V10ZM20.06 2.17C20.19 2.64 20.28 3.27 20.34 4.07C20.41 4.87 20.44 5.56 20.44 6.16L20.5 7C20.5 9.19 20.34 10.8 20.06 11.83C19.81 12.73 19.23 13.31 18.33 13.56C17.86 13.69 17 13.78 15.68 13.84C14.38 13.91 13.19 13.94 12.09 13.94L10.5 14C6.31 14 3.7 13.84 2.67 13.56C1.77 13.31 1.19 12.73 0.94 11.83C0.81 11.36 0.72 10.73 0.66 9.93C0.59 9.13 0.56 8.44 0.56 7.84L0.5 7C0.5 4.81 0.66 3.2 0.94 2.17C1.19 1.27 1.77 0.69 2.67 0.44C3.14 0.31 4 0.22 5.32 0.16C6.62 0.0899998 7.81 0.0599999 8.91 0.0599999L10.5 0C14.69 0 17.3 0.16 18.33 0.44C19.23 0.69 19.81 1.27 20.06 2.17Z"
-          fill="rgba(199, 137, 156, 1)"
-        />
-      </svg>
-      Sådan virker robotten
-    </button>
-  </div>
+  <div class="hamdan-header">
+    <div class="hamdan-header-left">
+      <p class="hamdan-header-title">Korrekturlæser</p>
+      <p class="hamdan-header-subtitle">Få styr på grammatikken.</p>
+      <button id="show-tutorial-btn">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="21"
+          height="14"
+          viewBox="0 0 21 14"
+          fill="none"
+          class="tutorial-icon"
+        >
+          <path
+            d="M8.5 10L13.69 7L8.5 4V10ZM20.06 2.17C20.19 2.64 20.28 3.27 20.34 4.07C20.41 4.87 20.44 5.56 20.44 6.16L20.5 7C20.5 9.19 20.34 10.8 20.06 11.83C19.81 12.73 19.23 13.31 18.33 13.56C17.86 13.69 17 13.78 15.68 13.84C14.38 13.91 13.19 13.94 12.09 13.94L10.5 14C6.31 14 3.7 13.84 2.67 13.56C1.77 13.31 1.19 12.73 0.94 11.83C0.81 11.36 0.72 10.73 0.66 9.93C0.59 9.13 0.56 8.44 0.56 7.84L0.5 7C0.5 4.81 0.66 3.2 0.94 2.17C1.19 1.27 1.77 0.69 2.67 0.44C3.14 0.31 4 0.22 5.32 0.16C6.62 0.0899998 7.81 0.0599999 8.91 0.0599999L10.5 0C14.69 0 17.3 0.16 18.33 0.44C19.23 0.69 19.81 1.27 20.06 2.17Z"
+            fill="rgba(199, 137, 156, 1)"
+          />
+        </svg>
+        Sådan virker robotten
+      </button>
+    </div>
 
-  <div id="tutorial-popup" class="modal" hidden>
-    <div class="modal-content">
-      <button class="close-btn" aria-label="Close Tutorial">&times;</button>
-      <iframe
-        id="tutorial-video"
-        width="100%"
-        height="100%"
-        src="https://www.youtube.com/embed/8pvX-zCwNSI?autoplay=1&mute=1"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-        style="filter: brightness(var(--wpdm-video-brightness, 100%)) grayscale(var(--wpdm-video-grayscale, 0%));"
-      ></iframe>
+    <div id="tutorial-popup" class="modal" hidden>
+      <div class="modal-content">
+        <button class="close-btn" aria-label="Close Tutorial">&times;</button>
+        <iframe
+          id="tutorial-video"
+          width="100%"
+          height="100%"
+          src="https://www.youtube.com/embed/8pvX-zCwNSI?autoplay=1&mute=1"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          style="
+            filter: brightness(var(--wpdm-video-brightness, 100%))
+              grayscale(var(--wpdm-video-grayscale, 0%));
+          "
+        ></iframe>
+      </div>
+    </div>
+
+    <div class="hamdan-header-right">
+      <button class="hamdan-header-btn" id="showSavedResponsesBtn">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          version="1.0"
+          width="16.25"
+          height="16.25"
+          viewBox="0 0 512 512"
+          preserveAspectRatio="xMidYMid meet"
+          style="fill: #104165; stroke: none"
+        >
+          <g transform="translate(0,512) scale(0.1,-0.1)">
+            <path
+              d="M2395 4794 c-325 -34 -564 -102 -830 -234 -340 -168 -628 -415 -838 -716 -28 -41 -52 -72 -53 -71 -2 2 -26 113 -55 247 -28 135 -57 257 -65 272 -45 87 -175 109 -249 41 -30 -29 -55 -80 -55 -115 0 -55 207 -994 225 -1022 23 -34 70 -56 122 -56 59 0 984 190 1018 209 16 9 40 33 53 52 20 29 23 43 20 98 -4 59 -7 66 -45 102 -66 61 -76 61 -427 -14 -171 -37 -312 -65 -314 -62 -7 7 67 122 141 217 303 393 761 657 1267 729 128 18 404 16 534 -5 724 -117 1306 -606 1535 -1292 157 -468 129 -970 -79 -1420 -148 -322 -430 -637 -733 -823 -224 -137 -473 -226 -738 -265 -134 -20 -400 -20 -536 -1 -555 79 -1039 390 -1353 870 -178 273 -300 675 -300 991 0 79 -19 125 -68 162 -29 22 -46 27 -92 27 -46 0 -63 -5 -92 -27 -62 -47 -72 -83 -64 -227 39 -731 407 -1379 1009 -1772 307 -201 653 -322 1026 -359 552 -54 1146 123 1594 477 93 73 287 267 360 360 354 448 531 1042 477 1594 -60 607 -344 1142 -815 1535 -160 133 -412 278 -625 359 -119 46 -323 99 -460 120 -102 15 -415 27 -495 19z"
+            />
+            <path
+              d="M2492 3664 c-18 -10 -45 -33 -60 -52 l-27 -35 -3 -516 c-2 -332 1 -528 7 -551 8 -27 103 -127 403 -427 425 -424 415 -415 505 -398 49 9 109 69 118 118 17 90 22 83 -361 467 l-354 355 0 464 c0 514 1 506 -67 558 -43 33 -114 41 -161 17z"
+            />
+          </g>
+        </svg>
+        <span>Mine referater</span>
+      </button>
     </div>
   </div>
-
-  <div class="hamdan-header-right">
-    <button class="hamdan-header-btn" id="showSavedResponsesBtn">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        version="1.0"
-        width="16.25"
-        height="16.25"
-        viewBox="0 0 512 512"
-        preserveAspectRatio="xMidYMid meet"
-        style="fill: #104165; stroke: none"
-      >
-        <g transform="translate(0,512) scale(0.1,-0.1)">
-          <path
-            d="M2395 4794 c-325 -34 -564 -102 -830 -234 -340 -168 -628 -415 -838 -716 -28 -41 -52 -72 -53 -71 -2 2 -26 113 -55 247 -28 135 -57 257 -65 272 -45 87 -175 109 -249 41 -30 -29 -55 -80 -55 -115 0 -55 207 -994 225 -1022 23 -34 70 -56 122 -56 59 0 984 190 1018 209 16 9 40 33 53 52 20 29 23 43 20 98 -4 59 -7 66 -45 102 -66 61 -76 61 -427 -14 -171 -37 -312 -65 -314 -62 -7 7 67 122 141 217 303 393 761 657 1267 729 128 18 404 16 534 -5 724 -117 1306 -606 1535 -1292 157 -468 129 -970 -79 -1420 -148 -322 -430 -637 -733 -823 -224 -137 -473 -226 -738 -265 -134 -20 -400 -20 -536 -1 -555 79 -1039 390 -1353 870 -178 273 -300 675 -300 991 0 79 -19 125 -68 162 -29 22 -46 27 -92 27 -46 0 -63 -5 -92 -27 -62 -47 -72 -83 -64 -227 39 -731 407 -1379 1009 -1772 307 -201 653 -322 1026 -359 552 -54 1146 123 1594 477 93 73 287 267 360 360 354 448 531 1042 477 1594 -60 607 -344 1142 -815 1535 -160 133 -412 278 -625 359 -119 46 -323 99 -460 120 -102 15 -415 27 -495 19z"
-          />
-          <path
-            d="M2492 3664 c-18 -10 -45 -33 -60 -52 l-27 -35 -3 -516 c-2 -332 1 -528 7 -551 8 -27 103 -127 403 -427 425 -424 415 -415 505 -398 49 9 109 69 118 118 17 90 22 83 -361 467 l-354 355 0 464 c0 514 1 506 -67 558 -43 33 -114 41 -161 17z"
-          />
-        </g>
-      </svg>
-      <span>Mine referater</span>
-    </button>
-  </div>
-</div>
-
 
   <div class="lang-legend-div">
     <!-- Language controls -->
-
-    <div class="dk-translation-box">
-      <div class="dk-language-select">
-        <div class="dk-language-icon">
-          <svg
-            width="18"
-            height="17"
-            viewBox="0 0 18 17"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle
-              cx="9"
-              cy="8.5"
-              r="7.5"
-              stroke="#606060"
-              stroke-width="1.5"
-            />
-            <path
-              d="M5.25 5.78448H8.625M12.75 5.78448H10.875M8.625 5.78448H10.875M8.625 5.78448V4.375M10.875 5.78448C10.4794 7.19921 9.65094 8.53654 8.70536 9.71182M6.29464 12.25C7.05904 11.5471 7.92236 10.685 8.70536 9.71182M8.70536 9.71182C8.22321 9.14655 7.54821 8.23197 7.35536 7.81818M8.70536 9.71182L10.1518 11.2155"
-              stroke="#606060"
-              stroke-width="1.5"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </div>
-        <span class="dk-language-text" data-lang="Dansk">Dansk</span>
-        <span class="dk-arrow">
-          <svg
-            width="12"
-            height="7"
-            viewBox="0 0 12 7"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M1.49976 1.24991L5.99979 5.74988L10.4998 1.24988"
-              stroke="#606060"
-              stroke-width="1.5"
-              stroke-miterlimit="16"
-            />
-          </svg>
-        </span>
-        <div class="dk-dropdown">
-          <div class="dk-dropdown-item" data-lang="Dansk">
-            <div class="dk-language-icon">
-              <svg
-                width="18"
-                height="17"
-                viewBox="0 0 18 17"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <circle
-                  cx="9"
-                  cy="8.5"
-                  r="7.5"
-                  stroke="#606060"
-                  stroke-width="1.5"
-                />
-                <path
-                  d="M5.25 5.78448H8.625M12.75 5.78448H10.875M8.625 5.78448H10.875M8.625 5.78448V4.375M10.875 5.78448C10.4794 7.19921 9.65094 8.53654 8.70536 9.71182M6.29464 12.25C7.05904 11.5471 7.92236 10.685 8.70536 9.71182M8.70536 9.71182C8.22321 9.14655 7.54821 8.23197 7.35536 7.81818M8.70536 9.71182L10.1518 11.2155"
-                  stroke="#606060"
-                  stroke-width="1.5"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </div>
-            Dansk
-          </div>
-          <div class="dk-dropdown-item" data-lang="Engelsk">
-            <div class="dk-language-icon">
-              <svg
-                width="18"
-                height="17"
-                viewBox="0 0 18 17"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <circle
-                  cx="9"
-                  cy="8.5"
-                  r="7.5"
-                  stroke="#606060"
-                  stroke-width="1.5"
-                />
-                <path
-                  d="M5.25 5.78448H8.625M12.75 5.78448H10.875M8.625 5.78448H10.875M8.625 5.78448V4.375M10.875 5.78448C10.4794 7.19921 9.65094 8.53654 8.70536 9.71182M6.29464 12.25C7.05904 11.5471 7.92236 10.685 8.70536 9.71182M8.70536 9.71182C8.22321 9.14655 7.54821 8.23197 7.35536 7.81818M8.70536 9.71182L10.1518 11.2155"
-                  stroke="#606060"
-                  stroke-width="1.5"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </div>
-            Engelsk
-          </div>
-
-          <div class="dk-dropdown-item" data-lang="Tysk">
-            <div class="dk-language-icon">
-              <svg
-                width="18"
-                height="17"
-                viewBox="0 0 18 17"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <circle
-                  cx="9"
-                  cy="8.5"
-                  r="7.5"
-                  stroke="#606060"
-                  stroke-width="1.5"
-                />
-                <path
-                  d="M5.25 5.78448H8.625M12.75 5.78448H10.875M8.625 5.78448H10.875M8.625 5.78448V4.375M10.875 5.78448C10.4794 7.19921 9.65094 8.53654 8.70536 9.71182M6.29464 12.25C7.05904 11.5471 7.92236 10.685 8.70536 9.71182M8.70536 9.71182C8.22321 9.14655 7.54821 8.23197 7.35536 7.81818M8.70536 9.71182L10.1518 11.2155"
-                  stroke="#606060"
-                  stroke-width="1.5"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </div>
-            Tysk
-          </div>
-          <div class="dk-dropdown-item" data-lang="Fransk">
-            <div class="dk-language-icon">
-              <svg
-                width="18"
-                height="17"
-                viewBox="0 0 18 17"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <circle
-                  cx="9"
-                  cy="8.5"
-                  r="7.5"
-                  stroke="#606060"
-                  stroke-width="1.5"
-                />
-                <path
-                  d="M5.25 5.78448H8.625M12.75 5.78448H10.875M8.625 5.78448H10.875M8.625 5.78448V4.375M10.875 5.78448C10.4794 7.19921 9.65094 8.53654 8.70536 9.71182M6.29464 12.25C7.05904 11.5471 7.92236 10.685 8.70536 9.71182M8.70536 9.71182C8.22321 9.14655 7.54821 8.23197 7.35536 7.81818M8.70536 9.71182L10.1518 11.2155"
-                  stroke="#606060"
-                  stroke-width="1.5"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </div>
-            Fransk
-          </div>
-          <div class="dk-dropdown-item" data-lang="Spansk">
-            <div class="dk-language-icon">
-              <svg
-                width="18"
-                height="17"
-                viewBox="0 0 18 17"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <circle
-                  cx="9"
-                  cy="8.5"
-                  r="7.5"
-                  stroke="#606060"
-                  stroke-width="1.5"
-                />
-                <path
-                  d="M5.25 5.78448H8.625M12.75 5.78448H10.875M8.625 5.78448H10.875M8.625 5.78448V4.375M10.875 5.78448C10.4794 7.19921 9.65094 8.53654 8.70536 9.71182M6.29464 12.25C7.05904 11.5471 7.92236 10.685 8.70536 9.71182M8.70536 9.71182C8.22321 9.14655 7.54821 8.23197 7.35536 7.81818M8.70536 9.71182L10.1518 11.2155"
-                  stroke="#606060"
-                  stroke-width="1.5"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </div>
-            Spansk
-          </div>
-          <!-- Custom language input -->
-          <div class="dk-custom-language">
-            <input
-              type="text"
-              placeholder="Skriv sprog"
-              class="dk-custom-input"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="toolbar-container">
       <div class="toolbar">
         <!-- Toggle section -->
         <div class="toggle-section">
           <label class="switch">
-            <input
-              type="checkbox"
-              class="switch-input"
-              id="correction-toggle"
-              checked
-            />
+            <input type="checkbox" class="switch-input" id="correction-toggle" checked />
             <span class="switch-slider"></span>
           </label>
-          <label for="correction-toggle" class="switch-label"
-            >Smart teksthjælp</label
-          >
+          <label for="correction-toggle" class="switch-label">Smart teksthjælp</label>
         </div>
         <div class="legend-section" id="legend-section">
           <div class="legend-item">
@@ -321,11 +130,8 @@
               />
             </svg>
           </button>
-          <button
-            class="control-btn"
-            title="Paste from clipboard"
-            id="pasteBtn"
-          >
+
+          <button class="control-btn" title="Paste from clipboard" id="pasteBtn">
             <svg
               width="22"
               height="22"
@@ -343,12 +149,7 @@
                 d="M13.8477 20.8557L13.6909 20.1223L13.8477 20.8557ZM12.6443 19.6523L13.3777 19.8091L12.6443 19.6523ZM13.5207 17.1117L12.9903 16.5814L13.5207 17.1117ZM16.3883 19.9793L15.858 19.449L16.3883 19.9793ZM20.2963 14.4773L20.9458 14.1023V14.1023L20.2963 14.4773ZM19.6961 16.6715L20.2265 17.2018L19.6961 16.6715ZM20.2963 15.9981L20.9458 16.3731L20.2963 15.9981ZM19.0227 13.2037L19.3977 12.5542V12.5542L19.0227 13.2037ZM16.8285 13.8039L17.3588 14.3342L16.8285 13.8039ZM17.5019 13.2037L17.1269 12.5542V12.5542L17.5019 13.2037ZM19.1658 16.1412L15.858 19.449L16.9186 20.5097L20.2265 17.2018L19.1658 16.1412ZM14.051 17.642L17.3588 14.3342L16.2982 13.2735L12.9903 16.5814L14.051 17.642ZM13.6909 20.1223C13.5155 20.1598 13.3753 20.1897 13.2548 20.2121C13.1333 20.2347 13.0536 20.2454 12.9996 20.2488C12.9441 20.2524 12.9479 20.2458 12.9825 20.2547C13.0296 20.2669 13.0936 20.2972 13.1482 20.3518L12.0876 21.4124C12.4113 21.7362 12.8158 21.7636 13.0948 21.7458C13.3603 21.7289 13.6839 21.6577 14.0045 21.5891L13.6909 20.1223ZM11.9109 19.4955C11.8423 19.8161 11.7711 20.1397 11.7542 20.4052C11.7364 20.6842 11.7638 21.0887 12.0876 21.4124L13.1482 20.3518C13.2028 20.4064 13.2331 20.4704 13.2453 20.5175C13.2542 20.5521 13.2476 20.5559 13.2512 20.5004C13.2546 20.4464 13.2653 20.3667 13.2879 20.2452C13.3103 20.1247 13.3402 19.9845 13.3777 19.8091L11.9109 19.4955ZM19.1658 14.3342C19.5333 14.7017 19.6084 14.786 19.6467 14.8523L20.9458 14.1023C20.7839 13.8218 20.5257 13.5728 20.2265 13.2735L19.1658 14.3342ZM20.2265 17.2018C20.5257 16.9026 20.7839 16.6535 20.9458 16.3731L19.6467 15.6231C19.6084 15.6894 19.5333 15.7737 19.1658 16.1412L20.2265 17.2018ZM19.6467 14.8523C19.7844 15.0908 19.7844 15.3846 19.6467 15.6231L20.9458 16.3731C21.3514 15.6705 21.3514 14.8049 20.9458 14.1023L19.6467 14.8523ZM20.2265 13.2735C19.9272 12.9743 19.6782 12.7161 19.3977 12.5542L18.6477 13.8533C18.714 13.8916 18.7983 13.9667 19.1658 14.3342L20.2265 13.2735ZM17.3588 14.3342C17.7263 13.9667 17.8106 13.8916 17.8769 13.8533L17.1269 12.5542C16.8465 12.7161 16.5974 12.9743 16.2982 13.2735L17.3588 14.3342ZM19.3977 12.5542C18.6951 12.1486 17.8295 12.1486 17.1269 12.5542L17.8769 13.8533C18.1154 13.7156 18.4092 13.7156 18.6477 13.8533L19.3977 12.5542ZM15.858 19.449C15.6624 19.6445 15.3952 19.771 15.0155 19.8679C14.8253 19.9165 14.6224 19.954 14.3963 19.9931C14.179 20.0306 13.9303 20.0711 13.6909 20.1223L14.0045 21.5891C14.2063 21.546 14.4131 21.5124 14.6517 21.4712C14.8814 21.4315 15.1346 21.3856 15.3866 21.3213C15.8914 21.1924 16.4533 20.975 16.9186 20.5097L15.858 19.449ZM13.3777 19.8091C13.4289 19.5697 13.4694 19.321 13.5069 19.1037C13.546 18.8776 13.5835 18.6747 13.6321 18.4845C13.729 18.1048 13.8555 17.8376 14.051 17.642L12.9903 16.5814C12.525 17.0467 12.3076 17.6086 12.1787 18.1134C12.1144 18.3654 12.0685 18.6186 12.0288 18.8483C11.9876 19.0869 11.954 19.2937 11.9109 19.4955L13.3777 19.8091Z"
                 fill="#929292"
               />
-              <path
-                d="M9 21H10"
-                stroke="#929292"
-                stroke-width="1.5"
-                stroke-linecap="round"
-              />
+              <path d="M9 21H10" stroke="#929292" stroke-width="1.5" stroke-linecap="round" />
               <path
                 d="M5.5 2.5C3.9442 2.54667 3.01661 2.71984 2.37477 3.36227C1.49609 4.24177 1.49609 5.6573 1.49609 8.48836L1.49609 14.9944C1.49609 17.8255 1.49609 19.241 2.37477 20.1205C3.14362 20.8901 4.32248 20.9863 6.5 20.9983M14.4922 2.5C16.048 2.54667 16.9756 2.71984 17.6174 3.36228C18.4961 4.24177 18.4961 5.6573 18.4961 8.48836L18.4961 10"
                 stroke="#929292"
@@ -381,30 +182,15 @@
                 y1="8.74"
                 x2="7.31"
                 y2="4.54"
-                style="
-                  fill: none;
-                  stroke: #929292;
-                  stroke-linecap: round;
-                  stroke-linejoin: round;
-                "
+                style="fill: none; stroke: #929292; stroke-linecap: round; stroke-linejoin: round"
               ></line>
               <polyline
                 points="5.54 6.21 7.3 4.45 9.05 6.21"
-                style="
-                  fill: none;
-                  stroke: #929292;
-                  stroke-linecap: round;
-                  stroke-linejoin: round;
-                "
+                style="fill: none; stroke: #929292; stroke-linecap: round; stroke-linejoin: round"
               ></polyline>
               <path
                 d="M15.16,6.64c-.48-1.35-1.61-2.38-3.01-2.74-.79-1.99-2.72-3.4-4.99-3.4C4.19.5,1.78,2.91,1.78,5.87c0,.3.04.59.09.88-.82.55-1.37,1.48-1.37,2.53,0,1.67,1.37,3.04,3.04,3.04h3.53"
-                style="
-                  fill: none;
-                  stroke: #929292;
-                  stroke-linecap: round;
-                  stroke-linejoin: round;
-                "
+                style="fill: none; stroke: #929292; stroke-linecap: round; stroke-linejoin: round"
               ></path>
               <path
                 d="M12.72,8.1h3.63s.04.02.04.04v5.92s-.02.04-.04.04h-3.63"
@@ -456,14 +242,48 @@
             </svg>
           </span>
         </div>
+
+        <!-- Middle Controls - Undo and Redo buttons -->
+        <div class="middle-controls">
+          <button class="control-btn" id="revertBack" disabled title="Undo">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              id="Layer_2"
+              data-name="Layer 2"
+              viewBox="0 0 255.49 191.62"
+            >
+              <g id="Layer_1-2" data-name="Layer 1">
+                <path
+                  fill="#929292"
+                  d="M55.24,47.86h135.86c7.2,0,21.62,5.71,28.08,9.34,48.18,27.09,48.47,97.34.49,124.77-12.54,7.17-45.14,18.23-51.19-1.46-3.09-10.05,3.63-19.46,13.83-20.93,2.47-.36,4.93.1,7.21-.27,29.71-4.86,44.23-38.78,26.21-63.49-4.45-6.09-17.74-15.78-25.39-15.78H55.24c5.59,7.6,15.45,14.02,20.94,21.35,11.85,15.82-6.97,34.89-22.83,22.08-17.04-13.77-32.43-34.96-49.39-49.41-5.78-7.37-4.98-14.63.75-21.72C17.95,35.93,38.33,21.14,52.24,4.81c10.97-10.59,29-2.51,27.71,12.73-.91,10.76-18.71,21.69-24.71,30.32Z"
+                />
+              </g>
+            </svg>
+          </button>
+
+          <!-- Add Redo button if needed -->
+          <button class="control-btn" id="redoBtn" disabled title="Redo">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 255.49 191.62"
+            >
+              <g transform="scale(-1,1) translate(-255.49,0)">
+                <path
+                  fill="#929292"
+                  d="M55.24,47.86h135.86c7.2,0,21.62,5.71,28.08,9.34,48.18,27.09,48.47,97.34.49,124.77-12.54,7.17-45.14,18.23-51.19-1.46-3.09-10.05,3.63-19.46,13.83-20.93,2.47-.36,4.93.1,7.21-.27,29.71-4.86,44.23-38.78,26.21-63.49-4.45-6.09-17.74-15.78-25.39-15.78H55.24c5.59,7.6,15.45,14.02,20.94,21.35,11.85,15.82-6.97,34.89-22.83,22.08-17.04-13.77-32.43-34.96-49.39-49.41-5.78-7.37-4.98-14.63.75-21.72C17.95,35.93,38.33,21.14,52.24,4.81c10.97-10.59,29-2.51,27.71,12.73-.91,10.76-18.71,21.69-24.71,30.32Z"
+                />
+              </g>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Right Controls - Switch text and Delete buttons -->
         <div class="right-controls">
-          <button
-            class="control-btn"
-            title="switch text"
-            id="mainSwitcher"
-            disabled
-            style="margin-left: 2px"
-          >
+          <button class="control-btn" title="Switch text" id="mainSwitcher" disabled>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -482,12 +302,7 @@
                     height="110.09"
                     rx="18"
                     ry="18"
-                    style="
-                      fill: none;
-                      stroke: #7e7e7e;
-                      stroke-miterlimit: 10;
-                      stroke-width: 7px;
-                    "
+                    style="fill: none; stroke: #7e7e7e; stroke-miterlimit: 10; stroke-width: 7px"
                   />
                 </clipPath>
               </defs>
@@ -512,12 +327,7 @@
                       height="110.09"
                       rx="18"
                       ry="18"
-                      style="
-                        fill: none;
-                        stroke: #7e7e7e;
-                        stroke-miterlimit: 10;
-                        stroke-width: 7px;
-                      "
+                      style="fill: none; stroke: #7e7e7e; stroke-miterlimit: 10; stroke-width: 7px"
                     />
                   </g>
                   <line
@@ -525,72 +335,42 @@
                     y1="42.89"
                     x2="47.13"
                     y2="42.89"
-                    style="
-                      fill: none;
-                      stroke: #7e7e7e;
-                      stroke-miterlimit: 10;
-                      stroke-width: 7px;
-                    "
+                    style="fill: none; stroke: #7e7e7e; stroke-miterlimit: 10; stroke-width: 7px"
                   />
                   <line
                     x1="69.17"
                     y1="42.89"
                     x2="102.43"
                     y2="42.89"
-                    style="
-                      fill: none;
-                      stroke: #b3b3b3;
-                      stroke-miterlimit: 10;
-                      stroke-width: 7px;
-                    "
+                    style="fill: none; stroke: #b3b3b3; stroke-miterlimit: 10; stroke-width: 7px"
                   />
                   <line
                     x1="13.87"
                     y1="71.59"
                     x2="47.13"
                     y2="71.59"
-                    style="
-                      fill: none;
-                      stroke: #7e7e7e;
-                      stroke-miterlimit: 10;
-                      stroke-width: 7px;
-                    "
+                    style="fill: none; stroke: #7e7e7e; stroke-miterlimit: 10; stroke-width: 7px"
                   />
                   <line
                     x1="69.17"
                     y1="71.59"
                     x2="102.43"
                     y2="71.59"
-                    style="
-                      fill: none;
-                      stroke: #b3b3b3;
-                      stroke-miterlimit: 10;
-                      stroke-width: 7px;
-                    "
+                    style="fill: none; stroke: #b3b3b3; stroke-miterlimit: 10; stroke-width: 7px"
                   />
                   <line
                     x1="13.87"
                     y1="100.28"
                     x2="47.13"
                     y2="100.28"
-                    style="
-                      fill: none;
-                      stroke: #7e7e7e;
-                      stroke-miterlimit: 10;
-                      stroke-width: 7px;
-                    "
+                    style="fill: none; stroke: #7e7e7e; stroke-miterlimit: 10; stroke-width: 7px"
                   />
                   <line
                     x1="69.17"
                     y1="100.28"
                     x2="102.43"
                     y2="100.28"
-                    style="
-                      fill: none;
-                      stroke: #b3b3b3;
-                      stroke-miterlimit: 10;
-                      stroke-width: 7px;
-                    "
+                    style="fill: none; stroke: #b3b3b3; stroke-miterlimit: 10; stroke-width: 7px"
                   />
                   <line
                     x1="58.54"
@@ -609,71 +389,319 @@
               </g>
             </svg>
           </button>
-          <div class="revert-clear-btn">
-            <button class="control-btn" id="revertBack" disabled>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                id="Layer_2"
-                data-name="Layer 2"
-                viewBox="0 0 255.49 191.62"
-              >
-                <g id="Layer_1-2" data-name="Layer 1">
-                  <path
-                    fill="#929292"
-                    d="M55.24,47.86h135.86c7.2,0,21.62,5.71,28.08,9.34,48.18,27.09,48.47,97.34.49,124.77-12.54,7.17-45.14,18.23-51.19-1.46-3.09-10.05,3.63-19.46,13.83-20.93,2.47-.36,4.93.1,7.21-.27,29.71-4.86,44.23-38.78,26.21-63.49-4.45-6.09-17.74-15.78-25.39-15.78H55.24c5.59,7.6,15.45,14.02,20.94,21.35,11.85,15.82-6.97,34.89-22.83,22.08-17.04-13.77-32.43-34.96-49.39-49.41-5.78-7.37-4.98-14.63.75-21.72C17.95,35.93,38.33,21.14,52.24,4.81c10.97-10.59,29-2.51,27.71,12.73-.91,10.76-18.71,21.69-24.71,30.32Z"
-                  />
-                </g>
-              </svg>
-            </button>
-            <hr class="vertical-hr" />
-            <button
-              class="control-btn"
-              title="Clear text"
-              id="clearBtn"
-              disabled
+
+          <button class="control-btn" title="Clear text" id="clearBtn" disabled>
+            <svg
+              width="20"
+              height="22"
+              viewBox="0 0 20 22"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <svg
-                width="20"
-                height="22"
-                viewBox="0 0 20 22"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M17.5 4.5L16.8803 14.5251C16.7219 17.0864 16.6428 18.3671 16.0008 19.2879C15.6833 19.7431 15.2747 20.1273 14.8007 20.416C13.8421 21 12.559 21 9.99274 21C7.42312 21 6.1383 21 5.17905 20.4149C4.7048 20.1257 4.296 19.7408 3.97868 19.2848C3.33688 18.3626 3.25945 17.0801 3.10461 14.5152L2.5 4.5"
-                  stroke="#929292"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                />
-                <path
-                  d="M1 4.5H19M14.0557 4.5L13.3731 3.09173C12.9196 2.15626 12.6928 1.68852 12.3017 1.39681C12.215 1.3321 12.1231 1.27454 12.027 1.2247C11.5939 1 11.0741 1 10.0345 1C8.96883 1 8.43598 1 7.99568 1.23412C7.8981 1.28601 7.80498 1.3459 7.71729 1.41317C7.32164 1.7167 7.10063 2.20155 6.65861 3.17126L6.05292 4.5"
-                  stroke="#929292"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                />
-                <path
-                  d="M7.5 15.5L7.5 9.5"
-                  stroke="#929292"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                />
-                <path
-                  d="M12.5 15.5L12.5 9.5"
-                  stroke="#929292"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                />
-              </svg>
-            </button>
-          </div>
+              <path
+                d="M17.5 4.5L16.8803 14.5251C16.7219 17.0864 16.6428 18.3671 16.0008 19.2879C15.6833 19.7431 15.2747 20.1273 14.8007 20.416C13.8421 21 12.559 21 9.99274 21C7.42312 21 6.1383 21 5.17905 20.4149C4.7048 20.1257 4.296 19.7408 3.97868 19.2848C3.33688 18.3626 3.25945 17.0801 3.10461 14.5152L2.5 4.5"
+                stroke="#929292"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+              <path
+                d="M1 4.5H19M14.0557 4.5L13.3731 3.09173C12.9196 2.15626 12.6928 1.68852 12.3017 1.39681C12.215 1.3321 12.1231 1.27454 12.027 1.2247C11.5939 1 11.0741 1 10.0345 1C8.96883 1 8.43598 1 7.99568 1.23412C7.8981 1.28601 7.80498 1.3459 7.71729 1.41317C7.32164 1.7167 7.10063 2.20155 6.65861 3.17126L6.05292 4.5"
+                stroke="#929292"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+              <path
+                d="M7.5 15.5L7.5 9.5"
+                stroke="#929292"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+              <path
+                d="M12.5 15.5L12.5 9.5"
+                stroke="#929292"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
         </div>
       </div>
 
       <!-- Textarea -->
       <div class="textarea-wrapper">
         <div class="text-area" id="inputText"></div>
+      </div>
+      <!-- Bottom controls -->
+      <div class="bottom-controls">
+        <div class="dk-translation-box">
+          <div class="dk-language-select">
+            <div class="dk-language-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                style="margin-right: 8px"
+              >
+                <g clip-path="url(#clip0_2304_5674)">
+                  <path
+                    d="M22.95 9.375C21.75 4.425 17.325 0.75 12 0.75H11.625V9.375H22.95ZM6.37499 2.25C3.74999 3.7875 1.79999 6.3375 1.04999 9.375H6.37499V2.25ZM1.04999 14.625C1.79999 17.6625 3.74999 20.2125 6.37499 21.75V14.625H1.04999ZM11.625 23.25H12C17.325 23.25 21.75 19.575 22.95 14.625H11.625V23.25Z"
+                    fill="#ED4C5C"
+                  />
+                  <path
+                    d="M22.95 9.375H11.625V0.75C9.7125 0.825 7.9125 1.35 6.375 2.25V9.375H1.05C0.8625 10.2 0.75 11.1 0.75 12C0.75 12.9 0.8625 13.8 1.05 14.625H6.375V21.75C7.9125 22.65 9.7125 23.175 11.625 23.25V14.625H22.95C23.1375 13.8 23.25 12.9 23.25 12C23.25 11.1 23.1375 10.2 22.95 9.375Z"
+                    fill="white"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_2304_5674">
+                    <rect width="24" height="24" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </div>
+            <span class="dk-language-text" data-lang="Dansk">Dansk</span>
+            <span class="dk-arrow">
+              <svg
+                width="12"
+                height="7"
+                viewBox="0 0 12 7"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1.49976 1.24991L5.99979 5.74988L10.4998 1.24988"
+                  stroke="#606060"
+                  stroke-width="1.5"
+                  stroke-miterlimit="16"
+                />
+              </svg>
+            </span>
+            <div class="dk-dropdown">
+              <div class="dk-dropdown-item" data-lang="Dansk">
+                <div class="dk-language-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    style="margin-right: 8px"
+                  >
+                    <g clip-path="url(#clip0_2304_5674)">
+                      <path
+                        d="M22.95 9.375C21.75 4.425 17.325 0.75 12 0.75H11.625V9.375H22.95ZM6.37499 2.25C3.74999 3.7875 1.79999 6.3375 1.04999 9.375H6.37499V2.25ZM1.04999 14.625C1.79999 17.6625 3.74999 20.2125 6.37499 21.75V14.625H1.04999ZM11.625 23.25H12C17.325 23.25 21.75 19.575 22.95 14.625H11.625V23.25Z"
+                        fill="#ED4C5C"
+                      />
+                      <path
+                        d="M22.95 9.375H11.625V0.75C9.7125 0.825 7.9125 1.35 6.375 2.25V9.375H1.05C0.8625 10.2 0.75 11.1 0.75 12C0.75 12.9 0.8625 13.8 1.05 14.625H6.375V21.75C7.9125 22.65 9.7125 23.175 11.625 23.25V14.625H22.95C23.1375 13.8 23.25 12.9 23.25 12C23.25 11.1 23.1375 10.2 22.95 9.375Z"
+                        fill="white"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_2304_5674">
+                        <rect width="24" height="24" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </div>
+                Dansk
+              </div>
+              <div class="dk-dropdown-item" data-lang="Engelsk">
+                <div class="dk-language-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    style="margin-right: 8px"
+                  >
+                    <g clip-path="url(#clip0_2304_5877_1)">
+                      <path
+                        d="M18 2.475C16.2375 1.3875 14.2125 0.75 12 0.75V2.475H18Z"
+                        fill="#ED4C5C"
+                      />
+                      <path
+                        d="M12 4.19998H20.1C19.4625 3.56248 18.75 2.96248 18 2.47498H12V4.19998Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M12 5.92495H21.4875C21.075 5.28745 20.625 4.72495 20.1375 4.19995H12V5.92495Z"
+                        fill="#ED4C5C"
+                      />
+                      <path
+                        d="M12 7.65005H22.3875C22.125 7.05005 21.825 6.45005 21.4875 5.92505H12V7.65005Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M12 9.37502H22.95C22.8 8.77502 22.6125 8.21252 22.3875 7.65002H12V9.37502Z"
+                        fill="#ED4C5C"
+                      />
+                      <path
+                        d="M12 11.1375H23.2125C23.175 10.5375 23.0625 9.97498 22.95 9.41248H12V11.1375Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M23.2125 11.1375H12V12H0.75C0.75 12.3 0.75 12.5625 0.7875 12.8625H23.2125C23.25 12.5625 23.25 12.3 23.25 12C23.25 11.7 23.25 11.4 23.2125 11.1375Z"
+                        fill="#ED4C5C"
+                      />
+                      <path
+                        d="M1.05001 14.5875H22.95C23.1 14.025 23.175 13.4625 23.2125 12.8625H0.787506C0.825006 13.425 0.937506 14.025 1.05001 14.5875Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M1.61249 16.3125H22.3875C22.6125 15.75 22.8 15.1875 22.95 14.5875H1.04999C1.19999 15.1875 1.38749 15.75 1.61249 16.3125Z"
+                        fill="#ED4C5C"
+                      />
+                      <path
+                        d="M2.51249 18.0375H21.4875C21.825 17.475 22.125 16.9125 22.3875 16.3125H1.61249C1.87499 16.9125 2.17499 17.475 2.51249 18.0375Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M3.86251 19.7625H20.1375C20.625 19.2375 21.1125 18.6375 21.4875 18.0375H2.51251C2.88751 18.675 3.37501 19.2375 3.86251 19.7625Z"
+                        fill="#ED4C5C"
+                      />
+                      <path
+                        d="M5.96249 21.4875H18.0375C18.825 21 19.5 20.4 20.1375 19.7625H3.86249C4.49999 20.4375 5.21249 21 5.96249 21.4875Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M12 23.25C14.2125 23.25 16.275 22.6125 18.0375 21.4875H5.96249C7.72499 22.6125 9.78749 23.25 12 23.25Z"
+                        fill="#ED4C5C"
+                      />
+                      <path
+                        d="M6 2.475C5.2125 2.9625 4.5 3.5625 3.8625 4.2C3.3375 4.725 2.8875 5.325 2.5125 5.925C2.175 6.4875 1.8375 7.05 1.6125 7.65C1.3875 8.2125 1.2 8.775 1.05 9.375C0.9 9.9375 0.825 10.5 0.7875 11.1C0.75 11.4 0.75 11.7 0.75 12H12V0.75C9.7875 0.75 7.7625 1.3875 6 2.475Z"
+                        fill="#428BC1"
+                      />
+                      <path
+                        d="M9.37499 1.125L9.56249 1.6875H10.125L9.67499 2.0625L9.82499 2.625L9.37499 2.2875L8.92499 2.625L9.07499 2.0625L8.62499 1.6875H9.18749L9.37499 1.125ZM10.875 3.375L11.0625 3.9375H11.625L11.175 4.3125L11.325 4.875L10.875 4.5375L10.425 4.875L10.575 4.3125L10.125 3.9375H10.6875L10.875 3.375ZM7.87499 3.375L8.06249 3.9375H8.62499L8.17499 4.3125L8.32499 4.875L7.87499 4.5375L7.42499 4.875L7.57499 4.3125L7.12499 3.9375H7.68749L7.87499 3.375ZM9.37499 5.625L9.56249 6.1875H10.125L9.67499 6.5625L9.82499 7.125L9.37499 6.7875L8.92499 7.125L9.07499 6.5625L8.62499 6.1875H9.18749L9.37499 5.625ZM6.37499 5.625L6.56249 6.1875H7.12499L6.67499 6.5625L6.82499 7.125L6.37499 6.7875L5.92499 7.125L6.07499 6.5625L5.62499 6.1875H6.18749L6.37499 5.625ZM3.37499 5.625L3.56249 6.1875H4.12499L3.67499 6.5625L3.82499 7.125L3.37499 6.7875L2.92499 7.125L3.07499 6.5625L2.62499 6.1875H3.18749L3.37499 5.625ZM10.875 7.875L11.0625 8.4375H11.625L11.175 8.8125L11.325 9.375L10.875 9.0375L10.425 9.375L10.575 8.8125L10.125 8.4375H10.6875L10.875 7.875ZM7.87499 7.875L8.06249 8.4375H8.62499L8.17499 8.8125L8.32499 9.375L7.87499 9.0375L7.42499 9.375L7.57499 8.8125L7.12499 8.4375H7.68749L7.87499 7.875ZM4.87499 7.875L5.06249 8.4375H5.62499L5.17499 8.8125L5.32499 9.375L4.87499 9.0375L4.42499 9.375L4.57499 8.8125L4.12499 8.4375H4.68749L4.87499 7.875ZM9.37499 10.125L9.56249 10.6875H10.125L9.67499 11.0625L9.82499 11.625L9.37499 11.2875L8.92499 11.625L9.07499 11.0625L8.62499 10.6875H9.18749L9.37499 10.125ZM6.37499 10.125L6.56249 10.6875H7.12499L6.67499 11.0625L6.82499 11.625L6.37499 11.2875L5.92499 11.625L6.07499 11.0625L5.62499 10.6875H6.18749L6.37499 10.125ZM3.37499 10.125L3.56249 10.6875H4.12499L3.67499 11.0625L3.82499 11.625L3.37499 11.2875L2.92499 11.625L3.07499 11.0625L2.62499 10.6875H3.18749L3.37499 10.125ZM4.42499 4.875L4.87499 4.5375L5.32499 4.875L5.13749 4.3125L5.58749 3.9375H5.02499L4.87499 3.375L4.68749 3.9375H4.16249L4.61249 4.275L4.42499 4.875ZM1.42499 9.375L1.87499 9.0375L2.32499 9.375L2.13749 8.8125L2.58749 8.4375H2.06249L1.87499 7.875L1.68749 8.4375H1.31249C1.31249 8.475 1.27499 8.5125 1.27499 8.55L1.57499 8.775L1.42499 9.375Z"
+                        fill="white"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_2304_5877_1">
+                        <rect width="24" height="24" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </div>
+                Engelsk
+              </div>
+
+              <div class="dk-dropdown-item" data-lang="Tysk">
+                <div class="dk-language-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <g clip-path="url(#clip0_de)">
+                      <path
+                        d="M11.752 0C6.42863 0 2.41412 3.36 0.748047 8H23.252C21.5859 3.36 17.0753 0 11.752 0Z"
+                        fill="#3E4347"
+                      />
+                      <path
+                        d="M0.68 8C0.24 9.24 0 10.6 0 12C0 13.4 0.24 14.76 0.68 16H23.32C23.76 14.76 24 13.4 24 12C24 10.6 23.76 9.24 23.32 8H0.68Z"
+                        fill="#ED4C5C"
+                      />
+                      <path
+                        d="M12.0397 24C17.2429 24 21.6518 20.68 23.2803 16H0.719727C2.34821 20.68 6.83651 24 12.0397 24Z"
+                        fill="#FFE62E"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_de">
+                        <rect width="24" height="24" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </div>
+                Tysk
+              </div>
+              <div class="dk-dropdown-item" data-lang="Fransk">
+                <div class="dk-language-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <g clip-path="url(#clip0_fr)">
+                      <path
+                        d="M0.712494 12C0.712494 16.9125 3.86249 21.075 8.21249 22.6125V1.38751C3.86249 2.92501 0.712494 7.08751 0.712494 12Z"
+                        fill="#428BC1"
+                      />
+                      <path
+                        d="M23.2125 12C23.2125 7.08751 20.1 2.92501 15.7125 1.38751V22.6125C20.1 21.075 23.2125 16.9125 23.2125 12Z"
+                        fill="#ED4C5C"
+                      />
+                      <path
+                        d="M8.21249 22.6125C9.37499 23.025 10.65 23.25 11.9625 23.25C13.275 23.25 14.55 23.025 15.7125 22.6125V1.3875C14.55 0.975 13.3125 0.75 11.9625 0.75C10.6125 0.75 9.37499 0.975 8.21249 1.3875V22.6125Z"
+                        fill="white"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_fr">
+                        <rect width="24" height="24" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </div>
+                Fransk
+              </div>
+              <div class="dk-dropdown-item" data-lang="Spansk">
+                <div class="dk-language-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <g clip-path="url(#clip0_es)">
+                      <path
+                        d="M0.75 12C0.75 14.2125 1.3875 16.275 2.475 18H21.4875C22.575 16.275 23.2125 14.2125 23.2125 12C23.2125 9.7875 22.575 7.725 21.4875 6H2.475C1.3875 7.725 0.75 9.7875 0.75 12Z"
+                        fill="#FFCE31"
+                      />
+                      <path
+                        d="M21.525 6C19.5375 2.85 16.0125 0.75 12 0.75C7.98751 0.75 4.46251 2.85 2.47501 6H21.525ZM2.47501 18C4.46251 21.15 7.98751 23.25 12 23.25C16.0125 23.25 19.5375 21.15 21.525 18H2.47501Z"
+                        fill="#ED4C5C"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_es">
+                        <rect width="24" height="24" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </div>
+                Spansk
+              </div>
+              <!-- Custom language input -->
+              <div class="dk-custom-language">
+                <input type="text" placeholder="Skriv sprog" class="dk-custom-input" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <button id="genBtn" class="write-applicationDiv">
+          <span>Ret teksten </span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+            <g fill="currentColor">
+              <path
+                fill-rule="evenodd"
+                d="M21.264 2.293a1 1 0 0 0-1.415 0l-.872.872a3.001 3.001 0 0 0-3.415.587L4.955 14.358l5.657 5.657L21.22 9.41a3 3 0 0 0 .586-3.415l.873-.873a1 1 0 0 0 0-1.414zm-4.268 8.51l-6.384 6.384l-2.828-2.829l6.383-6.383zm1.818-1.818l.99-.99a1 1 0 0 0 0-1.415l-1.413-1.414a1 1 0 0 0-1.415 0l-.99.99z"
+                clip-rule="evenodd"
+              />
+              <path d="m2 22.95l2.122-7.778l5.656 5.657z" />
+            </g>
+          </svg>
+        </button>
       </div>
     </div>
 
@@ -884,13 +912,26 @@
       </div>
       <div class="improv-inner">
         <div class="correction-content">
+          <!-- Speech bubble comes first -->
+          <div class="hamdan-speech-bubble">Jeg er klar!</div>
           <div class="hamdan-robot-container">
-            <!-- Speech bubble comes first -->
-            <div class="hamdan-speech-bubble">Jeg er klar!</div>
             <!-- Container for your animation -->
             <div id="gif"></div>
           </div>
-
+          <div class="legend-section" id="legend-section">
+            <div class="legend-item">
+              <div class="legend-dot change"></div>
+              <span class="legend-text">Rettet eller tilføjet</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot add"></div>
+              <span class="legend-text">Komma og punktum</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot remove"></div>
+              <span class="legend-text">Slettet</span>
+            </div>
+          </div>
           <div class="correction-message" style="display: none">
             <span>Jeg er klar!</span>
           </div>
@@ -898,18 +939,16 @@
       </div>
       <div class="correction-inner">
         <div class="demo-inner">
+          <!-- Speech bubble comes first -->
+          <div class="hamdan-speech-bubble">Jeg er klar!</div>
           <div class="hamdan-robot-container">
-            <!-- Speech bubble comes first -->
-            <div class="hamdan-speech-bubble">Jeg er klar!</div>
             <!-- Container for your animation -->
             <div id="gif"></div>
           </div>
 
           <div class="correction-message2">
             <div class="gradient-loader-smart" style="display: none"></div>
-            <span class="demo-text-correction-inner" style="display: none"
-              >Jeg er klar!</span
-            >
+            <span class="demo-text-correction-inner" style="display: none">Jeg er klar!</span>
           </div>
         </div>
         <div class="correction-inner-main" style="display: none">
@@ -978,18 +1017,11 @@
                 </g>
                 <defs>
                   <clipPath id="clip0_2009_1443">
-                    <rect
-                      width="10"
-                      height="10"
-                      fill="white"
-                      transform="translate(0 0.5)"
-                    />
+                    <rect width="10" height="10" fill="white" transform="translate(0 0.5)" />
                   </clipPath>
                 </defs>
               </svg>
-              <span class="warning-msg"
-                >The language is to informal for a business email</span
-              >
+              <span class="warning-msg">The language is to informal for a business email</span>
             </div>
           </div>
 
@@ -1029,13 +1061,7 @@
                 d="M22.6661 10.6665H23.4161C23.4161 10.2523 23.0803 9.9165 22.6661 9.9165V10.6665ZM9.33203 10.6665V9.9165C8.91782 9.9165 8.58203 10.2523 8.58203 10.6665H9.33203ZM15.2494 10.6665V23.9998H16.7494V10.6665H15.2494ZM18.6654 23.2498H13.332V24.7498H18.6654V23.2498ZM23.4161 13.3332V10.6665H21.9161V13.3332H23.4161ZM10.082 13.3332V10.6665H8.58203V13.3332H10.082ZM9.33203 11.4165H22.6661V9.9165H9.33203V11.4165Z"
                 fill="#6262F5"
               />
-              <circle
-                cx="15.9993"
-                cy="15.9998"
-                r="13.3333"
-                stroke="#6262F5"
-                stroke-width="1.5"
-              />
+              <circle cx="15.9993" cy="15.9998" r="13.3333" stroke="#6262F5" stroke-width="1.5" />
             </svg>
           </div>
           <div class="style-content">
@@ -1060,20 +1086,12 @@
                 d="M22.6661 10.6665H23.4161C23.4161 10.2523 23.0803 9.9165 22.6661 9.9165V10.6665ZM9.33203 10.6665V9.9165C8.91782 9.9165 8.58203 10.2523 8.58203 10.6665H9.33203ZM15.2494 10.6665V23.9998H16.7494V10.6665H15.2494ZM18.6654 23.2498H13.332V24.7498H18.6654V23.2498ZM23.4161 13.3332V10.6665H21.9161V13.3332H23.4161ZM10.082 13.3332V10.6665H8.58203V13.3332H10.082ZM9.33203 11.4165H22.6661V9.9165H9.33203V11.4165Z"
                 fill="#2DB62D"
               />
-              <circle
-                cx="15.9993"
-                cy="15.9998"
-                r="13.3333"
-                stroke="#2DB62D"
-                stroke-width="1.5"
-              />
+              <circle cx="15.9993" cy="15.9998" r="13.3333" stroke="#2DB62D" stroke-width="1.5" />
             </svg>
           </div>
           <div class="style-content">
             <div class="style-title">Punktopstilling</div>
-            <div class="style-description">
-              Din tekst bliver lavet om til en overskuelig liste.
-            </div>
+            <div class="style-description">Din tekst bliver lavet om til en overskuelig liste.</div>
           </div>
         </div>
 
@@ -1091,20 +1109,12 @@
                 d="M22.6661 10.6665H23.4161C23.4161 10.2523 23.0803 9.9165 22.6661 9.9165V10.6665ZM9.33203 10.6665V9.9165C8.91782 9.9165 8.58203 10.2523 8.58203 10.6665H9.33203ZM15.2494 10.6665V23.9998H16.7494V10.6665H15.2494ZM18.6654 23.2498H13.332V24.7498H18.6654V23.2498ZM23.4161 13.3332V10.6665H21.9161V13.3332H23.4161ZM10.082 13.3332V10.6665H8.58203V13.3332H10.082ZM9.33203 11.4165H22.6661V9.9165H9.33203V11.4165Z"
                 fill="#A122A1"
               />
-              <circle
-                cx="15.9993"
-                cy="15.9998"
-                r="13.3333"
-                stroke="#A122A1"
-                stroke-width="1.5"
-              />
+              <circle cx="15.9993" cy="15.9998" r="13.3333" stroke="#A122A1" stroke-width="1.5" />
             </svg>
           </div>
           <div class="style-content">
             <div class="style-title">Kortere tekst</div>
-            <div class="style-description">
-              Din tekst bliver forkortet men bevarer meningen.
-            </div>
+            <div class="style-description">Din tekst bliver forkortet men bevarer meningen.</div>
           </div>
         </div>
 
@@ -1122,20 +1132,12 @@
                 d="M22.6661 10.6665H23.4161C23.4161 10.2523 23.0803 9.9165 22.6661 9.9165V10.6665ZM9.33203 10.6665V9.9165C8.91782 9.9165 8.58203 10.2523 8.58203 10.6665H9.33203ZM15.2494 10.6665V23.9998H16.7494V10.6665H15.2494ZM18.6654 23.2498H13.332V24.7498H18.6654V23.2498ZM23.4161 13.3332V10.6665H21.9161V13.3332H23.4161ZM10.082 13.3332V10.6665H8.58203V13.3332H10.082ZM9.33203 11.4165H22.6661V9.9165H9.33203V11.4165Z"
                 fill="#F9AB1B"
               />
-              <circle
-                cx="15.9993"
-                cy="15.9998"
-                r="13.3333"
-                stroke="#F9AB1B"
-                stroke-width="1.5"
-              />
+              <circle cx="15.9993" cy="15.9998" r="13.3333" stroke="#F9AB1B" stroke-width="1.5" />
             </svg>
           </div>
           <div class="style-content">
             <div class="style-title">Længere tekst</div>
-            <div class="style-description">
-              Din tekst bliver uddybet med flere detaljer.
-            </div>
+            <div class="style-description">Din tekst bliver uddybet med flere detaljer.</div>
           </div>
         </div>
       </div>
@@ -1148,12 +1150,7 @@
       </div>
       <div class="nav-icons-div">
         <button class="arrow-left nav-btn next-btn" aria-label="Next">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 16 16"
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 16 16">
             <path fill="#ffffff" d="M12 13h-2L5 8l5-5h2L7 8z" />
           </svg>
         </button>
@@ -1194,8 +1191,7 @@
       </div>
       <div class="hClose">
         <div class="left-history-header">
-          <!-- svg removed -->
-          <!-- <svg
+          <svg
             xmlns="http://www.w3.org/2000/svg"
             version="1.0"
             width="20"
@@ -1203,10 +1199,7 @@
             viewBox="0 0 512 512"
             preserveAspectRatio="xMidYMid meet"
           >
-            <g
-              transform="translate(0,512) scale(0.1,-0.1)"
-              style="fill: #626262; stroke: none"
-            >
+            <g transform="translate(0,512) scale(0.1,-0.1)" style="fill: #626262; stroke: none">
               <path
                 d="M2395 4794 c-325 -34 -564 -102 -830 -234 -340 -168 -628 -415 -838 -716 -28 -41 -52 -72 -53 -71 -2 2 -26 113 -55 247 -28 135 -57 257 -65 272 -45 87 -175 109 -249 41 -30 -29 -55 -80 -55 -115 0 -55 207 -994 225 -1022 23 -34 70 -56 122 -56 59 0 984 190 1018 209 16 9 40 33 53 52 20 29 23 43 20 98 -4 59 -7 66 -45 102 -66 61 -76 61 -427 -14 -171 -37 -312 -65 -314 -62 -7 7 67 122 141 217 303 393 761 657 1267 729 128 18 404 16 534 -5 724 -117 1306 -606 1535 -1292 157 -468 129 -970 -79 -1420 -148 -322 -430 -637 -733 -823 -224 -137 -473 -226 -738 -265 -134 -20 -400 -20 -536 -1 -555 79 -1039 390 -1353 870 -178 273 -300 675 -300 991 0 79 -19 125 -68 162 -29 22 -46 27 -92 27 -46 0 -63 -5 -92 -27 -62 -47 -72 -83 -64 -227 39 -731 407 -1379 1009 -1772 307 -201 653 -322 1026 -359 552 -54 1146 123 1594 477 93 73 287 267 360 360 354 448 531 1042 477 1594 -60 607 -344 1142 -815 1535 -160 133 -412 278 -625 359 -119 46 -323 99 -460 120 -102 15 -415 27 -495 19z"
               />
@@ -1214,12 +1207,12 @@
                 d="M2492 3664 c-18 -10 -45 -33 -60 -52 l-27 -35 -3 -516 c-2 -332 1 -528 7 -551 8 -27 103 -127 403 -427 425 -424 415 -415 505 -398 49 9 109 69 118 118 17 90 22 83 -361 467 l-354 355 0 464 c0 514 1 506 -67 558 -43 33 -114 41 -161 17z"
               />
             </g>
-          </svg> -->
+          </svg>
           <p id="popup-heading">Historik</p>
         </div>
 
         <svg
-          class="grammar-history-close"
+          class="close"
           xmlns="http://www.w3.org/2000/svg"
           width="22"
           height="22"
@@ -1258,12 +1251,7 @@
             stroke-width="1.5"
             stroke-linecap="round"
           />
-          <path
-            d="M7.5 15.5L7.5 9.5"
-            stroke="#E35071"
-            stroke-width="1.5"
-            stroke-linecap="round"
-          />
+          <path d="M7.5 15.5L7.5 9.5" stroke="#E35071" stroke-width="1.5" stroke-linecap="round" />
           <path
             d="M12.5 15.5L12.5 9.5"
             stroke="#E35071"
@@ -1279,9 +1267,7 @@
     <div class="dk-hamdan-modal-header">
       <div>
         <h3 class="dk-hamdan-modal-title">Omskriv din tekst</h3>
-        <p class="dk-hamdan-modal-subtitle">
-          Vælg hvordan teksten skal forbedres
-        </p>
+        <p class="dk-hamdan-modal-subtitle">Vælg hvordan teksten skal forbedres</p>
       </div>
       <button class="dk-hamdan-close-button">
         <svg
@@ -1333,9 +1319,7 @@
           </svg>
         </div>
         <span class="dk-hamdan-option-title">Formelt sprog</span>
-        <span class="dk-hamdan-option-description"
-          >Til arbejde og professionelle emails</span
-        >
+        <span class="dk-hamdan-option-description">Til arbejde og professionelle emails</span>
       </button>
 
       <button class="dk-hamdan-option-button" id="simplify">
@@ -1361,9 +1345,7 @@
           </svg>
         </div>
         <span class="dk-hamdan-option-title">Hverdagssprog</span>
-        <span class="dk-hamdan-option-description"
-          >Sådan som du normalt snakker</span
-        >
+        <span class="dk-hamdan-option-description">Sådan som du normalt snakker</span>
       </button>
 
       <button class="dk-hamdan-option-button" id="elaborate">
@@ -1392,9 +1374,7 @@
           </svg>
         </div>
         <span class="dk-hamdan-option-title">Let at forstå</span>
-        <span class="dk-hamdan-option-description"
-          >Korte sætninger med enkle ord</span
-        >
+        <span class="dk-hamdan-option-description">Korte sætninger med enkle ord</span>
       </button>
 
       <button class="dk-hamdan-option-button" id="concise">
@@ -1440,21 +1420,14 @@
           </svg>
         </div>
         <span class="dk-hamdan-option-title">Mere humor</span>
-        <span class="dk-hamdan-option-description"
-          >Gør teksten sjovere og mindre seriøs</span
-        >
+        <span class="dk-hamdan-option-description">Gør teksten sjovere og mindre seriøs</span>
       </button>
     </div>
 
     <div class="dk-hamdan-custom-input-section">
       <div class="dk-hamdan-custom-input-header">
         <div class="dk-hamdan-custom-input-label">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="22px"
-            height="22px"
-            viewBox="0 0 16 16"
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" viewBox="0 0 16 16">
             <path
               fill="rgb(232, 107, 134)"
               d="M13.5 1a.5.5 0 0 1 .5.5V2h.5a.5.5 0 0 1 0 1H14v.5a.5.5 0 0 1-1 0V3h-.5a.5.5 0 0 1 0-1h.5v-.5a.5.5 0 0 1 .5-.5m-10 2a.5.5 0 0 1 .5.5V4h.5a.5.5 0 1 1 0 1H4v.5a.5.5 0 1 1-1 0V5h-.5a.5.5 0 0 1 0-1H3v-.5a.5.5 0 0 1 .5-.5m9 9a.5.5 0 0 0 0-1H12v-.5a.5.5 0 0 0-1 0v.5h-.5a.5.5 0 0 0 0 1h.5v.5a.5.5 0 0 0 1 0V12zM8.73 4.563a1.914 1.914 0 0 1 2.707 2.708l-7.17 7.17a1.914 1.914 0 0 1-2.707-2.708zm-.48 1.894L2.267 12.44a.914.914 0 0 0 1.293 1.293L9.543 7.75zm2 .586l.48-.48a.914.914 0 1 0-1.293-1.292l-.48.48z"
@@ -1497,12 +1470,7 @@
         />
         <span class="clear-icon" id="submint_rewrite">
           <span>Anvend</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="1em"
-            height="1em"
-            viewBox="0 0 24 24"
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
             <g fill="none" fill-rule="evenodd">
               <path
                 d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"
@@ -1558,12 +1526,7 @@
           <button
             class="option-btn"
             id="readBtn"
-            style="
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              gap: 5px;
-            "
+            style="display: flex; align-items: center; justify-content: center; gap: 5px"
           >
             <div class="loader" style="display: none">
               <div class="dotted-loader">
@@ -1703,26 +1666,5 @@
         </button>
       </div>
     </div>
-  </div>
-  <!-- Bottom controls -->
-  <div class="bottom-controls">
-    <button id="genBtn" class="write-applicationDiv">
-      <span>Ret teksten </span>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="18"
-        height="18"
-        viewBox="0 0 24 24"
-      >
-        <g fill="currentColor">
-          <path
-            fill-rule="evenodd"
-            d="M21.264 2.293a1 1 0 0 0-1.415 0l-.872.872a3.001 3.001 0 0 0-3.415.587L4.955 14.358l5.657 5.657L21.22 9.41a3 3 0 0 0 .586-3.415l.873-.873a1 1 0 0 0 0-1.414zm-4.268 8.51l-6.384 6.384l-2.828-2.829l6.383-6.383zm1.818-1.818l.99-.99a1 1 0 0 0 0-1.415l-1.413-1.414a1 1 0 0 0-1.415 0l-.99.99z"
-            clip-rule="evenodd"
-          />
-          <path d="m2 22.95l2.122-7.778l5.656 5.657z" />
-        </g>
-      </svg>
-    </button>
   </div>
 </div>
