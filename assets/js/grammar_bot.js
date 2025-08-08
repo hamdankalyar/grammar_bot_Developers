@@ -84,7 +84,7 @@ function lottieLoadAnimation() {
     renderer: 'svg',
     loop: true,
     autoplay: true,
-    path: 'https://developskriv.se/wp-content/uploads/2025/06/robot-wave.json'
+    path: 'https://stemme-skrivsikkert.dk/wp-content/uploads/2025/06/robot-wave.json'
   });
 }
 lottieLoadAnimation();
@@ -95,7 +95,7 @@ function lottieLoadAnimationByAddress(div) {
     renderer: 'svg',
     loop: true,
     autoplay: true,
-    path: 'https://developskriv.se/wp-content/uploads/2025/06/robot-wave.json'
+    path: 'https://stemme-skrivsikkert.dk/wp-content/uploads/2025/06/robot-wave.json'
   });
 }
 
@@ -855,7 +855,9 @@ function htmlToTextWithSpacing(html) {
     }
 
     console.log(
-      `Processing <${el.tagName.toLowerCase()}>: ${isHeading ? 'heading-like' : 'block'} – spacing "${JSON.stringify(spacing)}"`
+      `Processing <${el.tagName.toLowerCase()}>: ${
+        isHeading ? 'heading-like' : 'block'
+      } – spacing "${JSON.stringify(spacing)}"`
     );
   });
 
@@ -3628,6 +3630,76 @@ document.addEventListener('DOMContentLoaded', function () {
     dkHamdanCloseModal,
     clearHighlights, // ADD THIS
     manuallyCloseMicButton // ADD THIS
+  });
+});
+
+// //new tutorial button functionality
+// const showTutorialBtn = document.getElementById("show-tutorial-btn");
+// const modal = document.getElementById("tutorial-popup");
+// const closeBtn = document.querySelector(".tutorial-close-btn");
+// const iframe = document.getElementById("tutorial-video");
+
+// const originalSrc = iframe.src;
+
+// showTutorialBtn.addEventListener("click", () => {
+//   modal.hidden = false;
+//   modal.style.display = "block";
+//   iframe.src = originalSrc;
+// });
+
+// function closeModal() {
+//   modal.style.display = "none";
+//   modal.hidden = true;
+//   iframe.src = "";
+// }
+
+// closeBtn.addEventListener("click", closeModal);
+
+// window.addEventListener("click", (event) => {
+//   if (event.target === modal) {
+//     closeModal();
+//   }
+// });
+// Tutorial Popup Functionality
+document.addEventListener('DOMContentLoaded', function () {
+  // Get DOM elements
+  const showTutorialBtn = document.getElementById('show-tutorial-btn');
+  const modal = document.getElementById('tutorial-popup');
+  const closeBtn = document.querySelector('.close-btn');
+  const iframe = document.getElementById('tutorial-video');
+
+  // Store the original iframe source
+  const originalSrc = iframe.src;
+
+  // Show tutorial when button is clicked
+  showTutorialBtn.addEventListener('click', () => {
+    modal.hidden = false;
+    modal.style.display = 'block';
+    iframe.src = originalSrc; // Reset iframe src to start video
+  });
+
+  // Function to close the modal and stop the video
+  function closeModal() {
+    modal.style.display = 'none';
+    modal.hidden = true;
+    iframe.src = ''; // Clear src to stop video playback
+  }
+
+  // Close modal when close button is clicked
+  closeBtn.addEventListener('click', closeModal);
+
+  // Close modal when clicking outside of modal content
+  window.addEventListener('click', event => {
+    if (event.target === modal) {
+      closeModal();
+    }
+  });
+
+  // Add ESC key support to close the modal
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && modal.style.display === 'block') {
+      closeModal();
+    }
   });
 });
 

@@ -5,7 +5,7 @@ let isOpeningPopup = false;
 let originalZIndex;
 
 // DOM selectors
-const sidebarSelector = '.elementor-element-06aba58';
+const sidebarSelector = '.elementor-element-512a787';
 const popupSelector = '#savedResponsesPopup';
 const popupContentSelector = '.popup-content';
 
@@ -605,17 +605,11 @@ function handleDocumentClick(event) {
 
 // Initialize history functionality
 function initializeHistory() {
+  console.log('DeleteAllHistory element:', document.getElementById('deleteAllHistory'));
+
   // Add CSS to ensure proper textarea behavior
   const style = document.createElement('style');
   style.textContent = `
-        .saved-response {
-            margin-bottom: 10px;
-            padding: 13px;
-            border: 1px solid #E6E6E6;
-            border-radius: 5px;
-            background-color: #FFFFFF;
-        }
-
         .textarea-container {
             width: 100%;
             margin-bottom: 10px;
@@ -657,7 +651,7 @@ function initializeHistory() {
   });
 
   // Event listener for close button
-  const closeBtn = document.querySelector('.close');
+  const closeBtn = document.querySelector('.grammar-history-close');
   if (closeBtn) {
     closeBtn.addEventListener('click', closePopup);
   }
@@ -665,36 +659,67 @@ function initializeHistory() {
   // Event listener for document clicks (outside popup)
   document.addEventListener('click', handleDocumentClick);
 
-  // Event listener for delete all history button
-  document.addEventListener('DOMContentLoaded', function () {
-    const clearHistoryButton = document.getElementById('deleteAllHistory');
+  //   // Event listener for delete all history button
+  //   document.addEventListener("DOMContentLoaded", function () {
+  //     const clearHistoryButton = document.getElementById('deleteAllHistory');
+  //     if (clearHistoryButton) {
+  //       clearHistoryButton.addEventListener("click", function () {
+  //         console.log("Delete all history button was clicked!");
+  //         historyLoader(true);
+  //         const savedResponsesList =
+  //           document.getElementById("savedResponsesList");
 
-    if (clearHistoryButton) {
-      clearHistoryButton.addEventListener('click', function () {
-        historyLoader(true);
-        const savedResponsesList = document.getElementById('savedResponsesList');
+  //         fetch(SB_ajax_object.ajax_url, {
+  //           method: "POST",
+  //           headers: {
+  //             "Content-Type": "application/x-www-form-urlencoded",
+  //           },
+  //           body:
+  //             "action=hgf_korrektur_delete_all_user_responses&nonce=" +
+  //             HGF_ajax_object.nonce,
+  //         })
+  //           .then((response) => response.json())
+  //           .then((data) => {
+  //             if (data.success) {
+  //               // console.log('All responses deleted successfully');
+  //               if (
+  //                 document.getElementById("savedResponsesPopup").style.display ===
+  //                 "flex"
+  //               ) {
+  //                 displaySavedResponses(); // Refresh the list
+  //               }
+  //             } else {
+  //               console.error("Failed to delete responses:", data.data);
+  //             }
+  //           })
+  //           .catch((error) => console.error("Error:", error));
+  //       });
+  //     }
+  //   });
+  document.addEventListener('click', function (e) {
+    const deleteBtn = e.target.closest('#deleteAllHistory');
+    if (!deleteBtn) return;
 
-        fetch(SB_ajax_object.ajax_url, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          },
-          body: 'action=hgf_korrektur_delete_all_user_responses&nonce=' + HGF_ajax_object.nonce
-        })
-          .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-              // console.log('All responses deleted successfully');
-              if (document.getElementById('savedResponsesPopup').style.display === 'flex') {
-                displaySavedResponses(); // Refresh the list
-              }
-            } else {
-              console.error('Failed to delete responses:', data.data);
-            }
-          })
-          .catch(error => console.error('Error:', error));
-      });
-    }
+    console.log('Delete All History clicked'); // DEBUG
+    historyLoader(true);
+
+    fetch(SB_ajax_object.ajax_url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: 'action=hgf_korrektur_delete_all_user_responses&nonce=' + HGF_ajax_object.nonce
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          displaySavedResponses();
+        } else {
+          console.error('Failed to delete responses:', data.data);
+        }
+      })
+      .catch(err => console.error('Error:', err))
+      .finally(() => historyLoader(false));
   });
 
   // Add resize handler for textareas
