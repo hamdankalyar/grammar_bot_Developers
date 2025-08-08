@@ -27,13 +27,12 @@
 
 /* -------------------------- history show button ---------------------------- */
 
-#showSavedResponsesBtn {
-    /* margin-top: 20px; */
+/* #showSavedResponsesBtn {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 7px;
-}
+} */
 
 /* -------------------------------- lang legend div ---------------------------- */
 .lang-legend-div {
@@ -1600,18 +1599,6 @@
     justify-content: center;
 }
 
-.popup-content {
-    background-color: #F9F9F9;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 60%;
-    height: 80%;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-}
 
 .hClose {
     flex-shrink: 0;
@@ -1621,142 +1608,8 @@
     margin-bottom: 20px;
 }
 
-#savedResponsesList {
-    flex-grow: 1;
-    overflow-y: auto;
-    margin: 0 -10px;
-    /* Adjust as needed */
-    padding: 0 10px;
-    padding-right: 4px;
-    /* Adjust as needed */
-}
-
-.delete-all-history {
-    flex-shrink: 0;
-    margin-top: 20px;
-}
 
 /* Rest of your existing CSS remains the same */
-.close {
-    cursor: pointer;
-    margin-right: -12px;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.saved-response {
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid #E6E6E6;
-    border-radius: 8px;
-    color: black;
-    border-color: #E6E6E6;
-    background-color: #FFFFFF;
-    padding: 13px !important;
-}
-
-.copy-button-container {
-    display: flex;
-    margin-left: 5px;
-    justify-content: flex-end;
-}
-
-.left-history-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-}
-
-#popup-heading {
-    margin: 0;
-    padding: 0;
-    font-size: 16px;
-    font-weight: 400;
-    color: #626262;
-    margin-top: 1px;
-}
-
-.copy-btn1 {
-    margin-bottom: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.saved-response textarea {
-    width: 100%;
-    overflow: hidden;
-    resize: none;
-    border: none;
-    background: transparent;
-    font-family: inherit;
-    font-size: inherit;
-    line-height: inherit;
-    padding: 0;
-    margin: 0;
-}
-
-textarea.no-min-height {
-    min-height: 0;
-}
-
-.button-container {
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    gap: 1px;
-    margin-right: -4px;
-}
-
-.delete-btns {
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.button-container.loading::after {
-    content: "";
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    border: 2px solid #ccc;
-    border-top-color: #000;
-    border-radius: 50%;
-    animation: spin 0.6s linear infinite;
-    margin-left: 8px;
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-
-.del-history-text {
-    color: #E35071;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.delete-all-history {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-}
 
 .loader2 {
     position: absolute;
@@ -1842,16 +1695,6 @@ textarea.no-min-height {
     }
 }
 
-.copy-btn1:hover,
-.delete-btns:hover {
-    background: #e0e0e0;
-    border-radius: 4px;
-}
-
-.copy-btn1,
-.delete-btns {
-    padding: 3px !important;
-}
 
 /* Custom scrollbar styles for Webkit browsers (Chrome, Safari, Edge) */
 #savedResponsesList::-webkit-scrollbar {
@@ -1896,11 +1739,7 @@ textarea.no-min-height {
     /* margin: 0 !important; */
 }
 
-.markdown-body {
-    background-color: #fff !important;
-    color: #414141 !important;
-    font-size: 16px !important;
-}
+
 
 .markdown-body table {
     width: 100% !important;
