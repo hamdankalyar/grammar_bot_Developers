@@ -1,15 +1,6 @@
-Here is your updated **Developer Quick Guide**, revised to:
-
-* Eliminate confusion about forks vs collaboration
-* Match standard GitHub team workflows
-* Encourage Pull Request-based collaboration
-* Align with protected `master` branch setup
-
----
-
 # 👨‍💻 Developer Quick Guide
 
-## 🚨 **IMPORTANT RULE**
+## 🚨 IMPORTANT RULE
 
 **❌ NEVER work directly on the `master` branch!**
 **✅ Always create a new branch for your feature or fix.**
@@ -18,7 +9,7 @@ Here is your updated **Developer Quick Guide**, revised to:
 
 ## 📦 Setup (First Time Only)
 
-1. **Clone the main repository**:
+1. **Clone the main repository:**
 
    ```bash
    git clone https://github.com/ORIGINAL_OWNER/REPO_NAME.git
@@ -40,7 +31,7 @@ Here is your updated **Developer Quick Guide**, revised to:
 
 ---
 
-## 🔄 Daily Workflow
+## 🔀 Daily Workflow
 
 ### 1. Sync with Master
 
@@ -115,7 +106,7 @@ git push origin module/feature/your-feature-name
 
 ---
 
-## 🧰 Useful Git Commands
+## 🧠 Useful Git Commands
 
 ```bash
 # View branches
@@ -142,7 +133,7 @@ git reset --hard
 
 ---
 
-## 🆘 Need Help?
+## 🦐 Need Help?
 
 * Check existing issues
 * Open a new issue with clear details
@@ -150,10 +141,95 @@ git reset --hard
 
 ---
 
-### ✅ Reminder:
+## 🔐 Reminder
 
 **🔒 Master branch is protected — you must use feature branches + pull requests.**
 
 ---
 
-Would you like me to generate this as a downloadable `.md` file (Markdown), or paste it into your GitHub repo's `CONTRIBUTING.md` or `README.md`?
+# 🔄 Syncing with Upstream (For Forked Developers)
+
+If you've forked this repo and are working in your own feature branch, follow these steps to get the latest **Prettier**, **.vscode settings**, and other shared updates without losing your work.
+
+---
+
+## ✅ One-Time Setup
+
+1. **Add the original repo as `upstream`:**
+
+   ```bash
+   git remote add upstream https://github.com/ORIGINAL_OWNER/REPO_NAME.git
+   ```
+
+2. **Verify remotes:**
+
+   ```bash
+   git remote -v
+   ```
+
+   You should see both `origin` (your fork) and `upstream` (the original).
+
+---
+
+## 🔁 Keep Your Fork and Branch Updated
+
+1. **Switch to your local `master`:**
+
+   ```bash
+   git checkout master
+   ```
+
+2. **Fetch latest changes from upstream:**
+
+   ```bash
+   git fetch upstream
+   ```
+
+3. **Merge upstream `master` into your local `master`:**
+
+   ```bash
+   git merge upstream/master
+   ```
+
+4. **Push changes to your fork’s `master`:**
+
+   ```bash
+   git push origin master
+   ```
+
+5. **Switch back to your feature branch:**
+
+   ```bash
+   git checkout feature/your-feature-branch
+   ```
+
+6. **Merge updated `master` into your branch:**
+
+   ```bash
+   git merge master
+   ```
+
+   > If conflicts occur, Git will notify you. Manually resolve them, then commit.
+
+---
+
+## 🧹 Format Your Code (Prettier)
+
+After syncing, run this to auto-format your code:
+
+```bash
+npm install
+npm run format
+```
+
+Or simply **save your files in VS Code**, and formatting will happen automatically based on the included `.vscode/settings.json`.
+
+---
+
+## 💡 Tip
+
+You can rebase instead of merging for a cleaner commit history:
+
+```bash
+git rebase master
+```
