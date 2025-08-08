@@ -89,7 +89,7 @@ function lottieLoadAnimation() {
     renderer: 'svg',
     loop: true,
     autoplay: true,
-    path: 'https://developskriv2.se/wp-content/uploads/2025/06/robot-wave.json'
+    path: 'https://stemme-skrivsikkert.dk/wp-content/uploads/2025/06/robot-wave.json'
   });
 }
 
@@ -104,12 +104,11 @@ function lottieLoadAnimationByAddress(div) {
     renderer: 'svg',
     loop: true,
     autoplay: true,
-    path: 'https://developskriv2.se/wp-content/uploads/2025/06/robot-wave.json'
+    path: 'https://stemme-skrivsikkert.dk/wp-content/uploads/2025/06/robot-wave.json'
   });
 }
 
 let activeMember = true;
-
 function checkUserMembership() {
   return fetch(
     HGF_ajax_object.ajax_url + '?action=login_check_user_membership&nonce=' + HGF_ajax_object.nonce
