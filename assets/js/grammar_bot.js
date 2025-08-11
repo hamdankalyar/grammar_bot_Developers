@@ -447,15 +447,11 @@ function actionOnToggle(toggleState) {
     if (toggleState) {
       mainTextAreaToggle.style.flexBasis = '74%';
       correctionSidebarToggle.style.flexBasis = '25%';
-      correctionSidebarToggle.style.maxWidth = '25%';
-      correctionSidebarToggle.style.minWidth = '25%';
       correctionSidebarToggle.style.display = 'flex';
       correctionSidebarToggle.classList.remove('collapsed');
     } else {
-      mainTextAreaToggle.style.flexBasis = '92%';
-      correctionSidebarToggle.style.flexBasis = '8%';
-      correctionSidebarToggle.style.maxWidth = '64px';
-      correctionSidebarToggle.style.minWidth = '64px';
+      mainTextAreaToggle.style.flexBasis = '95%';
+      correctionSidebarToggle.style.flexBasis = '4%';
       correctionSidebarToggle.style.display = 'flex';
       correctionSidebarToggle.classList.add('collapsed');
     }
@@ -988,7 +984,7 @@ document.querySelector('#genBtn').addEventListener('click', async () => {
   noOfChanges = 0;
   // NEW:
   correctionSidebarLoader.showReadyState();
-  document.querySelector('.correction-options').style.display = 'flex';
+  // document.querySelector('.correction-options').style.display = 'flex';
   isUndo = false;
   isSmartCalled = false;
   isExplanations = false;
@@ -1775,6 +1771,7 @@ function formatCallingWithLoader(language, userInputText, correctedText) {
         lastCorrectedText = formattedResponse;
         onResponseGenerated(removeHamDanTags(formattedResponse));
         displayResponse(formattedResponse);
+        document.querySelector('.correction-options').style.display = 'flex';
         const dropDownValue = document.querySelector('.hk-dropdown-text').textContent;
         if (dropDownValue === 'Teksthjælp') {
           console.log('in formatting call analyzeTranslatedText');
@@ -1819,6 +1816,7 @@ function formatCallingParallelWithLoader(language, formattingParts, fallbackDiff
       lastCorrectedText = combinedResult;
       // console.log("here are the combined results from parallel formatting: ", combinedResult);
       displayResponse(combinedResult);
+      document.querySelector('.correction-options').style.display = 'flex';
       onResponseGenerated(removeHamDanTags(combinedResult));
       const dropDownValue = document.querySelector('.hk-dropdown-text').textContent;
       if (dropDownValue === 'Teksthjælp') {

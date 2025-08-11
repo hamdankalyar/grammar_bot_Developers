@@ -28,7 +28,7 @@ class CorrectionSidebarLoader {
       console.warn(`Correction loader container not found: ${selector}`);
       return;
     }
-
+    document.getElementById('genBtn').disabled = true;
     // Check if toggleState is false, return early
     if (typeof window !== 'undefined' && window.toggleState === false) {
       return;
@@ -79,7 +79,7 @@ class CorrectionSidebarLoader {
     if (messageSpan) {
       messageSpan.textContent = 'Jeg er klar!';
     }
-
+    document.getElementById('genBtn').disabled = false;
     this.activeLoaders.delete(selector);
   }
 

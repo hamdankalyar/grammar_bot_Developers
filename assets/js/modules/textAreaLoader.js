@@ -22,7 +22,7 @@ class TextAreaLoader {
 
     // Remove existing loader if present
     this.hideTextAreaLoader(selector);
-
+    document.getElementById('genBtn').disabled = true;
     // Create loader backdrop
     const loaderBackdrop = document.createElement('div');
     loaderBackdrop.className = 'loader-backdrop';
@@ -66,7 +66,7 @@ class TextAreaLoader {
         loader.remove();
       }
     });
-
+    document.getElementById('genBtn').disabled = false;
     this.activeLoaders.delete(selector);
   }
 
