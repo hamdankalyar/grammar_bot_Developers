@@ -71,6 +71,9 @@ import correctionSidebarLoader from './modules/correctionSidebarLoader.js';
 
 import { initializeTTS, stopSpeaking, manualStopSpeaking } from './modules/textToSpeech.js';
 import { initializeDownloadButton } from './modules/quillDownloader.js';
+
+let sliderValue = 5;
+
 document.addEventListener('DOMContentLoaded', function () {
   if (window.innerWidth < 400) {
     const langLegendDiv = document.querySelector('.lang-legend-div');
@@ -535,7 +538,7 @@ function updateSelectedOption(option) {
   const selectedText = dropdownButton.querySelector('.hk-dropdown-text');
   const optionIcon = option.querySelector('svg').cloneNode(true);
   const optionText = option.querySelector('span').textContent;
-  //console.log("updateSelectedOption", option);
+
   // Update icon and text
   selectedIcon.replaceWith(optionIcon);
   selectedText.textContent = optionText;
@@ -544,10 +547,15 @@ function updateSelectedOption(option) {
   dropdownOptions.forEach(opt => opt.classList.remove('active'));
   option.classList.add('active');
 
+  // Get voiceSection reference once
+  const voiceSection = document.querySelector('.voice-section');
+
   if (option.dataset.option === 'smart-help') {
     improvInner.style.display = 'none';
     correctionInner.style.display = 'flex';
     styleInner.style.display = 'none';
+    if (voiceSection) voiceSection.style.display = 'none'; // ✅ ADD THIS
+
     optionIcon.querySelectorAll('path').forEach(path => {
       if (path.getAttribute('stroke') === '#929292') {
         path.setAttribute('stroke', '#E24668');
@@ -562,6 +570,8 @@ function updateSelectedOption(option) {
     improvInner.style.display = 'none';
     correctionInner.style.display = 'none';
     styleInner.style.display = 'flex';
+    if (voiceSection) voiceSection.style.display = 'none'; // ✅ ADD THIS
+
     optionIcon.querySelectorAll('path').forEach(path => {
       path.setAttribute('stroke', '#E24668');
     });
@@ -569,15 +579,26 @@ function updateSelectedOption(option) {
     improvInner.style.display = 'flex';
     correctionInner.style.display = 'none';
     styleInner.style.display = 'none';
+    if (voiceSection) voiceSection.style.display = 'none'; // ✅ ADD THIS
 
+    optionIcon.querySelectorAll('path, line, polyline').forEach(element => {
+      element.setAttribute('stroke', '#E24668');
+    });
+  } else if (option.dataset.option === 'tone-style') {
+    improvInner.style.display = 'none';
+    correctionInner.style.display = 'none';
+    styleInner.style.display = 'none';
+
+    if (voiceSection) {
+      voiceSection.style.display = 'flex'; // ✅ SHOW VOICE SECTION
+    }
+    // Update icon color
     optionIcon.querySelectorAll('path, line, polyline').forEach(element => {
       element.setAttribute('stroke', '#E24668');
     });
   }
 
   onUpdateSelectOption(option);
-  // ! remember to fix this
-  // syncContentHeights();
 }
 // Toggle dropdown
 dropdownButton.addEventListener('click', () => {
@@ -612,10 +633,12 @@ window.addEventListener('DOMContentLoaded', () => {
   const improvInner = document.querySelector('.improv-inner');
   const correctionInner = document.querySelector('.correction-inner');
   const styleInner = document.querySelector('.style-inner');
+  const voiceSection = document.querySelector('.voice-section'); // Add this line
 
   improvInner.style.display = 'flex';
   correctionInner.style.display = 'none';
   styleInner.style.display = 'none';
+  voiceSection.style.display = 'none'; // Add this line
 });
 
 // Function to update dropdown based on which panel is shown
@@ -663,7 +686,12 @@ function onUpdateSelectOption(option) {
     // ✅ Make sure loaders are hidden for style tab
     correctionSidebarLoader.hideCorrectionLoader('.correction-message');
     correctionSidebarLoader.toggleSmartLoader(false);
+  } else if (option.dataset.option === 'tone-style') {
+    // Hide loaders for voice section
+    correctionSidebarLoader.hideCorrectionLoader('.correction-message');
+    correctionSidebarLoader.toggleSmartLoader(false);
   }
+
   clearHighlights();
   adjustHeights();
 }
@@ -679,7 +707,7 @@ function callSidebar() {
         correctionSidebarLoader.showCorrectionLoader('.correction-message', 'Analyzing...');
       }
       callImproveSidebar();
-    } else if (dropDownValue === 'Smart teksthjælp') {
+    } else if (dropDownValue === 'Teksthjælp') {
       // console.log("Retter teksten call started");
       // console.log("starting the analysis");
 
@@ -922,8 +950,7 @@ function htmlToTextWithSpacing(html) {
     }
 
     console.log(
-      `Processing <${el.tagName.toLowerCase()}>: ${
-        isHeading ? 'heading-like' : 'block'
+      `Processing <${el.tagName.toLowerCase()}>: ${isHeading ? 'heading-like' : 'block'
       } – spacing "${JSON.stringify(spacing)}"`
     );
   });
@@ -1748,7 +1775,7 @@ function formatCallingWithLoader(language, userInputText, correctedText) {
         onResponseGenerated(removeHamDanTags(formattedResponse));
         displayResponse(formattedResponse);
         const dropDownValue = document.querySelector('.hk-dropdown-text').textContent;
-        if (dropDownValue === 'Smart teksthjælp') {
+        if (dropDownValue === 'Teksthjælp') {
           console.log('in formatting call analyzeTranslatedText');
           analyzeTranslatedText();
         }
@@ -1793,7 +1820,7 @@ function formatCallingParallelWithLoader(language, formattingParts, fallbackDiff
       displayResponse(combinedResult);
       onResponseGenerated(removeHamDanTags(combinedResult));
       const dropDownValue = document.querySelector('.hk-dropdown-text').textContent;
-      if (dropDownValue === 'Smart teksthjælp') {
+      if (dropDownValue === 'Teksthjælp') {
         console.log('in formatting call parallel analyzeTranslatedText');
         analyzeTranslatedText();
       }
@@ -2529,6 +2556,10 @@ function updateAnalysisUI(analysis) {
   // updateDropdownFromPanel(correctionInner);
 }
 
+const gifInsider = document.querySelector('.correction-inner-main .hamdan-robot-container #gif');
+if (gifInsider && !gifInsider.querySelector('svg')) {
+  lottieLoadAnimationByAddress(gifInsider);
+}
 // Add click handler for the action button
 document.querySelector('.action-button').addEventListener('click', function () {
   if (!savedImprovementPrompt) {
@@ -2687,117 +2718,6 @@ function adjustInputTextareaHeight(element = document.getElementById('inputText'
 }
 
 // SIMPLIFIED height adjustment function - NO debounce, NO MutationObserver
-// function adjustHeights() {
-//   // // console.log("adjustHeights() function called");
-
-//   const textAreaContainer = document.querySelector('.text-area-container');
-//   const mainTextAreaSection = document.querySelector('.main-textarea-section');
-//   const correctionSidebar = document.querySelector('.correction-sidebar');
-//   const editor = document.querySelector('.ql-editor');
-//   const topControls = document.querySelector('.top-controls');
-//   const headerSection = document.querySelector('.header-section');
-//   const styleInner = document.querySelector('.style-inner');
-
-//   if (!textAreaContainer || !mainTextAreaSection) {
-//     console.error('Required container elements are missing');
-//     return;
-//   }
-
-//   // Set minimum height
-//   const minHeight = 620;
-
-//   // Get heights of fixed elements
-//   const topControlsHeight = topControls ? topControls.offsetHeight : 0;
-//   const headerHeight = headerSection ? headerSection.offsetHeight : 0;
-
-//   // Calculate editor content height
-//   let editorContentHeight = minHeight;
-//   if (editor) {
-//     // Temporarily set height to auto to get accurate scroll height
-//     const originalHeight = editor.style.height;
-//     const originalOverflow = editor.style.overflowY;
-
-//     editor.style.height = 'auto';
-//     editor.style.overflowY = 'hidden';
-
-//     editorContentHeight = Math.max(editor.scrollHeight + topControlsHeight, minHeight);
-
-//     // Restore original styles
-//     editor.style.height = originalHeight;
-//     editor.style.overflowY = originalOverflow;
-//   }
-
-//   // Calculate style-inner content height if visible
-//   let styleInnerContentHeight = 0;
-//   let styleInnerTotalHeight = minHeight;
-
-//   if (styleInner && window.getComputedStyle(styleInner).display !== 'none') {
-//     // Temporarily remove constraints to measure natural height
-//     const originalStyleHeight = styleInner.style.height;
-//     const originalStyleOverflow = styleInner.style.overflowY;
-
-//     styleInner.style.height = 'auto';
-//     styleInner.style.overflowY = 'visible';
-
-//     // Get the natural content height
-//     styleInnerContentHeight = styleInner.scrollHeight;
-//     styleInnerTotalHeight = Math.max(styleInnerContentHeight + headerHeight, minHeight);
-
-//     // Restore original styles temporarily
-//     styleInner.style.height = originalStyleHeight;
-//     styleInner.style.overflowY = originalStyleOverflow;
-
-//     // // console.log("Height comparison:", {
-//     //     editorContentHeight: editorContentHeight,
-//     //     styleInnerContentHeight: styleInnerContentHeight,
-//     //     styleInnerTotalHeight: styleInnerTotalHeight
-//     // });
-//   }
-
-//   // MAIN LOGIC: Compare heights and decide final height
-//   let finalHeight = Math.max(editorContentHeight, styleInnerTotalHeight, minHeight);
-
-//   // Apply the final height to all containers
-//   textAreaContainer.style.height = `${finalHeight}px`;
-//   mainTextAreaSection.style.height = `${finalHeight}px`;
-
-//   if (correctionSidebar) {
-//     correctionSidebar.style.height = `${finalHeight}px`;
-//   }
-
-//   // Handle style-inner specifically
-//   if (styleInner && window.getComputedStyle(styleInner).display !== 'none') {
-//     const availableHeight = finalHeight - headerHeight;
-//     styleInner.style.height = `${availableHeight}px`;
-//   }
-
-//   // Handle other sidebar sections (improv-inner, correction-inner)
-//   const improvInner = document.querySelector('.improv-inner');
-//   const correctionInner = document.querySelector('.correction-inner');
-//   const correctionContent = document.querySelector('.correction-content');
-
-//   if (improvInner && window.getComputedStyle(improvInner).display !== 'none') {
-//     const availableHeight = finalHeight - headerHeight;
-//     improvInner.style.height = `${availableHeight}px`;
-
-//     if (correctionContent) {
-//       correctionContent.style.height = `${availableHeight}px`;
-//     }
-//   }
-
-//   if (correctionInner && window.getComputedStyle(correctionInner).display !== 'none') {
-//     const availableHeight = finalHeight - headerHeight;
-//     correctionInner.style.height = `${availableHeight}px`;
-
-//     const correctionInnerMain = document.querySelector('.correction-inner-main');
-//     if (correctionInnerMain) {
-//       correctionInnerMain.style.height = `${availableHeight}px`;
-//     }
-//   }
-// }
-// ! new height function
-// SIMPLIFIED height adjustment function - NO debounce, NO MutationObserver
-// SIMPLIFIED height adjustment function - NO debounce, NO MutationObserver
 function adjustHeights() {
   // // console.log("adjustHeights() function called");
 
@@ -2930,6 +2850,7 @@ function adjustHeights() {
     }
   }
 }
+
 // Simple event listeners - NO debounce, NO MutationObserver
 document.addEventListener('DOMContentLoaded', function () {
   // Initial height adjustment
@@ -2977,6 +2898,162 @@ document.addEventListener('DOMContentLoaded', function () {
   // Window resize
   window.addEventListener('resize', function () {
     setTimeout(adjustHeights, 50);
+  });
+});
+
+// ------------------ voice handler logic ----------------
+
+// ------------------ voice handler logic ----------------
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.querySelector('.voice-slider-container');
+  const handle = document.querySelector('.voice-handle');
+  const progress = document.querySelector('.voice-progress');
+
+  if (!container || !handle || !progress) return; // Exit if elements don't exist
+
+  let isDragging = false;
+  let lastKnownPercent = 75; // Start at "convencing" (professional)
+
+  // Update for 4 points matching your option buttons
+  const STEP_POINTS = [25, 50, 75, 100]; // 4 evenly spaced points
+  const VALUE_MAP = {
+    25: 'simplify', // Hverdagssprog
+    50: 'elaborate', // Let at forstå
+    75: 'convencing', // Formelt sprog
+    100: 'concise' // Mere humor
+  };
+
+  const VOICE_SETTINGS = {
+    simplify: { title: 'Hverdagssprog', subtitle: 'Sådan som du normalt snakker' },
+    elaborate: { title: 'Let at forstå', subtitle: 'Korte sætninger med enkle ord' },
+    convencing: { title: 'Formelt sprog', subtitle: 'Til arbejde og professionelle emails' },
+    concise: { title: 'Mere humor', subtitle: 'Gør teksten sjovere og mindre seriøs' }
+  };
+
+  function getGradientForPosition(percent) {
+    const colors = {
+      hverdagssprog: '#2DB62D',
+      letAtForstaa: '#A122A1',
+      formelt: '#6262F5',
+      humor: '#F9AB1B'
+    };
+
+    if (percent <= STEP_POINTS[0]) {
+      return colors.hverdagssprog;
+    } else if (percent <= STEP_POINTS[1]) {
+      return `linear-gradient(90deg, ${colors.hverdagssprog} 0%, ${colors.letAtForstaa} 100%)`;
+    } else if (percent <= STEP_POINTS[2]) {
+      return `linear-gradient(90deg, ${colors.hverdagssprog} 0%, ${colors.letAtForstaa} 33%, ${colors.formelt} 100%)`;
+    } else {
+      return `linear-gradient(90deg, ${colors.hverdagssprog} 0%, ${colors.letAtForstaa} 25%, ${colors.formelt} 50%, ${colors.humor} 100%)`;
+    }
+  }
+
+  function getHandleColor(percent) {
+    const colors = ['#2DB62D', '#A122A1', '#6262F5', '#F9AB1B'];
+    const index = STEP_POINTS.findIndex(point => percent <= point);
+    return colors[index !== -1 ? index : colors.length - 1];
+  }
+
+  function getSliderValue(percent) {
+    const snappedPercent = STEP_POINTS.reduce((prev, curr) =>
+      Math.abs(curr - percent) < Math.abs(prev - percent) ? curr : prev
+    );
+    return VALUE_MAP[snappedPercent];
+  }
+
+  function updateVoiceCardSubtitle(optionId) {
+    const titleElement = document.getElementById('voiceCardTitle');
+    const subtitleElement = document.getElementById('voiceCardSubtitle');
+
+    if (VOICE_SETTINGS[optionId] && titleElement && subtitleElement) {
+      titleElement.textContent = VOICE_SETTINGS[optionId].title;
+      subtitleElement.textContent = VOICE_SETTINGS[optionId].subtitle;
+    }
+  }
+
+  function handleInteraction(e) {
+    const rect = container.getBoundingClientRect();
+    const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+    const x = clientX - rect.left;
+    let percent = Math.min(Math.max((x / rect.width) * 100, 0), 100);
+
+    // Update slider position immediately for direct clicks
+    if (!isDragging) {
+      handle.style.left = `${percent}%`;
+      progress.style.width = `${percent}%`;
+      progress.style.background = getGradientForPosition(percent);
+      handle.style.borderColor = getHandleColor(percent);
+
+      // Then snap to nearest point
+      percent = STEP_POINTS.reduce((prev, curr) =>
+        Math.abs(curr - percent) < Math.abs(prev - percent) ? curr : prev
+      );
+    }
+
+    lastKnownPercent = percent;
+    updateSliderPosition(percent);
+    return percent;
+  }
+
+  function updateSliderPosition(percent) {
+    handle.style.left = `${percent}%`;
+    progress.style.width = `${percent}%`;
+    progress.style.background = getGradientForPosition(percent);
+    handle.style.borderColor = getHandleColor(percent);
+
+    sliderValue = getSliderValue(percent);
+    updateVoiceCardSubtitle(sliderValue);
+    console.log(`Slider Value: ${sliderValue}`);
+  }
+
+  function startDragging(e) {
+    e.preventDefault();
+    isDragging = true;
+    handleInteraction(e);
+    document.addEventListener(
+      e.type.includes('touch') ? 'touchmove' : 'mousemove',
+      handleInteraction
+    );
+  }
+
+  function stopDragging() {
+    if (!isDragging) return;
+    isDragging = false;
+    const snappedPercent = STEP_POINTS.reduce((prev, curr) =>
+      Math.abs(curr - lastKnownPercent) < Math.abs(prev - lastKnownPercent) ? curr : prev
+    );
+    updateSliderPosition(snappedPercent);
+    document.removeEventListener('mousemove', handleInteraction);
+    document.removeEventListener('touchmove', handleInteraction);
+  }
+
+  handle.addEventListener('mousedown', startDragging);
+  handle.addEventListener('touchstart', startDragging);
+  document.addEventListener('mouseup', stopDragging);
+  document.addEventListener('touchend', stopDragging);
+
+  container.addEventListener('click', e => {
+    if (e.target !== handle) {
+      handleInteraction(e);
+    }
+  });
+
+  // Initialize with "convencing" (formelt sprog)
+  updateSliderPosition(75);
+
+  // Add voice change button functionality
+  document.getElementById('voiceChangeBtn')?.addEventListener('click', () => {
+    const currentOptionId = getSliderValue(lastKnownPercent);
+    console.log(`Voice change requested with option: ${currentOptionId}`);
+
+    // Trigger the existing button functionality
+    const existingButton = document.getElementById(currentOptionId);
+    if (existingButton) {
+      existingButton.click();
+    } else {
+      console.warn(`Button with ID ${currentOptionId} not found`);
+    }
   });
 });
 
@@ -3648,8 +3725,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }, 1000);
   initializeFileUpload({
-    showLoader: textAreaLoader.showTextAreaLoader, // ✅ NEW
-    hideLoader: textAreaLoader.hideTextAreaLoader, // ✅ NEW
+    showLoader: (selector, text) => textAreaLoader.showTextAreaLoader(selector, text), // ✅ Properly bound
+    hideLoader: selector => textAreaLoader.hideTextAreaLoader(selector), // ✅ Properly bound
     handleClear: handleClear,
     displayResponse: displayResponse,
     scrollAfterPaste: scrollAfterPaste,
@@ -3663,8 +3740,8 @@ document.addEventListener('DOMContentLoaded', function () {
   initializeRewriteSystem({
     displayResponse,
     onResponseGenerated,
-    sshowLoader: textAreaLoader.showTextAreaLoader, // ✅ NEW
-    hideLoader: textAreaLoader.hideTextAreaLoader, // ✅ NEW
+    showLoader: (selector, text) => textAreaLoader.showTextAreaLoader(selector, text), // ✅ Properly bound
+    hideLoader: selector => textAreaLoader.hideTextAreaLoader(selector), // ✅ Properly bound
     originalContent,
     languageMap,
     getCurrentLanguage,

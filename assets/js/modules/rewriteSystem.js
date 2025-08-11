@@ -163,10 +163,14 @@ function sendRewriteRequest(buttonId) {
     HGF_ajax_object
   } = window._rewriteSystem;
 
+  // Ensure showLoader and hideLoader are bound properly
+  const boundShowLoader = showLoader.bind(window.textAreaLoader);
+  const boundHideLoader = hideLoader.bind(window.textAreaLoader);
+
   const currentText = originalContent.html;
   // console.log("Text sending to rewrite\n", currentText)
 
-  showLoader('.textarea-wrapper', 'Omskriver teksten...');
+  boundShowLoader('.textarea-wrapper', 'Omskriver teksten...');
 
   if (!rewriteResponses[currentParagraphIndex]) {
     rewriteResponses[currentParagraphIndex] = {
@@ -256,7 +260,7 @@ function sendRewriteRequest(buttonId) {
       console.error('Request failed:', error);
     })
     .finally(() => {
-      hideLoader('.textarea-wrapper');
+      boundHideLoader('.textarea-wrapper');
       // console.log('Request completed.');
     });
 }
