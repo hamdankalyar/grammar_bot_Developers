@@ -2822,12 +2822,14 @@ function adjustHeights() {
   const topControlsHeight = topControls ? topControls.offsetHeight : 0;
   const headerHeight = headerSection ? headerSection.offsetHeight : 0;
   const bottomControlsHeight = bottomControls ? bottomControls.offsetHeight : 0;
-  
+
   // Get correction options height (initially hidden, but shows after responses)
   const correctionOptions = document.querySelector('.correction-options');
-  const correctionOptionsHeight = correctionOptions && window.getComputedStyle(correctionOptions).display !== 'none' 
-    ? correctionOptions.offsetHeight : 0;
-  
+  const correctionOptionsHeight =
+    correctionOptions && window.getComputedStyle(correctionOptions).display !== 'none'
+      ? correctionOptions.offsetHeight
+      : 0;
+
   // Get padding from inner-textarea-bottom (25px top + 25px bottom = 50px)
   const innerTextareaBottom = document.querySelector('.inner-textarea-bottom');
   const innerPadding = innerTextareaBottom ? 50 : 0; // Account for padding: 25px 20px;
@@ -2843,7 +2845,10 @@ function adjustHeights() {
     editor.style.overflowY = 'hidden';
 
     // Include bottom controls height and inner padding in the calculation
-    editorContentHeight = Math.max(editor.scrollHeight + topControlsHeight + bottomControlsHeight + innerPadding, minHeight);
+    editorContentHeight = Math.max(
+      editor.scrollHeight + topControlsHeight + bottomControlsHeight + innerPadding,
+      minHeight
+    );
 
     // Restore original styles
     editor.style.height = originalHeight;
@@ -2882,12 +2887,13 @@ function adjustHeights() {
 
   // Apply the final height to containers
   textAreaContainer.style.height = `${finalHeight}px`;
-  
+
   // For main textarea section, subtract all elements that are outside this container but inside inner-textarea-bottom:
   // - bottomControlsHeight (language dropdown + generate button)
   // - correctionOptionsHeight (copy, read, download, rewrite buttons - shown after responses)
   // - innerPadding (padding on inner-textarea-bottom)
-  const mainTextAreaHeight = finalHeight - bottomControlsHeight - correctionOptionsHeight - innerPadding;
+  const mainTextAreaHeight =
+    finalHeight - bottomControlsHeight - correctionOptionsHeight - innerPadding;
   mainTextAreaSection.style.height = `${mainTextAreaHeight}px`;
 
   if (correctionSidebar) {
