@@ -1,5 +1,5 @@
 .saved-response {
-  background: rgba(248, 249, 250, 1);
+  background: rgba(248, 249, 250, 1) !important;
   border: 1px solid rgba(222, 226, 230, 0.006);
   box-shadow:
     0px 2px 8px 0px rgba(0, 0, 0, 0.06),
@@ -118,11 +118,6 @@ textarea.no-min-height {
   margin-top: -32px;
   margin-right: -3px;
   cursor: pointer;
-  /* color: rgba(108, 117, 125, 1); */
-  /* position: absolute; */
-  /* top: 0.43px; */
-  /* left: 5.42px; */
-  /* opacity: 1; */
 }
 
 .grammar-history-close:hover {
@@ -154,7 +149,8 @@ textarea.no-min-height {
 .markdown-body {
   font-family: 'Poppins';
   background-color: rgba(248, 249, 250, 1) !important;
-  color: rgba(108, 117, 125, 1) !important;
+  background: rgba(248, 249, 250, 1);
+  color: #6c757d;
   font-size: 16px !important;
 }
 
@@ -178,6 +174,7 @@ textarea.no-min-height {
 .markdown-body h5,
 .markdown-body h6 {
   border-bottom: none !important;
+  color: #6c757d;
 }
 
 .copy-btn1 {

@@ -950,7 +950,8 @@ function htmlToTextWithSpacing(html) {
     }
 
     console.log(
-      `Processing <${el.tagName.toLowerCase()}>: ${isHeading ? 'heading-like' : 'block'
+      `Processing <${el.tagName.toLowerCase()}>: ${
+        isHeading ? 'heading-like' : 'block'
       } – spacing "${JSON.stringify(spacing)}"`
     );
   });
@@ -3757,7 +3758,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Get DOM elements
   const showTutorialBtn = document.getElementById('show-tutorial-btn');
   const modal = document.getElementById('tutorial-popup');
-  const closeBtn = document.querySelector('.close-btn');
+  const closeBtn = document.querySelector('.tutorial-close-btn');
   const iframe = document.getElementById('tutorial-video');
 
   // Store the original iframe source
