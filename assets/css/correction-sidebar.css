@@ -68,6 +68,18 @@
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
+  display: flex;
+  padding: 12px;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1 0 0;
+  align-self: stretch;
+  border-radius: 10px;
+  border: 1px solid rgba(222, 226, 230, 0.8);
+  background: #fff;
+  box-shadow:
+    0 1px 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 1px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
 .hk-dropdown-button:hover {
@@ -143,6 +155,179 @@
   stroke: #e24668;
 }
 
+/*================================================================
+  Simplified dropdown CSS with direct values and regular font sizes
+================================================================*/
+
+/*---------------------- Dropdown Container ----------------------*/
+.hk-dropdown-container {
+  position: relative;
+  width: 100%;
+  max-width: 15rem;
+}
+
+/*---------------------- Dropdown Button -------------------------*/
+.hk-dropdown-button {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: #ffffff;
+  border: 1px solid #e6e6e6;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #414141;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 3rem;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.hk-dropdown-button:hover {
+  border-color: #d1d1d1;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/*---------------------- Selected Option -------------------------*/
+.selected-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.selected-option svg {
+  flex-shrink: 0;
+}
+
+/*---------------------- Dropdown Text ---------------------------*/
+.hk-dropdown-text {
+  flex-grow: 1;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #414141;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/*---------------------- Dropdown Arrow --------------------------*/
+.hk-dropdown-arrow {
+  transition: transform 0.15s ease;
+  width: 1.25rem;
+  height: 1.25rem;
+  stroke: #606060;
+  flex-shrink: 0;
+}
+
+.hk-dropdown-button.active .hk-dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+/*---------------------- Dropdown Content ------------------------*/
+.hk-dropdown-content {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  margin-top: 0.25rem;
+  width: 100%;
+  border-radius: 0.5rem;
+  border: 1px solid #e6e6e6;
+  background: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  z-index: 1000;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 0.25rem 0;
+}
+
+.hk-dropdown-content.show {
+  display: block;
+  animation: dropdownFadeIn 0.15s ease-out;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*---------------------- Dropdown Options ------------------------*/
+.hk-dropdown-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #414141;
+  min-height: 2.75rem;
+  box-sizing: border-box;
+  margin: 0 0.25rem;
+}
+
+.hk-dropdown-option svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  stroke: #5a5a5a;
+  flex-shrink: 0;
+}
+
+.hk-dropdown-option span {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #414141;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/*---------------------- Hover State -----------------------------*/
+.hk-dropdown-option:not(.active):hover {
+  background: #ffffff;
+  box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.15);
+  margin: 0 0.4rem;
+  border-radius: 0.5rem;
+}
+
+/*---------------------- Active State ----------------------------*/
+.hk-dropdown-option.active {
+  background: #f8f9fa;
+  border: 1px solid #e6e6e6;
+  border-radius: 0.5rem;
+  margin: 1px 0.5rem 0;
+  padding-left: calc(0.5rem + 0.25rem);
+}
+
+.hk-dropdown-option.active span {
+  color: #111;
+  font-weight: 600;
+}
+
+.hk-dropdown-option.active svg {
+  stroke: #414141;
+}
+
+/*---------------------- Focus States ----------------------------*/
+.hk-dropdown-option:focus {
+  outline: 2px solid #e24668;
+  outline-offset: -2px;
+  background: #fcedf0;
+}
 /* ================================= Sidebar Content Sections ================================= */
 
 /* Improvement section */
