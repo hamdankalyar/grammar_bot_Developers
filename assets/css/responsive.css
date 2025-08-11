@@ -1,0 +1,371 @@
+/* Mobile First: 320px (Small Mobile) */
+@media (max-width: 320px) {
+  .hamdan-header {
+    padding: 16px 12px;
+    margin-bottom: 16px;
+    flex-direction: column;
+    gap: 16px;
+    border-radius: 12px;
+  }
+
+  .hamdan-header-left .hamdan-header-title {
+    font-size: 20px;
+    line-height: 24px;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+
+  .hamdan-header-subtitle {
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    margin-bottom: 6px !important;
+  }
+
+  #show-tutorial-btn {
+    font-size: 10px;
+    line-height: 14px;
+    gap: 4px;
+    justify-content: center;
+  }
+
+  .hamdan-header-right {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .hamdan-header-btn {
+    font-size: 14px;
+    padding: 10px 8px;
+    gap: 4px;
+    border-radius: 8px;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* Modal adjustments */
+  .modal-content {
+    width: 95%;
+    margin: 5% auto;
+    padding: 10px;
+    height: 50vh;
+    border-radius: 20px;
+  }
+
+  .popup-content {
+    width: 95%;
+    height: 85%;
+    padding: 15px;
+    margin: 5% auto;
+    border-radius: 8px;
+  }
+
+  #popup-heading {
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+  }
+
+  #savedResponsesList {
+    padding: 0px 15px 15px 10px;
+    margin: 0 -10px;
+  }
+
+  .saved-response {
+    padding: 10px;
+    margin-bottom: 8px;
+    margin-right: 5px;
+    border-radius: 4px;
+  }
+
+  .markdown-body {
+    font-size: 14px !important;
+  }
+
+  .delete-all-history {
+    font-size: 10px;
+    padding-top: 12px;
+  }
+
+  .del-history-text {
+    font-size: 14px;
+  }
+}
+
+/* 375px Mobile */
+@media (min-width: 321px) and (max-width: 375px) {
+  .hamdan-header {
+    padding: 20px 16px;
+    margin-bottom: 20px;
+    flex-direction: column;
+    gap: 16px;
+    border-radius: 14px;
+  }
+
+  .hamdan-header-left .hamdan-header-title {
+    font-size: 22px;
+    line-height: 26px;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+
+  .hamdan-header-subtitle {
+    font-size: 13px;
+    line-height: 17px;
+    text-align: center;
+    margin-bottom: 8px !important;
+  }
+
+  #show-tutorial-btn {
+    font-size: 11px;
+    line-height: 15px;
+    gap: 5px;
+    justify-content: center;
+  }
+
+  .hamdan-header-right {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hamdan-header-btn {
+    font-size: 14px;
+    padding: 10px;
+    gap: 4px;
+    border-radius: 8px;
+    flex: 1;
+    min-width: 120px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* Modal adjustments */
+  .modal-content {
+    width: 90%;
+    margin: 8% auto;
+    padding: 15px;
+    height: 55vh;
+    border-radius: 25px;
+  }
+
+  .popup-content {
+    width: 90%;
+    height: 82%;
+    padding: 18px;
+    border-radius: 10px;
+  }
+
+  #popup-heading {
+    font-size: 22px;
+    line-height: 26px;
+    text-align: center;
+  }
+
+  #savedResponsesList {
+    padding: 0px 18px 18px 15px;
+    margin: 0 -15px;
+  }
+
+  .saved-response {
+    padding: 11px;
+    margin-bottom: 9px;
+    margin-right: 8px;
+  }
+
+  .markdown-body {
+    font-size: 15px !important;
+  }
+}
+
+/* 425px Large Mobile */
+@media (min-width: 376px) and (max-width: 425px) {
+  .hamdan-header {
+    padding: 24px 20px;
+    margin-bottom: 20px;
+    flex-direction: column;
+    gap: 18px;
+    border-radius: 15px;
+  }
+
+  .hamdan-header-left .hamdan-header-title {
+    font-size: 24px;
+    line-height: 28px;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+
+  .hamdan-header-subtitle {
+    font-size: 13px;
+    line-height: 17px;
+    text-align: center;
+    margin-bottom: 8px !important;
+  }
+
+  #show-tutorial-btn {
+    font-size: 11px;
+    line-height: 15px;
+    gap: 5px;
+    justify-content: center;
+  }
+
+  .hamdan-header-right {
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hamdan-header-btn {
+    font-size: 15px;
+    padding: 11px;
+    gap: 5px;
+    border-radius: 9px;
+    flex: 1;
+    max-width: 150px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* Modal adjustments */
+  .modal-content {
+    width: 85%;
+    margin: 10% auto;
+    padding: 18px;
+    height: 58vh;
+    border-radius: 30px;
+  }
+
+  .popup-content {
+    width: 85%;
+    height: 80%;
+    padding: 20px;
+    border-radius: 11px;
+  }
+
+  #popup-heading {
+    font-size: 24px;
+    line-height: 28px;
+  }
+
+  #savedResponsesList {
+    padding: 0px 20px 20px 18px;
+    margin: 0 -18px;
+  }
+
+  .saved-response {
+    padding: 12px;
+    margin-bottom: 9px;
+    margin-right: 8px;
+  }
+}
+
+/* 768px Tablet */
+@media (min-width: 426px) and (max-width: 768px) {
+  .hamdan-header {
+    padding: 28px 24px;
+    margin-bottom: 22px;
+    flex-direction: row;
+    border-radius: 16px;
+  }
+
+  .hamdan-header-left .hamdan-header-title {
+    font-size: 26px;
+    line-height: 30px;
+    margin-bottom: 9px;
+    text-align: left;
+  }
+
+  .hamdan-header-subtitle {
+    font-size: 14px;
+    line-height: 18px;
+    margin-bottom: 9px !important;
+  }
+
+  #show-tutorial-btn {
+    font-size: 12px;
+    line-height: 16px;
+    gap: 6px;
+  }
+
+  .hamdan-header-right {
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  .hamdan-header-btn {
+    font-size: 15px;
+    padding: 11px;
+    gap: 5px;
+    border-radius: 9px;
+  }
+
+  /* Modal adjustments */
+  .modal-content {
+    width: 75%;
+    margin: 10% auto;
+    padding: 20px;
+    height: 60vh;
+    border-radius: 35px;
+  }
+
+  .popup-content {
+    width: 75%;
+    height: 80%;
+    padding: 25px;
+    border-radius: 12px;
+  }
+
+  #popup-heading {
+    font-size: 26px;
+    line-height: 30px;
+  }
+
+  #savedResponsesList {
+    padding: 0px 22px 22px 20px;
+    margin: 0 -20px;
+  }
+
+  .saved-response {
+    padding: 12px;
+    margin-bottom: 9px;
+    margin-right: 9px;
+  }
+}
+
+/* Touch device improvements */
+@media (pointer: coarse) {
+  .hamdan-header-btn,
+  .copy-btn1,
+  .delete-btns,
+  #show-tutorial-btn,
+  .del-history-text,
+  .grammar-history-close {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .saved-response:hover .button-container {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .button-container {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* High DPI screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .hamdan-header,
+  .saved-response,
+  .popup-content,
+  .modal-content {
+    border-width: 0.5px;
+  }
+}

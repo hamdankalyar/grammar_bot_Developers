@@ -89,7 +89,7 @@ function lottieLoadAnimation() {
     renderer: 'svg',
     loop: true,
     autoplay: true,
-    path: 'https://developskriv.se/wp-content/uploads/2025/06/robot-wave.json'
+    path: 'https://developskriv2.se/wp-content/uploads/2025/06/robot-wave.json'
   });
 }
 
@@ -104,7 +104,7 @@ function lottieLoadAnimationByAddress(div) {
     renderer: 'svg',
     loop: true,
     autoplay: true,
-    path: 'https://developskriv.se/wp-content/uploads/2025/06/robot-wave.json'
+    path: 'https://developskriv2.se/wp-content/uploads/2025/06/robot-wave.json'
   });
 }
 
@@ -139,7 +139,7 @@ window.addEventListener('load', function () {
     } else {
       console.log('User does not have active membership');
       // Your code for non-members or inactive members
-      activeMember = false;
+      activeMember = true;
     }
     updateGenerateButtonState();
   });
@@ -427,7 +427,7 @@ function actionOnToggle(toggleState) {
   console.log('language is this ', getCurrentLanguage());
 
   const toggleBtn = document.getElementById('sidebar-toggle-btn');
-  const mainTextAreaToggle = document.querySelector('.main-textarea-section');
+  const mainTextAreaToggle = document.querySelector('.inner-textarea-bottom');
   const correctionSidebarToggle = document.querySelector('.correction-sidebar');
   const isMobileToggle = window.innerWidth <= 767;
 
@@ -2687,6 +2687,117 @@ function adjustInputTextareaHeight(element = document.getElementById('inputText'
 }
 
 // SIMPLIFIED height adjustment function - NO debounce, NO MutationObserver
+// function adjustHeights() {
+//   // // console.log("adjustHeights() function called");
+
+//   const textAreaContainer = document.querySelector('.text-area-container');
+//   const mainTextAreaSection = document.querySelector('.main-textarea-section');
+//   const correctionSidebar = document.querySelector('.correction-sidebar');
+//   const editor = document.querySelector('.ql-editor');
+//   const topControls = document.querySelector('.top-controls');
+//   const headerSection = document.querySelector('.header-section');
+//   const styleInner = document.querySelector('.style-inner');
+
+//   if (!textAreaContainer || !mainTextAreaSection) {
+//     console.error('Required container elements are missing');
+//     return;
+//   }
+
+//   // Set minimum height
+//   const minHeight = 620;
+
+//   // Get heights of fixed elements
+//   const topControlsHeight = topControls ? topControls.offsetHeight : 0;
+//   const headerHeight = headerSection ? headerSection.offsetHeight : 0;
+
+//   // Calculate editor content height
+//   let editorContentHeight = minHeight;
+//   if (editor) {
+//     // Temporarily set height to auto to get accurate scroll height
+//     const originalHeight = editor.style.height;
+//     const originalOverflow = editor.style.overflowY;
+
+//     editor.style.height = 'auto';
+//     editor.style.overflowY = 'hidden';
+
+//     editorContentHeight = Math.max(editor.scrollHeight + topControlsHeight, minHeight);
+
+//     // Restore original styles
+//     editor.style.height = originalHeight;
+//     editor.style.overflowY = originalOverflow;
+//   }
+
+//   // Calculate style-inner content height if visible
+//   let styleInnerContentHeight = 0;
+//   let styleInnerTotalHeight = minHeight;
+
+//   if (styleInner && window.getComputedStyle(styleInner).display !== 'none') {
+//     // Temporarily remove constraints to measure natural height
+//     const originalStyleHeight = styleInner.style.height;
+//     const originalStyleOverflow = styleInner.style.overflowY;
+
+//     styleInner.style.height = 'auto';
+//     styleInner.style.overflowY = 'visible';
+
+//     // Get the natural content height
+//     styleInnerContentHeight = styleInner.scrollHeight;
+//     styleInnerTotalHeight = Math.max(styleInnerContentHeight + headerHeight, minHeight);
+
+//     // Restore original styles temporarily
+//     styleInner.style.height = originalStyleHeight;
+//     styleInner.style.overflowY = originalStyleOverflow;
+
+//     // // console.log("Height comparison:", {
+//     //     editorContentHeight: editorContentHeight,
+//     //     styleInnerContentHeight: styleInnerContentHeight,
+//     //     styleInnerTotalHeight: styleInnerTotalHeight
+//     // });
+//   }
+
+//   // MAIN LOGIC: Compare heights and decide final height
+//   let finalHeight = Math.max(editorContentHeight, styleInnerTotalHeight, minHeight);
+
+//   // Apply the final height to all containers
+//   textAreaContainer.style.height = `${finalHeight}px`;
+//   mainTextAreaSection.style.height = `${finalHeight}px`;
+
+//   if (correctionSidebar) {
+//     correctionSidebar.style.height = `${finalHeight}px`;
+//   }
+
+//   // Handle style-inner specifically
+//   if (styleInner && window.getComputedStyle(styleInner).display !== 'none') {
+//     const availableHeight = finalHeight - headerHeight;
+//     styleInner.style.height = `${availableHeight}px`;
+//   }
+
+//   // Handle other sidebar sections (improv-inner, correction-inner)
+//   const improvInner = document.querySelector('.improv-inner');
+//   const correctionInner = document.querySelector('.correction-inner');
+//   const correctionContent = document.querySelector('.correction-content');
+
+//   if (improvInner && window.getComputedStyle(improvInner).display !== 'none') {
+//     const availableHeight = finalHeight - headerHeight;
+//     improvInner.style.height = `${availableHeight}px`;
+
+//     if (correctionContent) {
+//       correctionContent.style.height = `${availableHeight}px`;
+//     }
+//   }
+
+//   if (correctionInner && window.getComputedStyle(correctionInner).display !== 'none') {
+//     const availableHeight = finalHeight - headerHeight;
+//     correctionInner.style.height = `${availableHeight}px`;
+
+//     const correctionInnerMain = document.querySelector('.correction-inner-main');
+//     if (correctionInnerMain) {
+//       correctionInnerMain.style.height = `${availableHeight}px`;
+//     }
+//   }
+// }
+// ! new height function
+// SIMPLIFIED height adjustment function - NO debounce, NO MutationObserver
+// SIMPLIFIED height adjustment function - NO debounce, NO MutationObserver
 function adjustHeights() {
   // // console.log("adjustHeights() function called");
 
@@ -2697,6 +2808,7 @@ function adjustHeights() {
   const topControls = document.querySelector('.top-controls');
   const headerSection = document.querySelector('.header-section');
   const styleInner = document.querySelector('.style-inner');
+  const bottomControls = document.querySelector('.bottom-controls'); // Added this
 
   if (!textAreaContainer || !mainTextAreaSection) {
     console.error('Required container elements are missing');
@@ -2704,11 +2816,21 @@ function adjustHeights() {
   }
 
   // Set minimum height
-  const minHeight = 420;
+  const minHeight = 620;
 
   // Get heights of fixed elements
   const topControlsHeight = topControls ? topControls.offsetHeight : 0;
   const headerHeight = headerSection ? headerSection.offsetHeight : 0;
+  const bottomControlsHeight = bottomControls ? bottomControls.offsetHeight : 0;
+  
+  // Get correction options height (initially hidden, but shows after responses)
+  const correctionOptions = document.querySelector('.correction-options');
+  const correctionOptionsHeight = correctionOptions && window.getComputedStyle(correctionOptions).display !== 'none' 
+    ? correctionOptions.offsetHeight : 0;
+  
+  // Get padding from inner-textarea-bottom (25px top + 25px bottom = 50px)
+  const innerTextareaBottom = document.querySelector('.inner-textarea-bottom');
+  const innerPadding = innerTextareaBottom ? 50 : 0; // Account for padding: 25px 20px;
 
   // Calculate editor content height
   let editorContentHeight = minHeight;
@@ -2720,7 +2842,8 @@ function adjustHeights() {
     editor.style.height = 'auto';
     editor.style.overflowY = 'hidden';
 
-    editorContentHeight = Math.max(editor.scrollHeight + topControlsHeight, minHeight);
+    // Include bottom controls height and inner padding in the calculation
+    editorContentHeight = Math.max(editor.scrollHeight + topControlsHeight + bottomControlsHeight + innerPadding, minHeight);
 
     // Restore original styles
     editor.style.height = originalHeight;
@@ -2757,9 +2880,15 @@ function adjustHeights() {
   // MAIN LOGIC: Compare heights and decide final height
   let finalHeight = Math.max(editorContentHeight, styleInnerTotalHeight, minHeight);
 
-  // Apply the final height to all containers
+  // Apply the final height to containers
   textAreaContainer.style.height = `${finalHeight}px`;
-  mainTextAreaSection.style.height = `${finalHeight}px`;
+  
+  // For main textarea section, subtract all elements that are outside this container but inside inner-textarea-bottom:
+  // - bottomControlsHeight (language dropdown + generate button)
+  // - correctionOptionsHeight (copy, read, download, rewrite buttons - shown after responses)
+  // - innerPadding (padding on inner-textarea-bottom)
+  const mainTextAreaHeight = finalHeight - bottomControlsHeight - correctionOptionsHeight - innerPadding;
+  mainTextAreaSection.style.height = `${mainTextAreaHeight}px`;
 
   if (correctionSidebar) {
     correctionSidebar.style.height = `${finalHeight}px`;
@@ -2795,7 +2924,6 @@ function adjustHeights() {
     }
   }
 }
-
 // Simple event listeners - NO debounce, NO MutationObserver
 document.addEventListener('DOMContentLoaded', function () {
   // Initial height adjustment

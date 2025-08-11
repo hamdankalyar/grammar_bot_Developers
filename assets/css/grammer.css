@@ -175,10 +175,14 @@
   box-sizing: border-box;
   align-items: stretch;
 }
-
+.inner-textarea-bottom {
+  flex-basis: 74%;
+  background: linear-gradient(179.63deg, #ffffff 56.57%, #f8f9fa 99.68%) !important;
+  padding: 25px 20px;
+  border-radius: 10px;
+}
 /* ---------------------------------- left cantainer   ---------------------------- */
 .main-textarea-section {
-  flex-basis: 74%;
   display: flex;
   flex-direction: column;
   min-height: 420px;
@@ -195,7 +199,6 @@
   padding: 8px 12px;
   background-color: #f9f9f9;
   border-radius: 100px;
-  margin-bottom: 2%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
   box-sizing: border-box;
@@ -432,7 +435,6 @@
 
 /* ================================= Bottom Controls Layout =============================== */
 .bottom-controls {
-  margin-top: 15px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -515,7 +517,6 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  margin-top: 15px;
   justify-content: center;
   align-items: center;
 }
@@ -1513,6 +1514,7 @@
 .ql-editor {
   padding: 20px;
   min-height: 200px;
+
   height: auto;
   overflow-y: visible;
   box-sizing: border-box;

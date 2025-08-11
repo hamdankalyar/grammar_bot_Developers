@@ -149,11 +149,35 @@ textarea.no-min-height {
   opacity: 1;
 }
 
+/*----------------------Mark Down------------------------*/
+
 .markdown-body {
   font-family: 'Poppins';
   background-color: rgba(248, 249, 250, 1) !important;
   color: rgba(108, 117, 125, 1) !important;
   font-size: 16px !important;
+}
+
+/* Force empty elements to minimum height */
+#inputText.is-empty {
+  height: auto !important;
+}
+
+.markdown-body table {
+  width: 100% !important;
+}
+
+#inputText .markdown-body table tr {
+  background-color: white !important;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  border-bottom: none !important;
 }
 
 .copy-btn1 {
