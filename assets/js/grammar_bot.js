@@ -946,7 +946,8 @@ function htmlToTextWithSpacing(html) {
     }
 
     console.log(
-      `Processing <${el.tagName.toLowerCase()}>: ${isHeading ? 'heading-like' : 'block'
+      `Processing <${el.tagName.toLowerCase()}>: ${
+        isHeading ? 'heading-like' : 'block'
       } – spacing "${JSON.stringify(spacing)}"`
     );
   });
@@ -2849,7 +2850,7 @@ function adjustInputTextareaHeight(element = document.getElementById('inputText'
 //   }
 // }
 
-// ! second working version 
+// ! second working version
 // SIMPLIFIED height adjustment function - NO debounce, NO MutationObserver
 // SIMPLIFIED height adjustment function - NO debounce, NO MutationObserver
 function adjustHeights() {
@@ -2879,8 +2880,10 @@ function adjustHeights() {
 
   // Get correction options height (initially hidden, but shows after responses)
   const correctionOptions = document.querySelector('.correction-options');
-  const correctionOptionsHeight = correctionOptions && window.getComputedStyle(correctionOptions).display !== 'none'
-    ? correctionOptions.offsetHeight : 0;
+  const correctionOptionsHeight =
+    correctionOptions && window.getComputedStyle(correctionOptions).display !== 'none'
+      ? correctionOptions.offsetHeight
+      : 0;
 
   // Get padding from inner-textarea-bottom (25px top + 25px bottom = 50px)
   const innerTextareaBottom = document.querySelector('.inner-textarea-bottom');
@@ -2931,7 +2934,8 @@ function adjustHeights() {
   // MAIN LOGIC: Calculate container height needed
   // inner-textarea-bottom ALWAYS has padding: 25px 20px (50px vertical total)
   // Inside this padded area we have: main-textarea-section + correction-options + bottom-controls
-  const totalContainerHeight = mainTextAreaSectionHeight + bottomControlsHeight + correctionOptionsHeight + innerPadding;
+  const totalContainerHeight =
+    mainTextAreaSectionHeight + bottomControlsHeight + correctionOptionsHeight + innerPadding;
 
   // Final height is the maximum of all requirements
   let finalHeight = Math.max(totalContainerHeight, styleInnerTotalHeight, minHeight);
@@ -3002,7 +3006,7 @@ function adjustHeights() {
   }
 }
 
-// ! third working version 
+// ! third working version
 // SIMPLIFIED height adjustment function - NO debounce, NO MutationObserver
 
 // function adjustHeights() {

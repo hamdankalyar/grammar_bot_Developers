@@ -9,6 +9,7 @@
   flex-shrink: 0;
   border-radius: 10px;
   min-height: 620px;
+  max-width: 25%;
 }
 
 .correction-sidebar.hidden {
@@ -911,7 +912,8 @@
 }
 
 /* High DPI screens */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
   .correction-content::-webkit-scrollbar {
     width: 6px;
   }
@@ -991,14 +993,12 @@
   left: 0;
   top: 0;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    #e68a00 0%,
-    #4caf50 25%,
-    #d6d6d6 50%,
-    #b2e0f2 75%,
-    #005f9e 100%
-  );
+  background: linear-gradient(90deg,
+      #e68a00 0%,
+      #4caf50 25%,
+      #d6d6d6 50%,
+      #b2e0f2 75%,
+      #005f9e 100%);
   border-radius: 3px;
   width: 100%;
 }
@@ -1236,12 +1236,10 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.3) 0%,
-    rgba(255, 255, 255, 0.1) 50%,
-    transparent 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 100%);
   pointer-events: none;
   border-radius: 28px;
   opacity: 0.8;

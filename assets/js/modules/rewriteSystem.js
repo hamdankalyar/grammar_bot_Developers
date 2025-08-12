@@ -9,6 +9,7 @@ let originalZIndex;
 const sidebarSelector = '.elementor-element-3189719';
 
 // Initialize rewrite system
+// Initialize rewrite system
 function initializeRewriteSystem({
   displayResponse,
   onResponseGenerated,
@@ -37,40 +38,86 @@ function initializeRewriteSystem({
     manuallyCloseMicButton
   };
 
-  // Add event listeners for rewrite buttons
-  document
-    .getElementById('convencing')
-    .addEventListener('click', () => handleRewrite('convencing'));
-  document.getElementById('simplify').addEventListener('click', () => handleRewrite('simplify'));
-  document.getElementById('elaborate').addEventListener('click', () => handleRewrite('elaborate'));
-  document.getElementById('concise').addEventListener('click', () => handleRewrite('concise'));
+  // Add event listeners for rewrite buttons with null checks
+  const convencingBtn = document.getElementById('convencing');
+  if (convencingBtn) {
+    convencingBtn.addEventListener('click', () => handleRewrite('convencing'));
+  } else {
+    console.warn('Element with ID "convencing" not found');
+  }
 
-  // Add navigation event listeners
-  document.querySelector('.arrow-left').addEventListener('click', () => {
-    // console.log('Navigating to previous response...');
-    navigateResponses('prev');
-  });
+  const simplifyBtn = document.getElementById('simplify');
+  if (simplifyBtn) {
+    simplifyBtn.addEventListener('click', () => handleRewrite('simplify'));
+  } else {
+    console.warn('Element with ID "simplify" not found');
+  }
 
-  document.querySelector('.arrow-right').addEventListener('click', () => {
-    // console.log('Navigating to next response...');
-    navigateResponses('next');
-  });
+  const elaborateBtn = document.getElementById('elaborate');
+  if (elaborateBtn) {
+    elaborateBtn.addEventListener('click', () => handleRewrite('elaborate'));
+  } else {
+    console.warn('Element with ID "elaborate" not found');
+  }
 
-  // Handle custom rewrite input
-  document.getElementById('submint_rewrite')?.addEventListener('click', () => {
-    // console.log('Custom rewrite submitted.');
-    handleRewrite('custom');
-  });
+  const conciseBtn = document.getElementById('concise');
+  if (conciseBtn) {
+    conciseBtn.addEventListener('click', () => handleRewrite('concise'));
+  } else {
+    console.warn('Element with ID "concise" not found');
+  }
 
-  // Add rewrite button modal trigger
-  document.querySelector('#rewriteBtn').addEventListener('click', () => {
-    // console.log("clicked the rewrite button")
-    window._rewriteSystem.clearHighlights();
-    dkHamdanOpenModal(0);
-  });
+  // Add navigation event listeners with null checks
+  const arrowLeft = document.querySelector('.arrow-left');
+  if (arrowLeft) {
+    arrowLeft.addEventListener('click', () => {
+      // console.log('Navigating to previous response...');
+      navigateResponses('prev');
+    });
+  } else {
+    console.warn('Element with class "arrow-left" not found');
+  }
 
-  // Attach the close function to the close button inside the modal
-  document.querySelector('.dk-hamdan-close-button').addEventListener('click', dkHamdanCloseModal);
+  const arrowRight = document.querySelector('.arrow-right');
+  if (arrowRight) {
+    arrowRight.addEventListener('click', () => {
+      // console.log('Navigating to next response...');
+      navigateResponses('next');
+    });
+  } else {
+    console.warn('Element with class "arrow-right" not found');
+  }
+
+  // Handle custom rewrite input with null check
+  const submitRewrite = document.getElementById('submint_rewrite');
+  if (submitRewrite) {
+    submitRewrite.addEventListener('click', () => {
+      // console.log('Custom rewrite submitted.');
+      handleRewrite('custom');
+    });
+  } else {
+    console.warn('Element with ID "submint_rewrite" not found');
+  }
+
+  // Add rewrite button modal trigger with null check
+  const rewriteBtn = document.querySelector('#rewriteBtn');
+  if (rewriteBtn) {
+    rewriteBtn.addEventListener('click', () => {
+      // console.log("clicked the rewrite button")
+      window._rewriteSystem.clearHighlights();
+      dkHamdanOpenModal(0);
+    });
+  } else {
+    console.warn('Element with ID "rewriteBtn" not found');
+  }
+
+  // Attach the close function to the close button inside the modal with null check
+  const closeButton = document.querySelector('.dk-hamdan-close-button');
+  if (closeButton) {
+    closeButton.addEventListener('click', dkHamdanCloseModal);
+  } else {
+    console.warn('Element with class "dk-hamdan-close-button" not found');
+  }
 }
 
 // Handle rewrite button clicks

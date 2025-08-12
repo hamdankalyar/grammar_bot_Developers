@@ -1090,7 +1090,13 @@ function normalizeEmojisInHtml(htmlContent) {
 // Enhanced paste handling function
 async function handlePaste(clearExisting = false, moveToEnd = true) {
   // Import required functions from main file
-  const { stopSpeaking, manuallyCloseMicButton, resetNavText, resetSidebar, handleClear } = window;
+  const {
+    stopSpeaking,
+    manuallyCloseMicButton,
+    resetNavText,
+    handleClear,
+    correctionSidebarLoader
+  } = window;
   stopSpeaking();
   manuallyCloseMicButton('micButton1');
   resetNavText();
@@ -1102,7 +1108,7 @@ async function handlePaste(clearExisting = false, moveToEnd = true) {
     if (clearExisting) {
       console.log('Clearing the editor…');
       window.quill1.setText('');
-      resetSidebar();
+      correctionSidebarLoader.showReadyState();
       handleClear();
     }
 

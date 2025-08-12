@@ -129,11 +129,11 @@ class CorrectionSidebarLoader {
     }
 
     correctionContent.innerHTML = `
-      <div class="hamdan-robot-container">
-          <!-- Speech bubble comes first -->
+    <!-- Speech bubble comes first -->
           <div class="hamdan-speech-bubble">
               Jeg er klar!
           </div>
+      <div class="hamdan-robot-container">
           <!-- Container for your animation -->
           <div id="gif" ></div>
       </div>
@@ -161,11 +161,11 @@ class CorrectionSidebarLoader {
     }
 
     correctionContent.innerHTML = `
-      <div class="hamdan-robot-container">
-          <!-- Speech bubble comes first -->
+    <!-- Speech bubble comes first -->
           <div class="hamdan-speech-bubble">
               Perfekt!
           </div>
+      <div class="hamdan-robot-container">
           <!-- Container for your animation -->
           <div id="gif" ></div>
       </div>
