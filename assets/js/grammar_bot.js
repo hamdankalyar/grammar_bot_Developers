@@ -2387,10 +2387,25 @@ function analyzeTranslatedText() {
   if (isSmartCalled) return;
   if (getInnerTextFromHTMLString(lastCorrectedText).length < 100) {
     correctionSidebarLoader.toggleSmartLoader(false);
-    const bubble = document.querySelector('.correction-inner .demo-inner .hamdan-speech-bubble');
-    bubble.style.display = 'block';
-    bubble.textContent = 'Teksten er for kort...';
-    document.querySelector('.demo-text-correction-inner').style.display = 'none';
+
+    // Handle both demo-inner and correction-inner-main sections
+    const demoInnerBubble = document.querySelector(
+      '.correction-inner .demo-inner .hamdan-speech-bubble'
+    );
+    const mainBubble = document.querySelector('.correction-inner-main .hamdan-speech-bubble');
+
+    if (demoInnerBubble) {
+      demoInnerBubble.style.display = 'block';
+      demoInnerBubble.textContent = 'Teksten er for kort...';
+    }
+    if (mainBubble) {
+      mainBubble.textContent = 'Teksten er for kort...';
+    }
+
+    const demoText = document.querySelector('.demo-text-correction-inner');
+    if (demoText) {
+      demoText.style.display = 'none';
+    }
     isSmartCalled = true;
     return;
   }
@@ -2485,7 +2500,7 @@ function analyzeTranslatedText() {
           }
         }
 
-        processedData = parsedData;
+        let processedData = parsedData;
 
         // Validate the processed data structure
         if (processedData && processedData.analysis) {
@@ -2534,25 +2549,56 @@ function analyzeTranslatedText() {
 }
 // Function to update the UI with analysis results
 function updateAnalysisUI(analysis) {
-  // Update text type
-  document.querySelector('.analysis-subtitle').textContent = analysis.textType;
+  // Update text type with null check
+  const analysisSubtitle = document.querySelector('.analysis-subtitle');
+  if (analysisSubtitle) {
+    analysisSubtitle.textContent = analysis.textType;
+  }
 
-  // Update warning message
-  document.querySelector('.warning-msg').textContent = analysis.issue;
+  // Update warning message with null check
+  const warningMsg = document.querySelector('.warning-msg');
+  if (warningMsg) {
+    warningMsg.textContent = analysis.issue;
+  }
 
-  // Update style conversion labels
-  document.querySelector('.style-label.informal').textContent = analysis.currentStyle;
-  document.querySelector('.style-label.professional').textContent = analysis.targetStyle;
+  // Update style conversion labels with null checks
+  const informalLabel = document.querySelector('.style-label.informal');
+  if (informalLabel) {
+    informalLabel.textContent = analysis.currentStyle;
+  }
 
-  // Update action button text
-  document.querySelector('.action-button').textContent = analysis.buttonText;
+  const professionalLabel = document.querySelector('.style-label.professional');
+  if (professionalLabel) {
+    professionalLabel.textContent = analysis.targetStyle;
+  }
 
-  // document.querySelector('.correction-inner').style.display = 'flex';
-  document.querySelector('.correction-inner').style.paddingTop = '16px';
-  document.querySelector('.demo-inner').style.display = 'none';
+  // Update action button text with null check
+  const actionButton = document.querySelector('.action-button');
+  if (actionButton) {
+    actionButton.textContent = analysis.buttonText;
+  }
 
-  document.querySelector('.correction-inner-main').style.display = 'flex';
-  // updateDropdownFromPanel(correctionInner);
+  // Show/hide sections with null checks
+  const correctionInner = document.querySelector('.correction-inner');
+  if (correctionInner) {
+    correctionInner.style.paddingTop = '16px';
+  }
+
+  const demoInner = document.querySelector('.demo-inner');
+  if (demoInner) {
+    demoInner.style.display = 'none';
+  }
+
+  const correctionInnerMain = document.querySelector('.correction-inner-main');
+  if (correctionInnerMain) {
+    correctionInnerMain.style.display = 'flex';
+  }
+
+  // ✅ Reset the bubble text when showing analysis with null check
+  const mainBubble = document.querySelector('.correction-inner-main .hamdan-speech-bubble');
+  if (mainBubble) {
+    mainBubble.textContent = analysis.issue;
+  }
 }
 
 const gifInsider = document.querySelector('.correction-inner-main .hamdan-robot-container #gif');
@@ -2716,140 +2762,6 @@ function adjustInputTextareaHeight(element = document.getElementById('inputText'
   adjustHeights();
 }
 
-// SIMPLIFIED height adjustment function - NO debounce, NO MutationObserver
-// function adjustHeights() {
-//   // // console.log("adjustHeights() function called");
-
-//   const textAreaContainer = document.querySelector('.text-area-container');
-//   const mainTextAreaSection = document.querySelector('.main-textarea-section');
-//   const correctionSidebar = document.querySelector('.correction-sidebar');
-//   const editor = document.querySelector('.ql-editor');
-//   const topControls = document.querySelector('.top-controls');
-//   const headerSection = document.querySelector('.header-section');
-//   const styleInner = document.querySelector('.style-inner');
-//   const bottomControls = document.querySelector('.bottom-controls'); // Added this
-
-//   if (!textAreaContainer || !mainTextAreaSection) {
-//     console.error('Required container elements are missing');
-//     return;
-//   }
-
-//   // Set minimum height
-//   const minHeight = 620;
-
-//   // Get heights of fixed elements
-//   const topControlsHeight = topControls ? topControls.offsetHeight : 0;
-//   const headerHeight = headerSection ? headerSection.offsetHeight : 0;
-//   const bottomControlsHeight = bottomControls ? bottomControls.offsetHeight : 0;
-
-//   // Get correction options height (initially hidden, but shows after responses)
-//   const correctionOptions = document.querySelector('.correction-options');
-//   const correctionOptionsHeight =
-//     correctionOptions && window.getComputedStyle(correctionOptions).display !== 'none'
-//       ? correctionOptions.offsetHeight
-//       : 0;
-
-//   // Get padding from inner-textarea-bottom (25px top + 25px bottom = 50px)
-//   const innerTextareaBottom = document.querySelector('.inner-textarea-bottom');
-//   const innerPadding = innerTextareaBottom ? 50 : 0; // Account for padding: 25px 20px;
-
-//   // Calculate editor content height
-//   let editorContentHeight = minHeight;
-//   if (editor) {
-//     // Temporarily set height to auto to get accurate scroll height
-//     const originalHeight = editor.style.height;
-//     const originalOverflow = editor.style.overflowY;
-
-//     editor.style.height = 'auto';
-//     editor.style.overflowY = 'hidden';
-
-//     // Include bottom controls height and inner padding in the calculation
-//     editorContentHeight = Math.max(
-//       editor.scrollHeight + topControlsHeight + bottomControlsHeight + innerPadding,
-//       minHeight
-//     );
-
-//     // Restore original styles
-//     editor.style.height = originalHeight;
-//     editor.style.overflowY = originalOverflow;
-//   }
-
-//   // Calculate style-inner content height if visible
-//   let styleInnerContentHeight = 0;
-//   let styleInnerTotalHeight = minHeight;
-
-//   if (styleInner && window.getComputedStyle(styleInner).display !== 'none') {
-//     // Temporarily remove constraints to measure natural height
-//     const originalStyleHeight = styleInner.style.height;
-//     const originalStyleOverflow = styleInner.style.overflowY;
-
-//     styleInner.style.height = 'auto';
-//     styleInner.style.overflowY = 'visible';
-
-//     // Get the natural content height
-//     styleInnerContentHeight = styleInner.scrollHeight;
-//     styleInnerTotalHeight = Math.max(styleInnerContentHeight + headerHeight, minHeight);
-
-//     // Restore original styles temporarily
-//     styleInner.style.height = originalStyleHeight;
-//     styleInner.style.overflowY = originalStyleOverflow;
-
-//     // // console.log("Height comparison:", {
-//     //     editorContentHeight: editorContentHeight,
-//     //     styleInnerContentHeight: styleInnerContentHeight,
-//     //     styleInnerTotalHeight: styleInnerTotalHeight
-//     // });
-//   }
-
-//   // MAIN LOGIC: Compare heights and decide final height
-//   let finalHeight = Math.max(editorContentHeight, styleInnerTotalHeight, minHeight);
-
-//   // Apply the final height to containers
-//   textAreaContainer.style.height = `${finalHeight}px`;
-
-//   // For main textarea section, subtract all elements that are outside this container but inside inner-textarea-bottom:
-//   // - bottomControlsHeight (language dropdown + generate button)
-//   // - correctionOptionsHeight (copy, read, download, rewrite buttons - shown after responses)
-//   // - innerPadding (padding on inner-textarea-bottom)
-//   const mainTextAreaHeight =
-//     finalHeight - bottomControlsHeight - correctionOptionsHeight - innerPadding;
-//   mainTextAreaSection.style.height = `${mainTextAreaHeight}px`;
-
-//   if (correctionSidebar) {
-//     correctionSidebar.style.height = `${finalHeight}px`;
-//   }
-
-//   // Handle style-inner specifically
-//   if (styleInner && window.getComputedStyle(styleInner).display !== 'none') {
-//     const availableHeight = finalHeight - headerHeight;
-//     styleInner.style.height = `${availableHeight}px`;
-//   }
-
-//   // Handle other sidebar sections (improv-inner, correction-inner)
-//   const improvInner = document.querySelector('.improv-inner');
-//   const correctionInner = document.querySelector('.correction-inner');
-//   const correctionContent = document.querySelector('.correction-content');
-
-//   if (improvInner && window.getComputedStyle(improvInner).display !== 'none') {
-//     const availableHeight = finalHeight - headerHeight;
-//     improvInner.style.height = `${availableHeight}px`;
-
-//     if (correctionContent) {
-//       correctionContent.style.height = `${availableHeight}px`;
-//     }
-//   }
-
-//   if (correctionInner && window.getComputedStyle(correctionInner).display !== 'none') {
-//     const availableHeight = finalHeight - headerHeight;
-//     correctionInner.style.height = `${availableHeight}px`;
-
-//     const correctionInnerMain = document.querySelector('.correction-inner-main');
-//     if (correctionInnerMain) {
-//       correctionInnerMain.style.height = `${availableHeight}px`;
-//     }
-//   }
-// }
-
 // ! second working version
 // SIMPLIFIED height adjustment function - NO debounce, NO MutationObserver
 // SIMPLIFIED height adjustment function - NO debounce, NO MutationObserver
@@ -3006,153 +2918,6 @@ function adjustHeights() {
   }
 }
 
-// ! third working version
-// SIMPLIFIED height adjustment function - NO debounce, NO MutationObserver
-
-// function adjustHeights() {
-//   // // console.log("adjustHeights() function called");
-
-//   const textAreaContainer = document.querySelector('.text-area-container');
-//   const mainTextAreaSection = document.querySelector('.main-textarea-section');
-//   const correctionSidebar = document.querySelector('.correction-sidebar');
-//   const editor = document.querySelector('.ql-editor');
-//   const topControls = document.querySelector('.top-controls');
-//   const headerSection = document.querySelector('.header-section');
-//   const styleInner = document.querySelector('.style-inner');
-//   const bottomControls = document.querySelector('.bottom-controls');
-
-//   if (!textAreaContainer || !mainTextAreaSection) {
-//     console.error('Required container elements are missing');
-//     return;
-//   }
-
-//   // Set minimum height
-//   const minHeight = 620;
-
-//   // Get heights of fixed elements
-//   const topControlsHeight = topControls ? topControls.offsetHeight : 0;
-//   const headerHeight = headerSection ? headerSection.offsetHeight : 0;
-//   const bottomControlsHeight = bottomControls ? bottomControls.offsetHeight : 0;
-
-//   // Get correction options height (initially hidden, but shows after responses)
-//   const correctionOptions = document.querySelector('.correction-options');
-//   const correctionOptionsHeight = correctionOptions && window.getComputedStyle(correctionOptions).display !== 'none'
-//     ? correctionOptions.offsetHeight : 0;
-
-//   // Get padding from inner-textarea-bottom (25px top + 25px bottom = 50px)
-//   const innerTextareaBottom = document.querySelector('.inner-textarea-bottom');
-//   const innerPadding = innerTextareaBottom ? 50 : 0;
-
-//   // Calculate editor content height (let it size naturally to content)
-//   let editorContentHeight = minHeight;
-//   if (editor) {
-//     // Temporarily set height to auto to get the natural content height
-//     const originalHeight = editor.style.height;
-//     const originalOverflow = editor.style.overflowY;
-
-//     editor.style.height = 'auto';
-//     editor.style.overflowY = 'hidden';
-
-//     // Get the natural height the editor wants (this should be 935px for your content)
-//     editorContentHeight = Math.max(editor.scrollHeight, minHeight);
-
-//     // Restore original styles
-//     editor.style.height = originalHeight;
-//     editor.style.overflowY = originalOverflow;
-//   }
-
-//   // Simple logic: main-textarea-section = editor content + top controls
-//   const mainTextAreaSectionHeight = editorContentHeight + topControlsHeight;
-
-//   // Calculate style-inner content height if visible
-//   let styleInnerContentHeight = 0;
-//   let styleInnerTotalHeight = minHeight;
-
-//   if (styleInner && window.getComputedStyle(styleInner).display !== 'none') {
-//     // Temporarily remove constraints to measure natural height
-//     const originalStyleHeight = styleInner.style.height;
-//     const originalStyleOverflow = styleInner.style.overflowY;
-
-//     styleInner.style.height = 'auto';
-//     styleInner.style.overflowY = 'visible';
-
-//     // Get the natural content height
-//     styleInnerContentHeight = styleInner.scrollHeight;
-//     styleInnerTotalHeight = Math.max(styleInnerContentHeight + headerHeight, minHeight);
-
-//     // Restore original styles temporarily
-//     styleInner.style.height = originalStyleHeight;
-//     styleInner.style.overflowY = originalStyleOverflow;
-//   }
-
-//   // MAIN LOGIC: Calculate container height needed
-//   // Container needs: main-textarea-section + bottom controls + correction options + padding
-//   const effectivePadding = correctionOptionsHeight > 0 ? innerPadding : 20;
-//   const totalContainerHeight = mainTextAreaSectionHeight + bottomControlsHeight + correctionOptionsHeight + effectivePadding;
-
-//   // Final height is the maximum of all requirements
-//   let finalHeight = Math.max(totalContainerHeight, styleInnerTotalHeight, minHeight);
-
-//   // Debug log to verify calculations
-//   console.log('Height calculations:', {
-//     editorContentHeight,
-//     topControlsHeight,
-//     mainTextAreaSectionHeight,
-//     bottomControlsHeight,
-//     correctionOptionsHeight,
-//     effectivePadding,
-//     totalContainerHeight,
-//     finalHeight
-//   });
-
-//   // Apply the final height to containers
-//   textAreaContainer.style.height = `${finalHeight}px`;
-
-//   // Main textarea section gets exactly what it needs: editor content + top controls
-//   mainTextAreaSection.style.height = `${mainTextAreaSectionHeight}px`;
-
-//   if (correctionSidebar) {
-//     correctionSidebar.style.height = `${finalHeight}px`;
-//   }
-
-//   // Handle style-inner specifically
-//   if (styleInner && window.getComputedStyle(styleInner).display !== 'none') {
-//     const availableHeight = finalHeight - headerHeight;
-//     styleInner.style.height = `${availableHeight}px`;
-//   }
-
-//   // Handle other sidebar sections (improv-inner, correction-inner)
-//   const improvInner = document.querySelector('.improv-inner');
-//   const correctionInner = document.querySelector('.correction-inner');
-//   const correctionContent = document.querySelector('.correction-content');
-//   const voiceSection = document.querySelector('.voice-section');
-
-//   if (improvInner && window.getComputedStyle(improvInner).display !== 'none') {
-//     const availableHeight = finalHeight - headerHeight;
-//     improvInner.style.height = `${availableHeight}px`;
-
-//     if (correctionContent) {
-//       correctionContent.style.height = `${availableHeight}px`;
-//     }
-//   }
-
-//   if (correctionInner && window.getComputedStyle(correctionInner).display !== 'none') {
-//     const availableHeight = finalHeight - headerHeight;
-//     correctionInner.style.height = `${availableHeight}px`;
-
-//     const correctionInnerMain = document.querySelector('.correction-inner-main');
-//     if (correctionInnerMain) {
-//       correctionInnerMain.style.height = `${availableHeight}px`;
-//     }
-//   }
-
-//   // Handle voice section if visible
-//   if (voiceSection && window.getComputedStyle(voiceSection).display !== 'none') {
-//     const availableHeight = finalHeight - headerHeight;
-//     voiceSection.style.height = `${availableHeight}px`;
-//   }
-// }
-
 // Simple event listeners - NO debounce, NO MutationObserver
 document.addEventListener('DOMContentLoaded', function () {
   // Initial height adjustment
@@ -3214,22 +2979,24 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!container || !handle || !progress) return; // Exit if elements don't exist
 
   let isDragging = false;
-  let lastKnownPercent = 75; // Start at "convencing" (professional)
+  let lastKnownPercent = 50; // Start at "convencing" (professional)
 
   // Update for 4 points matching your option buttons
-  const STEP_POINTS = [25, 50, 75, 100]; // 4 evenly spaced points
+  const STEP_POINTS = [0, 25, 50, 75, 100]; // 4 evenly spaced points
   const VALUE_MAP = {
-    25: 'simplify', // Hverdagssprog
-    50: 'elaborate', // Let at forstå
-    75: 'convencing', // Formelt sprog
-    100: 'concise' // Mere humor
+    0: 'simplify', // Uformel
+    25: 'elaborate', // Personlig
+    50: 'convencing', // Neutral
+    75: 'concise', // Høflig
+    100: 'professional' // Professionel
   };
 
   const VOICE_SETTINGS = {
-    simplify: { title: 'Hverdagssprog', subtitle: 'Sådan som du normalt snakker' },
-    elaborate: { title: 'Let at forstå', subtitle: 'Korte sætninger med enkle ord' },
-    convencing: { title: 'Formelt sprog', subtitle: 'Til arbejde og professionelle emails' },
-    concise: { title: 'Mere humor', subtitle: 'Gør teksten sjovere og mindre seriøs' }
+    simplify: { title: 'Uformel', subtitle: 'Afslappet og venlig' },
+    elaborate: { title: 'Personlig', subtitle: 'Varm og personlig' },
+    convencing: { title: 'Neutral', subtitle: 'Klar og direkte' },
+    concise: { title: 'Høflig', subtitle: 'Respektfuld og venlig' },
+    professional: { title: 'Professionel', subtitle: 'Formel og autoritativ' }
   };
 
   function getGradientForPosition(percent) {
@@ -3342,7 +3109,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Initialize with "convencing" (formelt sprog)
-  updateSliderPosition(75);
+  updateSliderPosition(50);
 
   // Add voice change button functionality
   document.getElementById('voiceChangeBtn')?.addEventListener('click', () => {
