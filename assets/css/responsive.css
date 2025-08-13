@@ -1,7 +1,6 @@
 /* ================================= TABLET RESPONSIVE (426px - 768px) ================================= */
 
 @media (min-width: 426px) and (max-width: 768px) {
-
   /* Header adjustments for tablet */
   .hamdan-header {
     padding: 24px 20px;
@@ -88,7 +87,6 @@
   }
 
   .middle-controls {
-    order: -1;
     width: fit-content;
     justify-content: center;
   }
@@ -262,7 +260,6 @@
 /* ================================= MOBILE RESPONSIVE (300px - 426px) ================================= */
 
 @media (min-width: 300px) and (max-width: 426px) {
-
   /* Header mobile layout */
   .hamdan-header {
     padding: 16px 12px;
@@ -353,23 +350,22 @@
   .left-controls,
   .right-controls {
     gap: 6px;
-    justify-content: left;
+    justify-content: center;
     width: 100%;
   }
 
   .middle-controls {
-    order: -1;
     width: fit-content;
     justify-content: center;
+    align-items: center;
   }
 
   .left-controls {
-    order: 2;
   }
 
   .right-controls {
-    order: -1;
-    width: 1px;
+    order: 2;
+    align-items: center;
   }
 
   .control-btn {
@@ -788,7 +784,6 @@
 /* ================================= TOUCH DEVICE OPTIMIZATIONS ================================= */
 
 @media (hover: none) and (pointer: coarse) {
-
   .hamdan-header-btn,
   .copy-btn1,
   .delete-btns,
@@ -829,9 +824,7 @@
 
 /* ================================= HIGH DPI SCREENS ================================= */
 
-@media (-webkit-min-device-pixel-ratio: 2),
-(min-resolution: 192dpi) {
-
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .hamdan-header,
   .saved-response,
   .popup-content,
@@ -886,7 +879,6 @@
 /* ================================= PRINT STYLES ================================= */
 
 @media print {
-
   .hamdan-header-right,
   .correction-options,
   .correction-sidebar,
@@ -916,7 +908,6 @@
 /* ================================= ACCESSIBILITY IMPROVEMENTS ================================= */
 
 @media (prefers-reduced-motion: reduce) {
-
   .hamdan-header,
   .control-btn,
   .option-btn,
@@ -938,7 +929,6 @@
 }
 
 @media (prefers-contrast: high) {
-
   .hamdan-header,
   .control-btn,
   .option-btn,
@@ -959,7 +949,6 @@
 
 /* Prevent zoom on input focus */
 @media (max-width: 768px) {
-
   input[type='text'],
   textarea,
   select {
@@ -974,7 +963,6 @@
 
 /* iOS Safari specific fixes */
 @supports (-webkit-touch-callout: none) {
-
   .modal-content,
   .popup-content {
     -webkit-overflow-scrolling: touch;

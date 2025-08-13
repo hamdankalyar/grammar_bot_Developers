@@ -81,6 +81,22 @@ export function handleCustomLanguage(input, languageSelect) {
   const languageText = languageSelect.querySelector('.dk-language-text');
   languageText.textContent = customLanguage;
 
+  // Update icon for custom language
+  const mainLanguageIcon = languageSelect.querySelector('.dk-language-icon');
+  if (mainLanguageIcon) {
+    mainLanguageIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" style="margin-right: 8px;">
+                <g clip-path="url(#clip0_custom_globe_1755061628572)">
+                    <circle cx="12" cy="12" r="10" stroke="#6B7280" stroke-width="2" fill="none"></circle>
+                    <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="#6B7280" stroke-width="2" fill="none"></path>
+                </g>
+                <defs>
+                    <clipPath id="clip0_custom_globe_1755061628572">
+                        <rect width="24" height="24" fill="white"></rect>
+                    </clipPath>
+                </defs>
+            </svg>`;
+  }
+
   // Update the current language
   // If it's a known language name, use its code, otherwise use the custom input as the code
   currentLanguage = languageMap[customLanguage] || customLanguage.toLowerCase();
@@ -102,6 +118,13 @@ function handleDropdownItemClick(item) {
   const selectedLang = item.getAttribute('data-lang');
 
   languageText.textContent = selectedLang;
+
+  // Update the main language icon
+  const mainLanguageIcon = languageSelect.querySelector('.dk-language-icon');
+  const selectedIcon = item.querySelector('.dk-language-icon');
+  if (mainLanguageIcon && selectedIcon) {
+    mainLanguageIcon.innerHTML = selectedIcon.innerHTML;
+  }
 
   // Update the current language
   currentLanguage = languageMap[selectedLang] || selectedLang;
@@ -177,19 +200,16 @@ function handleDocumentClick(e) {
  * @param {Function} updatePlaceholderFunction - Callback to update placeholder
  */
 export function initLanguageDropdown(initialLanguage = 'da', updatePlaceholderFunction) {
-  // Set initial language and callback
   currentLanguage = initialLanguage;
   updatePlaceholderCallback = updatePlaceholderFunction;
 
-  // Add document click listener
   document.addEventListener('click', handleDocumentClick);
 
-  // Initialize all language select containers
   document.querySelectorAll('.dk-language-select').forEach(select => {
-    // Add click listener to language select container
+    // container click
     select.addEventListener('click', e => handleLanguageSelectClick(e, select));
 
-    // Handle custom input if it exists
+    // custom input
     const customInput = select.querySelector('.dk-custom-input');
     if (customInput) {
       customInput.addEventListener('keypress', e =>
@@ -197,9 +217,19 @@ export function initLanguageDropdown(initialLanguage = 'da', updatePlaceholderFu
       );
       customInput.addEventListener('click', handleCustomInputClick);
     }
+
+    // ✅ add button (must be inside this block)
+    const addBtn = select.querySelector('.dk-add-btn');
+    if (addBtn && customInput) {
+      addBtn.addEventListener('click', e => {
+        e.preventDefault(); // avoid form submit
+        e.stopPropagation(); // don't let the select's click handler close first
+        handleCustomLanguage(customInput, select); // same path as Enter
+      });
+    }
   });
 
-  // Initialize all dropdown items
+  // dropdown items
   document.querySelectorAll('.dk-dropdown-item').forEach(item => {
     item.addEventListener('click', e => {
       e.stopPropagation();

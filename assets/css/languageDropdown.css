@@ -115,7 +115,8 @@
   background: #f8f9fa;
   color: #495057;
   font-weight: 500;
-  margin-bottom: 3px; /* Keep consistent margin */
+  margin-bottom: 3px;
+  /* Keep consistent margin */
 }
 
 @keyframes dkFadeIn {
@@ -123,6 +124,7 @@
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -219,4 +221,55 @@
   font-size: 14px;
   font-weight: 400;
   line-height: 18px;
+}
+
+/* Real button styled like the old ::after */
+.dk-add-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #d97398;
+  padding: 4px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  opacity: 0;
+}
+
+.dk-custom-language:hover .dk-add-btn,
+.dk-custom-language:focus-within .dk-add-btn {
+  opacity: 1;
+}
+
+/* .dk-add-btn:hover {
+  background-color: rgba(217, 115, 152, 0.1);
+  color: #c86587;
+} */
+
+.dk-custom-language {
+  position: relative;
+  /* so the absolute button is anchored here */
+}
+
+.dk-add-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  opacity: 0;
+  z-index: 1;
+  /* ensure it's above the input */
+}
+
+.dk-custom-language:hover .dk-add-btn,
+.dk-custom-language:focus-within .dk-add-btn {
+  opacity: 1;
 }

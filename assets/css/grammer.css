@@ -70,11 +70,11 @@
   height: 0;
 }
 
-.switch-input:checked+.switch-slider {
+.switch-input:checked + .switch-slider {
   background-color: #141b34;
 }
 
-.switch-input:checked+.switch-slider:before {
+.switch-input:checked + .switch-slider:before {
   transform: translateX(13px);
 }
 
@@ -174,6 +174,7 @@
   transition: height 0.3s ease-in-out;
   box-sizing: border-box;
   align-items: stretch;
+  gap: 1%;
 }
 
 .inner-textarea-bottom {
@@ -239,6 +240,7 @@
   padding: 5px;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
   gap: 10px;
   border-radius: 100px;
   border: 1px solid var(--Text-Primary-Dark, #e4e4e4);
@@ -463,10 +465,29 @@
     0 1px 3px 0 rgba(0, 0, 0, 0.04);
 }
 
-.write-applicationDiv:hover {
+.write-applicationDiv:not(:disabled):hover {
   opacity: 1;
   border: 1px solid #e24668 !important;
   background: #ce3657 !important;
+}
+
+/* -------------------------- gen btn disabled ---------------- */
+.disabled-gen-btn {
+  background-color: rgb(255, 255, 255) !important;
+  color: rgb(17, 17, 17) !important;
+  cursor: not-allowed !important;
+  border: 1px solid rgb(229, 229, 231) !important;
+  opacity: 0.7 !important;
+  pointer-events: none !important;
+}
+
+.disabled-gen-btn:hover {
+  background-color: rgb(255, 255, 255) !important;
+  color: rgb(17, 17, 17) !important;
+  cursor: not-allowed !important;
+  border: 1px solid rgb(229, 229, 231) !important;
+  opacity: 0.7 !important;
+  pointer-events: none !important;
 }
 
 /* -------------------------------------- grammer highlighting code ---------------------------- */
@@ -1078,7 +1099,6 @@
 }
 
 @keyframes fade {
-
   0%,
   100% {
     opacity: 0.3;
@@ -1273,8 +1293,6 @@
 /* Override any conflicting box-sizing */
 .text-area-container *,
 .main-textarea-section * {
-  font-weight: 400;
-
   font-size: 14px;
   font-family: Poppins;
   box-sizing: border-box;
@@ -1286,13 +1304,17 @@ mark.word-highlight * {
   background-color: #fff1c2 !important;
 }
 
-.ql-editor>h1:first-child+p>br:only-child,
-.ql-editor>h2:first-child+p>br:only-child,
-.ql-editor>h3:first-child+p>br:only-child,
-.ql-editor>h4:first-child+p>br:only-child,
-.ql-editor>h5:first-child+p>br:only-child,
-.ql-editor>h6:first-child+p>br:only-child {
+.ql-editor > h1:first-child + p > br:only-child,
+.ql-editor > h2:first-child + p > br:only-child,
+.ql-editor > h3:first-child + p > br:only-child,
+.ql-editor > h4:first-child + p > br:only-child,
+.ql-editor > h5:first-child + p > br:only-child,
+.ql-editor > h6:first-child + p > br:only-child {
   display: none !important;
+}
+
+#inputText *:not(.word-highlight) {
+  background-color: #fff !important;
 }
 
 /* ---------------- char limiting code ---------------- */
@@ -1310,23 +1332,4 @@ mark.word-highlight * {
 .correction-sidebar-opsaeting-svg {
   width: 16px;
   height: 14px;
-}
-
-/* -------------------------- gen btn disabled ---------------- */
-.disabled-gen-btn {
-  background-color: rgb(255, 255, 255) !important;
-  color: rgb(17, 17, 17) !important;
-  cursor: not-allowed !important;
-  border: 1px solid rgb(229, 229, 231) !important;
-  opacity: 0.7 !important;
-  pointer-events: none !important;
-}
-
-.disabled-gen-btn:hover {
-  background-color: rgb(255, 255, 255) !important;
-  color: rgb(17, 17, 17) !important;
-  cursor: not-allowed !important;
-  border: 1px solid rgb(229, 229, 231) !important;
-  opacity: 0.7 !important;
-  pointer-events: none !important;
 }
