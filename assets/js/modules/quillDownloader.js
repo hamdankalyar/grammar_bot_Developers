@@ -274,19 +274,308 @@ function stripGrammarRemoved(delta) {
   return { ops: cleanedOps };
 }
 
-// Perfect DOCX with fixed font and perfect lists
+// NEW: Enhanced function to convert HTML to Delta with proper bold formatting
+function htmlToDeltaWithBoldSupport(htmlContent) {
+  // Create a temporary div to parse HTML
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = htmlContent;
+
+  const delta = { ops: [] };
+
+  // Process each element in the HTML
+  function processNode(node) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      if (node.textContent) {
+        const parentElement = node.parentElement;
+        const attributes = {};
+
+        // Check for formatting based on parent elements
+        let currentElement = parentElement;
+        while (currentElement && currentElement !== tempDiv) {
+          const tagName = currentElement.tagName?.toLowerCase();
+
+          switch (tagName) {
+            case 'strong':
+            case 'b':
+              attributes.bold = true;
+              break;
+            case 'em':
+            case 'i':
+              attributes.italic = true;
+              break;
+            case 'u':
+              attributes.underline = true;
+              break;
+            case 'strike':
+            case 's':
+              attributes.strike = true;
+              break;
+          }
+
+          currentElement = currentElement.parentElement;
+        }
+
+        delta.ops.push({
+          insert: node.textContent,
+          attributes: Object.keys(attributes).length > 0 ? attributes : undefined
+        });
+      }
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      const tagName = node.tagName.toLowerCase();
+
+      // Handle line breaks and block elements
+      if (['p', 'div', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(tagName)) {
+        // Process children first
+        Array.from(node.childNodes).forEach(processNode);
+
+        // Add line break for block elements (except the last one)
+        if (tagName !== 'br') {
+          delta.ops.push({ insert: '\n' });
+        }
+      } else {
+        // For inline elements, process children
+        Array.from(node.childNodes).forEach(processNode);
+      }
+    }
+  }
+
+  Array.from(tempDiv.childNodes).forEach(processNode);
+
+  return delta;
+}
+
+// NEW: Sanitize HTML for DOCX - keep h1-h6 tags, don't convert to strong
+function sanitizeHtmlContentForDocx(rawHtml) {
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = rawHtml;
+
+  // 1. Keep h1-h6 tags as they are - DON'T convert to strong for DOCX
+
+  // 2. Remove <p><br></p> after headings (h1-h6 and strong)
+  const headingElements = tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6, strong');
+  headingElements.forEach(heading => {
+    const nextSibling = heading.nextElementSibling;
+    if (nextSibling && nextSibling.tagName === 'P') {
+      if (
+        (nextSibling.childNodes.length === 1 &&
+          nextSibling.firstChild &&
+          nextSibling.firstChild.nodeType === Node.ELEMENT_NODE &&
+          nextSibling.firstChild.tagName === 'BR') ||
+        nextSibling.innerHTML.trim().toLowerCase() === '<br>' ||
+        nextSibling.innerHTML.trim().toLowerCase() === '<br/>' ||
+        nextSibling.innerHTML.trim().toLowerCase() === '<br />'
+      ) {
+        nextSibling.parentNode.removeChild(nextSibling);
+      }
+    }
+  });
+
+  // 3. Convert bullet-point <ol> items with data-list="bullet" to <ul>
+  const olElements = [...tempDiv.querySelectorAll('ol')];
+  olElements.forEach(ol => {
+    const ul = document.createElement('ul');
+    let liMoved = false;
+
+    [...ol.children].forEach(li => {
+      const dataList = li.getAttribute('data-list');
+      if (dataList === 'bullet') {
+        li.removeAttribute('data-list');
+        ul.appendChild(li.cloneNode(true));
+        li.remove();
+        liMoved = true;
+      }
+    });
+
+    if (liMoved) {
+      if (ol.children.length === 0) {
+        ol.replaceWith(ul);
+      } else {
+        ol.parentNode.insertBefore(ul, ol);
+      }
+    }
+  });
+
+  return tempDiv.innerHTML;
+}
+
+// NEW: Enhanced function to convert HTML to Delta with proper heading and bold formatting
+function htmlToDeltaWithHeadingSupport(htmlContent) {
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = htmlContent;
+
+  const delta = { ops: [] };
+
+  function processNode(node) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      if (node.textContent) {
+        const parentElement = node.parentElement;
+        const attributes = {};
+
+        // Check for formatting based on parent elements
+        let currentElement = parentElement;
+        while (currentElement && currentElement !== tempDiv) {
+          const tagName = currentElement.tagName?.toLowerCase();
+
+          switch (tagName) {
+            case 'h1':
+              attributes.header = 1;
+              break;
+            case 'h2':
+              attributes.header = 2;
+              break;
+            case 'h3':
+              attributes.header = 3;
+              break;
+            case 'h4':
+              attributes.header = 4;
+              break;
+            case 'h5':
+              attributes.header = 5;
+              break;
+            case 'h6':
+              attributes.header = 6;
+              break;
+            case 'strong':
+            case 'b':
+              attributes.bold = true;
+              break;
+            case 'em':
+            case 'i':
+              attributes.italic = true;
+              break;
+            case 'u':
+              attributes.underline = true;
+              break;
+            case 'strike':
+            case 's':
+              attributes.strike = true;
+              break;
+          }
+
+          currentElement = currentElement.parentElement;
+        }
+
+        delta.ops.push({
+          insert: node.textContent,
+          attributes: Object.keys(attributes).length > 0 ? attributes : undefined
+        });
+      }
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      const tagName = node.tagName.toLowerCase();
+
+      // Handle line breaks and block elements
+      if (['p', 'div', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(tagName)) {
+        // Process children first
+        Array.from(node.childNodes).forEach(processNode);
+
+        // Add line break for block elements (except the last one)
+        if (tagName !== 'br') {
+          // For headings, add the header attribute to the newline
+          const attributes = {};
+          if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(tagName)) {
+            const headerLevel = parseInt(tagName.charAt(1));
+            attributes.header = headerLevel;
+          }
+
+          delta.ops.push({
+            insert: '\n',
+            attributes: Object.keys(attributes).length > 0 ? attributes : undefined
+          });
+        }
+      } else {
+        // For inline elements, process children
+        Array.from(node.childNodes).forEach(processNode);
+      }
+    }
+  }
+
+  Array.from(tempDiv.childNodes).forEach(processNode);
+
+  return delta;
+}
+
+// NEW: Special sanitization for DOCX that preserves strong tags and prevents h-tag conversion
+function sanitizeHtmlForDocxOnly(rawHtml) {
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = rawHtml;
+
+  // Remove inline styles only
+  const elements = tempDiv.querySelectorAll('*');
+  elements.forEach(element => {
+    element.removeAttribute('style');
+  });
+
+  // Remove <p><br></p> after headings and strong tags
+  const importantElements = tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6, strong');
+  importantElements.forEach(element => {
+    const nextSibling = element.nextElementSibling;
+    if (nextSibling && nextSibling.tagName === 'P') {
+      if (
+        (nextSibling.childNodes.length === 1 &&
+          nextSibling.firstChild &&
+          nextSibling.firstChild.nodeType === Node.ELEMENT_NODE &&
+          nextSibling.firstChild.tagName === 'BR') ||
+        nextSibling.innerHTML.trim().toLowerCase() === '<br>' ||
+        nextSibling.innerHTML.trim().toLowerCase() === '<br/>' ||
+        nextSibling.innerHTML.trim().toLowerCase() === '<br />'
+      ) {
+        nextSibling.parentNode.removeChild(nextSibling);
+      }
+    }
+  });
+
+  // Handle bullet lists
+  const olElements = [...tempDiv.querySelectorAll('ol')];
+  olElements.forEach(ol => {
+    const ul = document.createElement('ul');
+    let liMoved = false;
+
+    [...ol.children].forEach(li => {
+      const dataList = li.getAttribute('data-list');
+      if (dataList === 'bullet') {
+        li.removeAttribute('data-list');
+        ul.appendChild(li.cloneNode(true));
+        li.remove();
+        liMoved = true;
+      }
+    });
+
+    if (liMoved) {
+      if (ol.children.length === 0) {
+        ol.replaceWith(ul);
+      } else {
+        ol.parentNode.insertBefore(ul, ol);
+      }
+    }
+  });
+
+  return tempDiv.innerHTML;
+}
+
+// Perfect DOCX with fixed font and perfect lists - ENHANCED with heading support
 async function downloadDocx() {
   try {
-    // ① Grab the editor's raw Delta
-    const originalDelta = quill1.getContents();
-    console.log('Before cleaning:', JSON.stringify(originalDelta, null, 2));
+    // Get the RAW HTML content and use DOCX-only sanitization
+    const rawHtml = quill1.root.innerHTML;
+    console.log('Raw HTML from Quill:', rawHtml);
 
-    // ② Drop the grammar-removed segments
-    const cleanedDelta = stripGrammarRemoved(originalDelta);
+    // Use special DOCX-only sanitization that doesn't convert strong to h tags
+    const htmlContent = sanitizeHtmlForDocxOnly(rawHtml);
+
+    console.log('HTML content for DOCX (strong tags preserved):', htmlContent);
+
+    // Convert HTML to Delta with proper heading and bold support
+    const delta = htmlToDeltaWithHeadingSupport(htmlContent);
+
+    console.log('Delta for DOCX with headings:', JSON.stringify(delta, null, 2));
+
+    // Clean the Delta (remove grammar-removed segments)
+    const cleanedDelta = stripGrammarRemoved(delta);
     console.log('Cleaned Delta for DOCX:', JSON.stringify(cleanedDelta, null, 2));
 
-    // ③ Build the paragraphs and doc exactly as before
+    // Build the paragraphs and doc
     const paragraphs = deltaToDocxParagraphs(cleanedDelta);
+
     // Create document with list support
     const doc = new docx.Document({
       numbering: {
@@ -370,17 +659,18 @@ async function downloadDocx() {
     // Download
     saveAs(blob, `${getDocumentTitle()}.docx`);
 
-    console.log('Perfect DOCX created with fixed font and lists');
+    console.log('Perfect DOCX created with fixed font, lists, and BOLD support');
   } catch (error) {
     console.error('Error creating DOCX:', error);
   }
 }
 
-// Convert Delta to DOCX paragraphs with proper list ending spacing
+// Convert Delta to DOCX paragraphs with proper list ending spacing and heading support
 function deltaToDocxParagraphs(delta) {
   const paragraphs = [];
   let currentRuns = [];
   let previousWasList = false;
+  let currentAttributes = {};
 
   delta.ops.forEach((op, index) => {
     if (typeof op.insert === 'string') {
@@ -402,20 +692,26 @@ function deltaToDocxParagraphs(delta) {
             // Check if we need spacing after list ends
             const needsListEndSpacing = previousWasList && !isCurrentList;
 
-            paragraphs.push(createParagraph(currentRuns, attributes, needsListEndSpacing));
+            // Use the attributes from the newline for paragraph formatting (especially for headings)
+            const paragraphAttributes = { ...currentAttributes, ...attributes };
+
+            paragraphs.push(createParagraph(currentRuns, paragraphAttributes, needsListEndSpacing));
             currentRuns = [];
             previousWasList = isCurrentList;
+            currentAttributes = {}; // Reset for next paragraph
           }
         });
       } else if (text) {
         currentRuns.push(createTextRun(text, attributes));
+        // Store attributes for potential paragraph use
+        currentAttributes = { ...currentAttributes, ...attributes };
       }
     }
   });
 
   // Add final paragraph if there are remaining runs
   if (currentRuns.length > 0) {
-    paragraphs.push(createParagraph(currentRuns, {}, false));
+    paragraphs.push(createParagraph(currentRuns, currentAttributes, false));
   }
 
   // Ensure at least one paragraph
@@ -430,18 +726,48 @@ function deltaToDocxParagraphs(delta) {
   return paragraphs;
 }
 
-// Create text run with FIXED FONT (Calibri 11pt always)
+// ENHANCED: Create text run with FIXED FONT and support for headings and bold
 function createTextRun(text, attributes) {
   const formatting = {
     text: text,
     font: 'Calibri',
-    size: 22, // Always 11pt (22 half-points)
     color: '000000' // Always black
   };
 
-  // Only handle basic formatting
-  if (attributes.bold) {
-    formatting.bold = true;
+  // Handle heading styles with proper sizing and bold
+  if (attributes.header) {
+    formatting.bold = true; // All headings are bold
+
+    switch (attributes.header) {
+      case 1:
+        formatting.size = 32; // 16pt (32 half-points)
+        break;
+      case 2:
+        formatting.size = 28; // 14pt (28 half-points)
+        break;
+      case 3:
+        formatting.size = 26; // 13pt (26 half-points)
+        break;
+      case 4:
+        formatting.size = 24; // 12pt (24 half-points)
+        break;
+      case 5:
+        formatting.size = 22; // 11pt (22 half-points)
+        break;
+      case 6:
+        formatting.size = 20; // 10pt (20 half-points)
+        break;
+      default:
+        formatting.size = 22; // Default 11pt
+    }
+  } else {
+    // Regular text size
+    formatting.size = 22; // Always 11pt (22 half-points)
+
+    // Handle bold formatting for non-headings
+    if (attributes.bold || attributes.strong) {
+      formatting.bold = true;
+    }
   }
 
   if (attributes.italic) {
@@ -468,7 +794,7 @@ function createTextRun(text, attributes) {
   return new docx.TextRun(formatting);
 }
 
-// Create paragraph with perfect list support and 20px spacing
+// Create paragraph with perfect list support, heading support, and 20px spacing
 function createParagraph(runs, attributes, needsListEndSpacing = false) {
   const paragraphProps = {
     children: runs.length > 0 ? runs : [createTextRun(' ', {})],
@@ -478,8 +804,18 @@ function createParagraph(runs, attributes, needsListEndSpacing = false) {
     }
   };
 
+  // Handle headings with extra spacing
+  if (attributes.header) {
+    paragraphProps.spacing = {
+      after: 200, // Smaller spacing after headings
+      before: attributes.header <= 2 ? 400 : 200 // More space before H1/H2
+    };
+
+    // Heading style
+    paragraphProps.heading = `Heading${attributes.header}`;
+  }
   // Handle lists perfectly
-  if (attributes.list) {
+  else if (attributes.list) {
     const indentLevel = attributes.indent || 0;
 
     // Remove spacing for list items

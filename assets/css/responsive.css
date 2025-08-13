@@ -1,24 +1,292 @@
-/* Mobile First: 320px (Small Mobile) */
+/* ================================= TABLET RESPONSIVE (426px - 768px) ================================= */
+
+@media (min-width: 426px) and (max-width: 768px) {
+
+  /* Header adjustments for tablet */
+  .hamdan-header {
+    padding: 24px 20px;
+    margin-bottom: 20px;
+    flex-direction: column;
+    gap: 16px;
+    border-radius: 14px;
+    text-align: center;
+  }
+
+  .hamdan-header-left {
+    order: 1;
+    width: 100%;
+    text-align: center;
+  }
+
+  .hamdan-header-left .hamdan-header-title {
+    font-size: 24px;
+    line-height: 28px;
+    margin-bottom: 8px;
+  }
+
+  .hamdan-header-subtitle {
+    font-size: 13px;
+    line-height: 17px;
+    margin-bottom: 8px !important;
+  }
+
+  #show-tutorial-btn {
+    font-size: 11px;
+    line-height: 15px;
+    gap: 5px;
+    justify-content: center;
+    margin: 0 auto;
+  }
+
+  .hamdan-header-right {
+    order: 2;
+    flex-direction: row;
+    gap: 12px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hamdan-header-btn {
+    font-size: 14px;
+    padding: 10px 16px;
+    gap: 6px;
+    border-radius: 9px;
+    flex: 1;
+    max-width: 200px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* Main content area */
+  .new-korrektur {
+    padding: 16px;
+  }
+
+  .text-area-container {
+    flex-direction: column;
+    min-height: 400px;
+    gap: 16px;
+  }
+
+  .inner-textarea-bottom {
+    flex-basis: 100%;
+    padding: 20px 16px;
+    border-radius: 8px;
+  }
+
+  /* Top controls */
+  .top-controls {
+    padding: 6px 10px;
+    border-radius: 25px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .left-controls,
+  .right-controls {
+    gap: 6px;
+  }
+
+  .middle-controls {
+    order: -1;
+    width: fit-content;
+    justify-content: center;
+  }
+
+  .control-btn {
+    padding: 8px;
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  .control-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Textarea adjustments */
+  .textarea-wrapper {
+    min-height: 180px;
+  }
+
+  #inputText {
+    min-height: 180px;
+    font-size: 15px;
+    padding: 16px;
+  }
+
+  /* Language dropdown */
+  .dk-translation-box {
+    width: 100%;
+    max-width: none;
+    margin-bottom: 12px;
+  }
+
+  .dk-language-select {
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+
+  /* Generate button */
+  .write-applicationDiv {
+    padding: 14px 20px;
+    border-radius: 8px;
+    font-size: 15px;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  /* Bottom controls layout */
+  .bottom-controls {
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+
+  /* Correction options */
+  .options-container {
+    padding: 12px;
+  }
+
+  .options-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 8px;
+  }
+
+  .option-btn {
+    width: 100%;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 8px;
+    font-size: 13px;
+    white-space: nowrap;
+    box-sizing: border-box;
+  }
+
+  .option-btn svg {
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+    flex-shrink: 0;
+  }
+
+  /* Sidebar adjustments */
+  .correction-sidebar {
+    max-width: 100%;
+    width: 100%;
+    margin-top: 16px;
+    min-height: 400px;
+  }
+
+  .header-section {
+    padding: 16px;
+    flex-direction: row;
+  }
+
+  .hk-dropdown-button {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .correction-content {
+    min-height: 150px;
+    padding: 8px 12px;
+  }
+
+  /* Modal adjustments */
+  .modal-content {
+    width: 85%;
+    margin: 5% auto;
+    padding: 16px;
+    height: 70vh;
+    border-radius: 20px;
+  }
+
+  .popup-content {
+    width: 85%;
+    height: 85%;
+    padding: 20px;
+    margin: 5% auto;
+    border-radius: 10px;
+  }
+
+  #popup-heading {
+    font-size: 22px;
+    line-height: 26px;
+  }
+
+  /* Counter and navigation */
+  .counter-nav-div {
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+    align-items: center;
+  }
+
+  .word-counter-div {
+    order: 1;
+    text-align: center;
+  }
+
+  .response-navigation {
+    order: 2;
+    justify-content: center;
+  }
+
+  /* Voice section */
+  .voice-section {
+    padding: 12px;
+  }
+
+  .voice-card {
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+
+  .dk-hamdan-input-container {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .dk-hamdan-custom-input {
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+}
+
+/* ================================= MOBILE RESPONSIVE (300px - 426px) ================================= */
+
 @media (min-width: 300px) and (max-width: 426px) {
+
+  /* Header mobile layout */
   .hamdan-header {
     padding: 16px 12px;
     margin-bottom: 16px;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
     border-radius: 12px;
+  }
+
+  .hamdan-header-left {
+    order: 1;
+    width: 100%;
+    text-align: center;
   }
 
   .hamdan-header-left .hamdan-header-title {
     font-size: 20px;
     line-height: 24px;
     margin-bottom: 6px;
-    text-align: center;
   }
 
   .hamdan-header-subtitle {
     font-size: 12px;
     line-height: 16px;
-    text-align: center;
     margin-bottom: 6px !important;
   }
 
@@ -27,50 +295,281 @@
     line-height: 14px;
     gap: 4px;
     justify-content: center;
+    margin: 0 auto;
   }
 
   .hamdan-header-right {
+    order: 2;
     flex-direction: column;
     gap: 8px;
     width: 100%;
   }
 
   .hamdan-header-btn {
-    font-size: 14px;
-    padding: 10px 8px;
+    font-size: 13px;
+    padding: 10px 12px;
     gap: 4px;
     border-radius: 8px;
     width: 100%;
     justify-content: center;
     text-align: center;
+    min-height: 44px;
   }
 
-  /* Modal adjustments */
+  /* Main content adjustments */
+  .new-korrektur {
+    padding: 12px 8px;
+  }
+
+  .text-area-container {
+    flex-direction: column;
+    min-height: 350px;
+    gap: 12px;
+  }
+
+  .inner-textarea-bottom {
+    flex-basis: 100%;
+    padding: 16px 12px;
+    border-radius: 8px;
+  }
+
+  /* Top controls mobile */
+  /* .top-controls {
+    padding: 8px;
+    border-radius: 20px;
+    flex-direction: column;
+    gap: 8px;
+  } */
+  .top-controls {
+    padding: 8px;
+    border-radius: 20px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: flex-start;
+  }
+
+  .left-controls,
+  .right-controls {
+    gap: 6px;
+    justify-content: left;
+    width: 100%;
+  }
+
+  .middle-controls {
+    order: -1;
+    width: fit-content;
+    justify-content: center;
+  }
+
+  .left-controls {
+    order: 2;
+  }
+
+  .right-controls {
+    order: -1;
+    width: 1px;
+  }
+
+  .control-btn {
+    padding: 10px;
+    min-width: 44px;
+    min-height: 44px;
+    flex: 1;
+    max-width: 80px;
+  }
+
+  .control-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Textarea mobile */
+  .textarea-wrapper {
+    min-height: 150px;
+  }
+
+  #inputText {
+    min-height: 150px;
+    font-size: 14px;
+    padding: 12px;
+    line-height: 22px;
+  }
+
+  /* Language dropdown mobile */
+  .dk-translation-box {
+    width: 100%;
+    margin-bottom: 12px;
+  }
+
+  .dk-language-select {
+    padding: 12px;
+    font-size: 12px;
+    border-radius: 8px;
+  }
+
+  .dk-language-text {
+    font-size: 12px;
+  }
+
+  .dk-dropdown {
+    padding: 8px;
+  }
+
+  .dk-dropdown-item {
+    padding: 10px 8px;
+    font-size: 12px;
+  }
+
+  /* Generate button mobile */
+  .write-applicationDiv {
+    padding: 14px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    width: 100%;
+    gap: 8px;
+  }
+
+  /* Bottom controls mobile */
+  .bottom-controls {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  /* Correction options mobile */
+  .correction-options {
+    margin-top: 12px;
+  }
+
+  .options-container {
+    padding: 8px;
+    border-radius: 8px;
+  }
+
+  .options-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 4px;
+  }
+
+  .option-btn {
+    width: 100%;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    font-size: 13px;
+    gap: 8px;
+    box-sizing: border-box;
+    border-radius: 6px;
+  }
+
+  .option-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .option-btn span {
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  /* TTS specific mobile adjustments */
+  .tts-container {
+    width: 100%;
+  }
+
+  .loader {
+    margin-right: 4px;
+  }
+
+  .dotted-loader {
+    width: 12px;
+    height: 16px;
+  }
+
+  .dotted-loader .dot {
+    width: 2px;
+    height: 2px;
+  }
+
+  /* Sidebar mobile - hidden or collapsed */
+  .correction-sidebar {
+    display: none !important;
+  }
+
+  /* Alternative: If you want to show sidebar on mobile */
+  /*
+  .correction-sidebar {
+    max-width: 100%;
+    width: 100%;
+    margin-top: 12px;
+    min-height: 300px;
+  }
+
+  .header-section {
+    padding: 12px;
+    flex-direction: row;
+  }
+
+  .sidebar-toggle-btn {
+    min-width: 36px;
+    min-height: 36px;
+    padding: 6px;
+  }
+
+  .hk-dropdown-button {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .hk-dropdown-text {
+    font-size: 12px;
+  }
+
+  .correction-content {
+    min-height: 120px;
+    padding: 8px;
+  }
+
+  .hamdan-speech-bubble {
+    width: 140px;
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  #gif svg {
+    width: 80px !important;
+    height: 80px !important;
+  }
+  */
+
+  /* Modal mobile */
   .modal-content {
     width: 95%;
     margin: 5% auto;
-    padding: 10px;
-    height: 50vh;
-    border-radius: 20px;
+    padding: 12px;
+    height: 60vh;
+    border-radius: 16px;
   }
 
   .popup-content {
     width: 95%;
     height: 85%;
-    padding: 15px;
+    padding: 16px;
     margin: 5% auto;
     border-radius: 8px;
   }
 
   #popup-heading {
-    font-size: 20px;
-    line-height: 24px;
+    font-size: 18px;
+    line-height: 22px;
     text-align: center;
-  }
-
-  #savedResponsesList {
-    padding: 0px 15px 15px 10px;
-    margin: 0 -10px;
   }
 
   .saved-response {
@@ -78,155 +577,427 @@
     margin-bottom: 8px;
     margin-right: 5px;
     border-radius: 4px;
-  }
-
-  .markdown-body {
-    font-size: 14px !important;
-  }
-
-  .delete-all-history {
-    font-size: 10px;
-    padding-top: 12px;
-  }
-
-  .del-history-text {
-    font-size: 14px;
-  }
-}
-
-/* 768px Tablet */
-@media (min-width: 426px) and (max-width: 768px) {
-  .hamdan-header {
-    padding: 28px 24px;
-    margin-bottom: 22px;
-    flex-direction: row;
-    border-radius: 16px;
-  }
-
-  .hamdan-header-left .hamdan-header-title {
-    font-size: 26px;
-    line-height: 30px;
-    margin-bottom: 9px;
-    text-align: left;
-  }
-
-  .hamdan-header-subtitle {
-    font-size: 14px;
-    line-height: 18px;
-    margin-bottom: 9px !important;
-  }
-
-  #show-tutorial-btn {
-    font-size: 12px;
-    line-height: 16px;
-    gap: 6px;
-  }
-
-  .hamdan-header-right {
-    flex-direction: row;
-    gap: 8px;
-  }
-
-  .hamdan-header-btn {
-    font-size: 15px;
-    padding: 11px;
-    gap: 5px;
-    border-radius: 9px;
-  }
-
-  /* Modal adjustments */
-  .modal-content {
-    width: 75%;
-    margin: 10% auto;
-    padding: 20px;
-    height: 60vh;
-    border-radius: 35px;
-  }
-
-  .popup-content {
-    width: 75%;
-    height: 80%;
-    padding: 25px;
-    border-radius: 12px;
-  }
-
-  #popup-heading {
-    font-size: 26px;
-    line-height: 30px;
+    font-size: 13px;
   }
 
   #savedResponsesList {
-    padding: 0px 22px 22px 20px;
-    margin: 0 -20px;
+    padding: 0px 12px 12px 8px;
+    margin: 0 -8px;
   }
 
-  .saved-response {
+  /* Counter and navigation mobile */
+  .counter-nav-div {
+    flex-direction: column-reverse;
+    gap: 10px;
+    margin-top: 12px;
+    align-items: center;
+  }
+
+  .word-counter-div {
+    order: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .word-count {
+    font-size: 12px;
+  }
+
+  #char-limit-warning {
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: 4px;
+  }
+
+  .response-navigation {
+    order: 2;
+    justify-content: center;
+    display: none;
+    /* Usually hidden on mobile */
+  }
+
+  /* Voice section mobile */
+  .voice-section {
+    padding: 8px;
+  }
+
+  .voice-card {
     padding: 12px;
-    margin-bottom: 9px;
-    margin-right: 9px;
+    margin-bottom: 10px;
+  }
+
+  .voice-card-title {
+    font-size: 16px;
+  }
+
+  .voice-card-subtitle {
+    font-size: 12px;
+  }
+
+  .voice-slider-labels {
+    font-size: 11px;
+    gap: 8px;
+  }
+
+  .voice-change-btn {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  .dk-hamdan-input-container {
+    max-width: 100%;
+    padding: 0;
+    margin-top: 8px;
+  }
+
+  .dk-hamdan-custom-input {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+
+  /* Style options mobile */
+  .style-option {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .style-icon {
+    padding: 6px;
+    margin-right: 8px;
+  }
+
+  .style-title {
+    font-size: 12px;
+  }
+
+  /* Language dropdown improvements */
+  .dk-dropdown-content {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .dk-custom-language {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .dk-custom-input {
+    font-size: 12px;
+    padding: 4px 6px;
+  }
+
+  /* History and modal improvements */
+  .delete-all-history {
+    font-size: 11px;
+    padding-top: 10px;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .del-history-text {
+    font-size: 12px;
+  }
+
+  .copy-btn1,
+  .delete-btns {
+    padding: 6px !important;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  /* Markdown content mobile */
+  .markdown-body {
+    font-size: 13px !important;
+  }
+
+  /* Grammar highlighting mobile */
+  .grammar-correction-added,
+  .grammar-correction-removed,
+  .grammar-correction-punctuation {
+    border-bottom-width: 1px;
   }
 }
 
-/* Touch device improvements */
-@media (pointer: coarse) {
+/* ================================= EXTRA SMALL MOBILE (300px - 360px) ================================= */
+
+@media (max-width: 360px) {
+  .hamdan-header {
+    padding: 12px 8px;
+    gap: 10px;
+  }
+
+  .hamdan-header-left .hamdan-header-title {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .hamdan-header-subtitle {
+    font-size: 11px;
+    line-height: 14px;
+  }
+
+  #show-tutorial-btn {
+    font-size: 9px;
+    line-height: 12px;
+  }
+
+  .hamdan-header-btn {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+
+  .new-korrektur {
+    padding: 8px 4px;
+  }
+
+  .inner-textarea-bottom {
+    padding: 12px 8px;
+  }
+
+  .control-btn {
+    min-width: 40px;
+    min-height: 40px;
+    padding: 8px;
+  }
+
+  #inputText {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .write-applicationDiv {
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+
+  .option-btn {
+    height: 44px;
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  .dk-language-select {
+    padding: 10px;
+    font-size: 11px;
+  }
+}
+
+/* ================================= TOUCH DEVICE OPTIMIZATIONS ================================= */
+
+@media (hover: none) and (pointer: coarse) {
+
   .hamdan-header-btn,
   .copy-btn1,
   .delete-btns,
   #show-tutorial-btn,
   .del-history-text,
-  .grammar-history-close {
-    min-height: 25px;
-    min-width: 25px;
+  .grammar-history-close,
+  .control-btn,
+  .option-btn,
+  .dk-language-select,
+  .dk-dropdown-item,
+  .write-applicationDiv {
+    min-height: 44px;
+    min-width: 44px;
   }
 
-  .saved-response:hover .button-container {
+  .saved-response:hover .button-container,
+  .button-container {
     opacity: 1 !important;
     visibility: visible !important;
   }
 
-  .button-container {
-    opacity: 1;
-    visibility: visible;
+  /* Improve tap targets */
+  .sidebar-toggle-btn,
+  .hk-dropdown-button {
+    min-height: 44px;
+    padding: 8px 12px;
+  }
+
+  /* Better spacing for touch */
+  .options-row {
+    gap: 12px;
+  }
+
+  .top-controls {
+    gap: 10px;
   }
 }
 
-/* High DPI screens */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+/* ================================= HIGH DPI SCREENS ================================= */
+
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+
   .hamdan-header,
   .saved-response,
   .popup-content,
-  .modal-content {
+  .modal-content,
+  .correction-sidebar,
+  .option-btn,
+  .control-btn {
     border-width: 0.5px;
   }
-}
 
-/* ================================= Correction Sidebar Styles ================================= */
-
-/* Main sidebar container */
-.correction-sidebar {
-  display: flex;
-  height: 524px;
-  flex-direction: column;
-  align-items: flex-start;
-  flex-shrink: 0;
-  border-radius: 10px;
-  min-height: 620px;
-  max-width: 25%;
-}
-
-/*
-  The below rule fixes the responsiveness of the sidebar on mobile devices.
-  It makes sure that the sidebar width is 100% on a smaller screen.
-*/
-@media (max-width: 768px) {
-  .correction-sidebar {
-    max-width: 100%;
-    /* Take full width on small screens */
-    width: 100%;
-    margin-top: 20px;
+  .control-btn svg,
+  .option-btn svg {
+    stroke-width: 1.25;
   }
 }
 
-.correction-sidebar.hidden {
-  display: none;
+/* ================================= LANDSCAPE ORIENTATION ================================= */
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .hamdan-header {
+    padding: 12px 16px;
+    margin-bottom: 12px;
+  }
+
+  .text-area-container {
+    min-height: 250px;
+  }
+
+  .textarea-wrapper {
+    min-height: 120px;
+  }
+
+  #inputText {
+    min-height: 120px;
+  }
+
+  .modal-content {
+    height: 80vh;
+    margin: 2% auto;
+  }
+
+  .popup-content {
+    height: 90vh;
+    margin: 2% auto;
+  }
+
+  .correction-sidebar {
+    min-height: 250px;
+  }
+}
+
+/* ================================= PRINT STYLES ================================= */
+
+@media print {
+
+  .hamdan-header-right,
+  .correction-options,
+  .correction-sidebar,
+  .modal,
+  .popup,
+  .bottom-controls .write-applicationDiv,
+  .top-controls {
+    display: none !important;
+  }
+
+  .hamdan-header {
+    border: 1px solid #000;
+    box-shadow: none;
+    background: white;
+  }
+
+  .text-area-container {
+    border: 1px solid #000;
+  }
+
+  #inputText {
+    border: none;
+    box-shadow: none;
+  }
+}
+
+/* ================================= ACCESSIBILITY IMPROVEMENTS ================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .hamdan-header,
+  .control-btn,
+  .option-btn,
+  .correction-sidebar,
+  .modal-content,
+  .popup-content,
+  .dk-dropdown-content {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .dotted-loader .dot {
+    animation: none !important;
+  }
+
+  .bubble {
+    animation: none !important;
+  }
+}
+
+@media (prefers-contrast: high) {
+
+  .hamdan-header,
+  .control-btn,
+  .option-btn,
+  .correction-sidebar {
+    border-width: 2px;
+    border-color: #000;
+  }
+
+  .hamdan-header-title {
+    background: #000;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+/* ================================= SPECIFIC MOBILE FIXES ================================= */
+
+/* Prevent zoom on input focus */
+@media (max-width: 768px) {
+
+  input[type='text'],
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+
+  .dk-custom-input,
+  .dk-hamdan-custom-input {
+    font-size: 16px !important;
+  }
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+
+  .modal-content,
+  .popup-content {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .correction-content {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Safe area handling for newer phones */
+@supports (padding: max(0px)) {
+  @media (max-width: 768px) {
+    .new-korrektur {
+      padding-left: max(8px, env(safe-area-inset-left));
+      padding-right: max(8px, env(safe-area-inset-right));
+      padding-bottom: max(8px, env(safe-area-inset-bottom));
+    }
+
+    .modal-content,
+    .popup-content {
+      margin-left: max(16px, env(safe-area-inset-left));
+      margin-right: max(16px, env(safe-area-inset-right));
+    }
+  }
 }

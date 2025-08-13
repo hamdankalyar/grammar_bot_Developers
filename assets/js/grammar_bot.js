@@ -375,7 +375,12 @@ quill1.clipboard.addMatcher('mark.word-highlight', flag('mark'));
 // Event handlers
 quill1.on('text-change', function (delta, oldDelta, source) {
   adjustHeights();
+  updateClearRevertButtonState(); // For clear/revert buttons
+  updateUndoRedoButtonState(); // For undo/redo buttons
 });
+
+// Also call both on generate button state updates
+quill1.on('text-change', updateGenerateButtonState);
 
 function updatePlaceholder(lang) {
   if (quill1) {
@@ -2409,6 +2414,7 @@ function analyzeTranslatedText() {
     isSmartCalled = true;
     return;
   }
+
   // ✅ Only show analyseLoader if not already shown
   // (this prevents duplicate loader calls when switching tabs)
   const smartLoader = document.querySelector('.gradient-loader-smart');
@@ -2448,65 +2454,82 @@ function analyzeTranslatedText() {
           // Try to parse as-is first
           parsedData = JSON.parse(cleanedString);
         } catch (firstError) {
-          // console.log("First parse attempt failed, trying to fix newlines...");
+          console.log('First parse attempt failed, trying to fix JSON...');
 
           try {
-            // More sophisticated newline fixing
-            // This regex finds newlines that are inside string values (between quotes)
-            // and escapes them, while preserving structural newlines
-            let fixedString = cleanedString.replace(
-              /"([^"\\]*(\\.[^"\\]*)*)"/g,
-              function (match, content) {
-                // Escape newlines and other control characters within string values
-                return (
-                  '"' +
-                  content.replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t') +
-                  '"'
-                );
-              }
-            );
+            // More aggressive cleaning for malformed JSON
+            let fixedString = cleanedString;
+
+            // Remove any leading/trailing non-JSON characters
+            const jsonStart = fixedString.indexOf('{');
+            const jsonEnd = fixedString.lastIndexOf('}');
+
+            if (jsonStart !== -1 && jsonEnd !== -1 && jsonStart < jsonEnd) {
+              fixedString = fixedString.substring(jsonStart, jsonEnd + 1);
+            }
+
+            // Fix common JSON issues
+            fixedString = fixedString
+              .replace(/[\u0000-\u001F\u007F-\u009F]/g, '') // Remove control characters
+              .replace(/\n/g, '\\n') // Escape newlines
+              .replace(/\r/g, '\\r') // Escape carriage returns
+              .replace(/\t/g, '\\t') // Escape tabs
+              .replace(/\\/g, '\\\\') // Escape backslashes
+              .replace(/"/g, '"') // Normalize quotes
+              .replace(/"/g, '"') // Normalize quotes
+              .replace(/'/g, "'"); // Normalize single quotes
 
             parsedData = JSON.parse(fixedString);
-            // console.log("Successfully parsed after fixing newlines");
+            console.log('Successfully parsed after fixing JSON');
           } catch (secondError) {
-            // console.log("Second parse attempt failed, trying alternative approach...");
+            console.log('Second parse attempt failed, using fallback...');
 
             try {
-              // Last resort: try to extract JSON using a more aggressive approach
-              // Find the first { and last } to extract the JSON object
-              const startIndex = cleanedString.indexOf('{');
-              const lastIndex = cleanedString.lastIndexOf('}');
+              // Last resort: try to extract key-value pairs manually
+              const textTypeMatch = cleanedString.match(/"textType"\s*:\s*"([^"]+)"/);
+              const issueMatch = cleanedString.match(/"issue"\s*:\s*"([^"]+)"/);
+              const currentStyleMatch = cleanedString.match(/"currentStyle"\s*:\s*"([^"]+)"/);
+              const targetStyleMatch = cleanedString.match(/"targetStyle"\s*:\s*"([^"]+)"/);
+              const buttonTextMatch = cleanedString.match(/"buttonText"\s*:\s*"([^"]+)"/);
 
-              if (startIndex !== -1 && lastIndex !== -1 && startIndex < lastIndex) {
-                let jsonString = cleanedString.substring(startIndex, lastIndex + 1);
+              // Create a fallback object
+              parsedData = {
+                analysis: {
+                  textType: textTypeMatch ? textTypeMatch[1] : 'Besked',
+                  issue: issueMatch ? issueMatch[1] : 'Gør teksten mere præcis og forståelig.',
+                  currentStyle: currentStyleMatch ? currentStyleMatch[1] : 'Uformel',
+                  targetStyle: targetStyleMatch ? targetStyleMatch[1] : 'Professionel',
+                  buttonText: buttonTextMatch ? buttonTextMatch[1] : 'Forbedre teksten'
+                },
+                improvementPrompt: 'Improve the text to be more professional and clear.'
+              };
 
-                // Fix common JSON issues
-                jsonString = jsonString
-                  .replace(/\n\s*\n/g, '\\n') // Replace double newlines
-                  .replace(/([^\\])\n/g, '$1\\n') // Escape single newlines
-                  .replace(/\n/g, '\\n') // Escape any remaining newlines
-                  .replace(/\r/g, '\\r')
-                  .replace(/\t/g, '\\t');
-
-                parsedData = JSON.parse(jsonString);
-                // console.log("Successfully parsed using fallback method");
-              } else {
-                throw new Error('Could not find valid JSON structure');
-              }
+              console.log('Created fallback parsed data');
             } catch (thirdError) {
               console.error('All parsing attempts failed:', thirdError);
-              throw thirdError;
+
+              // Use completely predefined fallback
+              parsedData = {
+                analysis: {
+                  textType: 'Besked',
+                  issue: 'Gør teksten mere præcis og forståelig.',
+                  currentStyle: 'Uformel',
+                  targetStyle: 'Professionel',
+                  buttonText: 'Forbedre teksten'
+                },
+                improvementPrompt: 'Improve the text to be more professional and clear.'
+              };
+
+              console.log('Using completely predefined fallback data');
             }
           }
         }
 
-        let processedData = parsedData;
-
         // Validate the processed data structure
-        if (processedData && processedData.analysis) {
-          updateAnalysisUI(processedData.analysis);
+        if (parsedData && parsedData.analysis) {
+          updateAnalysisUI(parsedData.analysis);
           // Save the improvement prompt for later use
-          savedImprovementPrompt = processedData.improvementPrompt;
+          savedImprovementPrompt = parsedData.improvementPrompt;
           isImproved = true;
           isSmartCalled = true;
         } else {
@@ -2518,12 +2541,21 @@ function analyzeTranslatedText() {
     })
     .catch(error => {
       console.error('Text analysis failed:', error);
+      console.log(
+        'Raw response that failed to parse:',
+        typeof data !== 'undefined' && data.data
+          ? typeof data.data === 'string'
+            ? data.data
+            : JSON.stringify(data.data)
+          : 'No data available'
+      );
+
       if (analyseAttempts < 2) {
-        // console.log("failed to analyze, retrying...");
+        console.log('failed to analyze, retrying...');
         analyseAttempts++;
         analyzeTranslatedText();
       } else {
-        // console.log("failed to analyze after retry");
+        console.log('failed to analyze after retry, using fallback');
         const preDefinedText = {
           textType: 'Besked',
           issue: 'Gør teksten mere præcis og forståelig.',
@@ -2532,14 +2564,12 @@ function analyzeTranslatedText() {
           buttonText: 'Forbedre teksten'
         };
         updateAnalysisUI(preDefinedText);
-        // ✅ Hide loader on failure
         correctionSidebarLoader.toggleSmartLoader(false);
       }
     })
     .finally(() => {
       // ✅ Hide the loader regardless of success or error (if API completes)
       if (isSmartCalled || analyseAttempts >= 2) {
-        // correctionSidebarLoader.toggleSmartLoader(false);
         console.log(`inside the final block \n isSmartCalled : ${isSmartCalled}`);
         isImproved = true;
         isSmartCalled = true;
@@ -2733,6 +2763,12 @@ mainSwitcher.addEventListener('click', textSwitcher);
 document.querySelector('#revertBack').addEventListener('click', e => {
   e.preventDefault();
   quill1.history.undo();
+});
+
+// ========================================== Redo btn ===============================================
+document.querySelector('#redoBtn').addEventListener('click', e => {
+  e.preventDefault();
+  quill1.history.redo();
 });
 
 // ----------------------------- adjust heigts ========================================================
@@ -3112,7 +3148,13 @@ document.addEventListener('DOMContentLoaded', () => {
   updateSliderPosition(50);
 
   // Add voice change button functionality
+  // Add voice change button functionality
   document.getElementById('voiceChangeBtn')?.addEventListener('click', () => {
+    // Check if text field has content
+    if (!quill1.getText().trim().length) {
+      return;
+    }
+
     const currentOptionId = getSliderValue(lastKnownPercent);
     console.log(`Voice change requested with option: ${currentOptionId}`);
 
@@ -3150,18 +3192,43 @@ window.addEventListener('load', function () {
 // ------------------------------------- handle clear button ----------------------------
 const clearButton = document.querySelector('#clearBtn');
 const revertFun = document.querySelector('#revertBack');
-// Function to update clear button state
+
+// Function to update clear and revert button states (text-dependent)
 function updateClearRevertButtonState(flag = 'center') {
+  const revertBtn = document.querySelector('#revertBack');
+  const clearBtn = document.querySelector('#clearBtn');
+
   if (flag === 'false') {
-    revertFun.disabled = false;
-    clearButton.disabled = false;
-  }
-  if (flag === 'true') {
-    revertFun.disabled = true;
-    clearButton.disabled = true;
+    if (revertBtn) revertBtn.disabled = false;
+    if (clearBtn) clearBtn.disabled = false;
+  } else if (flag === 'true') {
+    if (revertBtn) revertBtn.disabled = true;
+    if (clearBtn) clearBtn.disabled = true;
   } else {
-    revertFun.disabled = quill1.getText().trim().length === 0;
-    clearButton.disabled = quill1.getText().trim().length === 0;
+    const hasText = quill1.getText().trim().length > 0;
+    if (revertBtn) revertBtn.disabled = !hasText;
+    if (clearBtn) clearBtn.disabled = !hasText;
+  }
+}
+
+// Function to update undo/redo button states (history-dependent)
+function updateUndoRedoButtonState() {
+  const revertBtn = document.querySelector('#revertBack');
+  const redoBtn = document.querySelector('#redoBtn');
+
+  if (revertBtn) {
+    const canUndo = quill1.history.stack.undo.length > 0;
+    const hasText = quill1.getText().trim().length > 0;
+    // Undo requires both text and undo history
+    revertBtn.disabled = !hasText || !canUndo;
+    revertBtn.title = canUndo && hasText ? 'Fortryd (Ctrl+Z)' : 'Intet at fortryde';
+  }
+
+  if (redoBtn) {
+    const canRedo = quill1.history.stack.redo.length > 0;
+    // Redo only requires redo history, not current text
+    redoBtn.disabled = !canRedo;
+    redoBtn.title = canRedo ? 'Gentag (Ctrl+Y)' : 'Intet at gentage';
   }
 }
 
@@ -3210,6 +3277,7 @@ function handleClear() {
     }, 10);
   }
   updateClearRevertButtonState();
+  updateUndoRedoButtonState(); // Also update undo/redo states after clear
 }
 // Add click event listener to clear button
 clearButton.addEventListener('click', handleClear);
@@ -3217,9 +3285,31 @@ clearButton.addEventListener('click', handleClear);
 quill1.on('text-change', updateClearRevertButtonState);
 
 document.addEventListener('keydown', e => {
+  // Existing clear shortcut
   if ((e.ctrlKey || e.metaKey) && e.key === 'Delete') {
     e.preventDefault();
     handleClear();
+  }
+
+  // Undo shortcut
+  if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) {
+    e.preventDefault();
+    const revertBtn = document.querySelector('#revertBack');
+    if (revertBtn && !revertBtn.disabled) {
+      quill1.history.undo();
+    }
+  }
+
+  // Redo shortcut (Ctrl+Y or Ctrl+Shift+Z)
+  if (
+    ((e.ctrlKey || e.metaKey) && e.key === 'y') ||
+    ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'Z')
+  ) {
+    e.preventDefault();
+    const redoBtn = document.querySelector('#redoBtn');
+    if (redoBtn && !redoBtn.disabled) {
+      quill1.history.redo();
+    }
   }
 });
 
@@ -3785,6 +3875,10 @@ document.addEventListener('DOMContentLoaded', function () {
   // Initialize STT system
   initializeSTT();
   initializeDownloadButton();
+
+  // Initialize undo/redo states
+  updateUndoRedoButtonState();
+
   setTimeout(() => {
     if (typeof quill1 !== 'undefined') {
       console.log('Quill instance found:', quill1);

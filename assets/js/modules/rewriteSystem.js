@@ -38,33 +38,62 @@ function initializeRewriteSystem({
     manuallyCloseMicButton
   };
 
-  // Add event listeners for rewrite buttons with null checks
+  function validateTextForToneChange() {
+    if (!quill1.getText().trim().length) {
+      return false;
+    }
+    return true;
+  }
+
+  // Add event listeners for rewrite buttons with null checks and text validation
   const convencingBtn = document.getElementById('convencing');
   if (convencingBtn) {
-    convencingBtn.addEventListener('click', () => handleRewrite('convencing'));
+    convencingBtn.addEventListener('click', () => {
+      if (!validateTextForToneChange()) return;
+      handleRewrite('convencing');
+    });
   } else {
     console.warn('Element with ID "convencing" not found');
   }
 
   const simplifyBtn = document.getElementById('simplify');
   if (simplifyBtn) {
-    simplifyBtn.addEventListener('click', () => handleRewrite('simplify'));
+    simplifyBtn.addEventListener('click', () => {
+      if (!validateTextForToneChange()) return;
+      handleRewrite('simplify');
+    });
   } else {
     console.warn('Element with ID "simplify" not found');
   }
 
   const elaborateBtn = document.getElementById('elaborate');
   if (elaborateBtn) {
-    elaborateBtn.addEventListener('click', () => handleRewrite('elaborate'));
+    elaborateBtn.addEventListener('click', () => {
+      if (!validateTextForToneChange()) return;
+      handleRewrite('elaborate');
+    });
   } else {
     console.warn('Element with ID "elaborate" not found');
   }
 
   const conciseBtn = document.getElementById('concise');
   if (conciseBtn) {
-    conciseBtn.addEventListener('click', () => handleRewrite('concise'));
+    conciseBtn.addEventListener('click', () => {
+      if (!validateTextForToneChange()) return;
+      handleRewrite('concise');
+    });
   } else {
     console.warn('Element with ID "concise" not found');
+  }
+
+  const professionalBtn = document.getElementById('professional');
+  if (professionalBtn) {
+    professionalBtn.addEventListener('click', () => {
+      if (!validateTextForToneChange()) return;
+      handleRewrite('professional');
+    });
+  } else {
+    console.warn('Element with ID "professional" not found');
   }
 
   // Add navigation event listeners with null checks
@@ -92,8 +121,20 @@ function initializeRewriteSystem({
   const submitRewrite = document.getElementById('submint_rewrite');
   if (submitRewrite) {
     submitRewrite.addEventListener('click', () => {
-      // console.log('Custom rewrite submitted.');
-      handleRewrite('custom');
+      // FIRST: Check if main textarea (Quill editor) has content
+      if (!validateTextForToneChange()) {
+        return; // Do nothing if main textarea is empty
+      }
+
+      // SECOND: Check if custom input field has content
+      const customInput = document.getElementById('custom_rewrite_input');
+      const inputValue = customInput ? customInput.value.trim() : '';
+
+      if (inputValue.length > 0) {
+        // console.log('Custom rewrite submitted.');
+        handleRewrite('custom');
+      }
+      // If custom input is empty, do nothing (button click has no effect)
     });
   } else {
     console.warn('Element with ID "submint_rewrite" not found');
@@ -237,17 +278,23 @@ function sendRewriteRequest(buttonId) {
   formData.append('language', langForRewrite);
 
   switch (buttonId) {
-    case 'convencing':
+    case 'simplify': // Uformel
       formData.append('prompt_index', '0');
       break;
-    case 'simplify':
+    case 'elaborate': // Personlig
       formData.append('prompt_index', '1');
       break;
-    case 'elaborate':
+    case 'convencing': // Neutral
       formData.append('prompt_index', '2');
       break;
-    case 'concise':
+    case 'concise': // Høflig
       formData.append('prompt_index', '3');
+      break;
+    case 'professional': // Professionel
+      formData.append('prompt_index', '4');
+      break;
+    default:
+      formData.append('prompt_index', '2'); // Default to Neutral
       break;
   }
 

@@ -19,10 +19,12 @@ class TextAreaLoader {
       console.warn(`TextArea loader container not found: ${selector}`);
       return;
     }
-
     // Remove existing loader if present
     this.hideTextAreaLoader(selector);
     document.getElementById('genBtn').disabled = true;
+    document.getElementById('genBtn').style.pointerEvents = 'none';
+    document.getElementById('genBtn').style.cursor = 'not-allowed';
+    document.getElementById('genBtn').classList.add('disabled-gen-btn');
     // Create loader backdrop
     const loaderBackdrop = document.createElement('div');
     loaderBackdrop.className = 'loader-backdrop';
@@ -59,14 +61,18 @@ class TextAreaLoader {
   hideTextAreaLoader(selector) {
     const element = document.querySelector(selector);
     if (!element) return;
-
+    document.getElementById('genBtn').disabled = false;
+    document.getElementById('genBtn').style.pointerEvents = 'auto';
+    document.getElementById('genBtn').style.cursor = 'pointer';
+    document.getElementById('genBtn').classList.remove('disabled-gen-btn');
+    // Create loader backdrop
     const loaders = element.querySelectorAll('.loader-backdrop');
     loaders.forEach(loader => {
       if (loader.dataset.selector === selector) {
         loader.remove();
       }
     });
-    document.getElementById('genBtn').disabled = false;
+
     this.activeLoaders.delete(selector);
   }
 
