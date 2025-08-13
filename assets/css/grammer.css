@@ -1188,6 +1188,7 @@
   overflow-y: visible;
   box-sizing: border-box;
   resize: none;
+  height: 100%;
 }
 
 .ql-editor.ql-blank::before {

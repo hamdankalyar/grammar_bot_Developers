@@ -10,13 +10,13 @@
 
 .dk-language-select {
   width: 100%;
-  padding: 12px 16px;
+  padding: 12px 19px;
   border-radius: 10px 0 0 10px;
-  border: 1px solid var(--Text-Primary-Dark, #e4e4e4);
-  background: linear-gradient(139deg, #fff 71.45%, #f8f9fa 94.3%);
+  border: 1px solid rgba(228, 228, 228, 1);
+  background: linear-gradient(138.61deg, #ffffff 71.45%, #f8f9fa 94.3%);
   box-shadow:
-    0 1px 1px 0 rgba(255, 255, 255, 0.9) inset,
-    0 1px 3px 0 rgba(0, 0, 0, 0.04);
+    0px 1px 1px 0px rgba(255, 255, 255, 0.9) inset,
+    0px 1px 3px 0px rgba(0, 0, 0, 0.04);
   font-size: 14px;
   color: #495057;
   cursor: pointer;
@@ -27,10 +27,16 @@
   position: relative;
   flex: 1;
   min-width: 151px;
+  gap: 8px;
 }
 
 .dk-language-select:hover {
-  border-color: #d1d1d6;
+  background: linear-gradient(138.61deg, #ffffff 12.36%, #f1f3f4 94.3%);
+  border: 1px solid rgba(228, 228, 228, 1);
+  box-shadow:
+    0px 1px 1px 0px rgba(255, 255, 255, 0.9) inset,
+    0px 2px 8px 0px rgba(0, 0, 0, 0.06),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.04);
 }
 
 .dk-language-icon {
@@ -41,9 +47,13 @@
 
 .dk-language-text {
   font-size: 14px;
-  color: #495057;
+  color: rgba(73, 80, 87, 1);
   flex: 1;
-  margin-left: 0.8rem;
+  font-family: Poppins;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 18px;
+  letter-spacing: 0%;
 }
 
 .dk-arrow {
@@ -86,20 +96,27 @@
   align-items: center;
   padding: 10px 8px;
   font-size: 14px;
-  color: #495057;
+  color: rgba(73, 80, 87, 1);
   cursor: pointer;
   transition: all 0.2s ease;
-  background: white;
   margin-bottom: 3px;
   width: 100%;
   gap: 0.8rem;
   border-radius: 8px;
+  font-family: Poppins;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 18px;
+  letter-spacing: 0%;
 }
 
 .dk-dropdown-item:hover {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(138.61deg, #ffffff 12.36%, #f1f3f4 94.3%);
+  box-shadow:
+    0px 1px 1px 0px rgba(255, 255, 255, 0.9) inset,
+    0px 2px 8px 0px rgba(0, 0, 0, 0.06),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.04); /* Combined box-shadows from previous modifications */
   border-radius: 8px;
-  border: 1px solid rgba(228, 228, 228, 1);
   /* Removed margin-bottom change to prevent layout shift */
 }
 

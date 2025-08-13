@@ -446,7 +446,7 @@ function actionOnToggle(toggleState) {
   }
 
   // Toggle the SVG icon
-  const toggleIcon = toggleBtn.querySelector('.sidebar-toggle-icon svg');
+  const toggleIcon = toggleBtn.querySelector('.sidebar-toggle-icon');
   if (toggleIcon) {
     if (toggleState) {
       // Sidebar is expanded - show collapse icon
