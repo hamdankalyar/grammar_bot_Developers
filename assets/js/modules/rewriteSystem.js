@@ -6,7 +6,7 @@ let currentParagraphIndex = 0;
 
 // Modal management variables
 let originalZIndex;
-const sidebarSelector = '.elementor-element-3189719';
+const sidebarSelector = '.elementor-element-45ebb7b3';
 
 // Initialize rewrite system
 function initializeRewriteSystem({
@@ -101,16 +101,16 @@ function initializeRewriteSystem({
   }
 
   // ✅ NEW: Add navigation event listeners for ALL arrow buttons
-  const arrowLeftButtons = document.querySelectorAll('.arrow-left');
-  arrowLeftButtons.forEach(button => {
+  const prevButtons = document.querySelectorAll('.prev-btn');
+  prevButtons.forEach(button => {
     button.addEventListener('click', () => {
       console.log('Navigating to previous response...');
       navigateResponses('prev');
     });
   });
 
-  const arrowRightButtons = document.querySelectorAll('.arrow-right');
-  arrowRightButtons.forEach(button => {
+  const nextButtons = document.querySelectorAll('.next-btn');
+  nextButtons.forEach(button => {
     button.addEventListener('click', () => {
       console.log('Navigating to next response...');
       navigateResponses('next');
@@ -184,8 +184,8 @@ function updateNavigationButtonStates() {
 
     const [current, total] = parseCounterText(counterEl.textContent);
 
-    const prevBtn = nav.querySelector('.arrow-left'); // previous
-    const nextBtn = nav.querySelector('.arrow-right'); // next
+    const prevBtn = nav.querySelector('.prev-btn');
+    const nextBtn = nav.querySelector('.next-btn');
 
     const atStart = current <= 1;
     const atEnd = current >= total;
@@ -193,10 +193,12 @@ function updateNavigationButtonStates() {
     if (prevBtn) {
       prevBtn.disabled = atStart;
       setBtnFill(prevBtn, atStart);
+      prevBtn.style.cursor = atStart ? 'not-allowed' : 'pointer';
     }
     if (nextBtn) {
       nextBtn.disabled = atEnd;
       setBtnFill(nextBtn, atEnd);
+      nextBtn.style.cursor = atEnd ? 'not-allowed' : 'pointer';
     }
   });
 }
@@ -211,20 +213,23 @@ function handleRewrite(buttonId) {
 
 // Navigate through responses
 function navigateResponses(direction) {
-  // ✅ UPDATE: Get ALL counter elements and update them all
   const counters = document.querySelectorAll('.response-counter');
   if (counters.length === 0) return;
 
-  // Use the first counter to determine current state
   const counter = counters[0];
   const matches = counter.textContent.match(/\d+/g);
-  const [current, total] = matches ? matches.map(num => parseInt(num)) : [0, 0];
+  const [current, total] = matches ? matches.map(num => parseInt(num)) : [1, 1];
 
-  if (direction === 'prev' && current > 1) {
-    updateContent(current - 2);
-  } else if (direction === 'next' && current < total) {
-    updateContent(current);
+  let newIndex;
+  if (direction === 'next' && current < total) {
+    newIndex = current; // 1-based to 0-based: current
+  } else if (direction === 'prev' && current > 1) {
+    newIndex = current - 2; // 1-based to 0-based: (current-1) - 1
+  } else {
+    return; // No navigation possible
   }
+
+  updateContent(newIndex);
 }
 
 // Update content with specific response
@@ -234,22 +239,24 @@ function updateContent(responseIndex) {
   // Ensure rewriteResponses exists for current paragraph
   if (!rewriteResponses[currentParagraphIndex]) {
     rewriteResponses[currentParagraphIndex] = {
-      responses: [window.lastCorrectedText] // ✅ Use lastCorrectedText as version 1
+      responses: [window.lastCorrectedText || '']
     };
     console.log('Initialized response storage for the current paragraph index.');
   }
 
   const responses = rewriteResponses[currentParagraphIndex].responses;
+  if (!responses || responses.length === 0) {
+    console.warn('No responses available for current paragraph.');
+    return;
+  }
 
-  if (responses && responses[responseIndex]) {
+  if (responses[responseIndex]) {
     window._rewriteSystem.displayResponse(responses[responseIndex]);
 
-    // Call adjustHeights if it exists globally
     if (typeof adjustHeights === 'function') {
       adjustHeights();
     }
 
-    // ✅ UPDATE: Update ALL counter elements
     const counters = document.querySelectorAll('.response-counter');
     counters.forEach(counter => {
       counter.textContent = `Tekst ${responseIndex + 1} ud af ${responses.length}`;
@@ -306,6 +313,7 @@ function showNavigation() {
 }
 
 // Send rewrite request to server
+// function sendRewriteRequest(buttonId) {
 function sendRewriteRequest(buttonId) {
   console.log(`Sending rewrite request with buttonId: ${buttonId}`);
 
@@ -412,15 +420,19 @@ function sendRewriteRequest(buttonId) {
         rewriteResponses[currentParagraphIndex].responses.push(content);
         const responseCount = rewriteResponses[currentParagraphIndex].responses.length;
 
-        // ✅ UPDATE: Update ALL counter elements
+        // Update ALL counter elements and set current index to latest response
         const counters = document.querySelectorAll('.response-counter');
         counters.forEach(counter => {
           counter.textContent = `Tekst ${responseCount} ud af ${responseCount}`;
         });
 
+        // Explicitly update navigation buttons to reflect the latest response
         updateNavigationButtonStates();
 
-        console.log('Rewrite successful. Updated corrections display and counter.');
+        // Force a content update to ensure the latest response is displayed
+        updateContent(responseCount - 1);
+
+        console.log('Rewrite successful. Updated corrections display, counter, and navigation.');
       } else {
         console.error('Error:', data.data?.message || 'Unknown error');
       }
@@ -536,5 +548,6 @@ export {
   resetRewriteResponses,
   dkHamdanOpenModal,
   dkHamdanCloseModal,
-  toggleClearIcon
+  toggleClearIcon,
+  updateNavigationButtonStates
 };

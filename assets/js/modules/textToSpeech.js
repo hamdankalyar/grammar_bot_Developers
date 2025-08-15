@@ -471,7 +471,7 @@ function textToSpeech() {
   console.log('selected gender', selectedGender);
 
   jQuery.ajax({
-    url: window.SB_ajax_object.ajax_url,
+    url: HGF_ajax_object.ajax_url,
     type: 'POST',
     data: {
       action: 'hgf_grammar_bot_tts',

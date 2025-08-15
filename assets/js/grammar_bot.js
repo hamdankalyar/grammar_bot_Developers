@@ -13,7 +13,8 @@ import {
   resetRewriteResponses,
   dkHamdanOpenModal,
   dkHamdanCloseModal,
-  toggleClearIcon
+  toggleClearIcon,
+  updateNavigationButtonStates // ADD THIS LINE
 } from './modules/rewriteSystem.js';
 import {
   saveResponse,
@@ -92,7 +93,7 @@ function lottieLoadAnimation() {
     renderer: 'svg',
     loop: true,
     autoplay: true,
-    path: 'https://developskriv2.se/wp-content/uploads/2025/06/robot-wave.json'
+    path: 'https://login.skrivsikkert.dk/wp-content/uploads/2025/06/robot-wave.json'
   });
 }
 
@@ -107,7 +108,7 @@ function lottieLoadAnimationByAddress(div) {
     renderer: 'svg',
     loop: true,
     autoplay: true,
-    path: 'https://developskriv2.se/wp-content/uploads/2025/06/robot-wave.json'
+    path: 'https://login.skrivsikkert.dk/wp-content/uploads/2025/06/robot-wave.json'
   });
 }
 
@@ -579,7 +580,7 @@ function updateSelectedOption(option) {
     if (voiceSection) voiceSection.style.display = 'none'; // ✅ ADD THIS
 
     optionIcon.querySelectorAll('path').forEach(path => {
-      if (path.getAttribute('stroke') === '#929292') {
+      if (path.getAttribute('stroke') === '#6C757D') {
         path.setAttribute('stroke', '#E24668');
       }
     });
@@ -729,7 +730,7 @@ function callSidebar() {
         correctionSidebarLoader.showCorrectionLoader('.correction-message', 'Analyzing...');
       }
       callImproveSidebar();
-    } else if (dropDownValue === 'Teksthjælp') {
+    } else if (dropDownValue === 'Forbedre teksten') {
       // console.log("Retter teksten call started");
       // console.log("starting the analysis");
 
@@ -1801,7 +1802,7 @@ function formatCallingWithLoader(language, userInputText, correctedText) {
         displayResponse(formattedResponse);
         document.querySelector('.correction-options').style.display = 'flex';
         const dropDownValue = document.querySelector('.hk-dropdown-text').textContent;
-        if (dropDownValue === 'Teksthjælp') {
+        if (dropDownValue === 'Forbedre teksten') {
           console.log('in formatting call analyzeTranslatedText');
           analyzeTranslatedText();
         }
@@ -1848,7 +1849,7 @@ function formatCallingParallelWithLoader(language, formattingParts, fallbackDiff
       document.querySelector('.correction-options').style.display = 'flex';
       onResponseGenerated(removeHamDanTags(combinedResult));
       const dropDownValue = document.querySelector('.hk-dropdown-text').textContent;
-      if (dropDownValue === 'Teksthjælp') {
+      if (dropDownValue === 'Forbedre teksten') {
         console.log('in formatting call parallel analyzeTranslatedText');
         analyzeTranslatedText();
       }
@@ -2384,9 +2385,7 @@ function sendStyleChangeRequest(text, promptNumber) {
         });
 
         // Recompute buttons (enable/disable + fills)
-        if (typeof updateNavigationButtonStates === 'function') {
-          updateNavigationButtonStates();
-        }
+        updateNavigationButtonStates();
       } else {
         throw new Error(data.data?.message || 'Style change failed');
       }
@@ -2869,7 +2868,7 @@ function adjustHeights() {
 
   // Get padding from inner-textarea-bottom (25px top + 25px bottom = 50px)
   const innerTextareaBottom = document.querySelector('.inner-textarea-bottom');
-  const innerPadding = innerTextareaBottom ? 50 : 0;
+  // const innerPadding = innerTextareaBottom ? 50 : 0;
 
   // Calculate editor content height (let it size naturally to content)
   let editorContentHeight = minHeight;
@@ -2913,12 +2912,10 @@ function adjustHeights() {
     styleInner.style.overflowY = originalStyleOverflow;
   }
 
-  // MAIN LOGIC: Calculate container height needed
-  // inner-textarea-bottom ALWAYS has padding: 25px 20px (50px vertical total)
-  // Inside this padded area we have: main-textarea-section + correction-options + bottom-controls
-  const totalContainerHeight =
-    mainTextAreaSectionHeight + bottomControlsHeight + correctionOptionsHeight + innerPadding;
-
+  // const totalContainerHeight =
+  //   mainTextAreaSectionHeight + bottomControlsHeight + correctionOptionsHeight + innerPadding;
+const totalContainerHeight =
+    mainTextAreaSectionHeight + bottomControlsHeight + correctionOptionsHeight;
   // Final height is the maximum of all requirements
   let finalHeight = Math.max(totalContainerHeight, styleInnerTotalHeight, minHeight);
 
@@ -2929,7 +2926,6 @@ function adjustHeights() {
     mainTextAreaSectionHeight,
     bottomControlsHeight,
     correctionOptionsHeight,
-    innerPadding,
     totalContainerHeight,
     finalHeight
   });
@@ -3039,8 +3035,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // ------------------ voice handler logic ----------------
-
-// ------------------ voice handler logic ----------------
 document.addEventListener('DOMContentLoaded', () => {
   const container = document.querySelector('.voice-slider-container');
   const handle = document.querySelector('.voice-handle');
@@ -3070,26 +3064,30 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   function getGradientForPosition(percent) {
+    // Your color sequence: E68A00 > 4CAF50 > D6D6D6 > B2E0F2 > 005F9E
     const colors = {
-      hverdagssprog: '#2DB62D',
-      letAtForstaa: '#A122A1',
-      formelt: '#6262F5',
-      humor: '#F9AB1B'
+      uformel: '#E68A00', // Orange
+      personal: '#4CAF50', // Green
+      neutral: '#D6D6D6', // Light Gray
+      hoflig: '#B2E0F2', // Light Blue
+      professional: '#005F9E' // Dark Blue
     };
 
     if (percent <= STEP_POINTS[0]) {
-      return colors.hverdagssprog;
+      return colors.uformel;
     } else if (percent <= STEP_POINTS[1]) {
-      return `linear-gradient(90deg, ${colors.hverdagssprog} 0%, ${colors.letAtForstaa} 100%)`;
+      return `linear-gradient(90deg, ${colors.uformel} 0%, ${colors.personal} 100%)`;
     } else if (percent <= STEP_POINTS[2]) {
-      return `linear-gradient(90deg, ${colors.hverdagssprog} 0%, ${colors.letAtForstaa} 33%, ${colors.formelt} 100%)`;
+      return `linear-gradient(90deg, ${colors.uformel} 0%, ${colors.personal} 25%, ${colors.neutral} 100%)`;
+    } else if (percent <= STEP_POINTS[3]) {
+      return `linear-gradient(90deg, ${colors.uformel} 0%, ${colors.personal} 25%, ${colors.neutral} 50%, ${colors.hoflig} 100%)`;
     } else {
-      return `linear-gradient(90deg, ${colors.hverdagssprog} 0%, ${colors.letAtForstaa} 25%, ${colors.formelt} 50%, ${colors.humor} 100%)`;
+      return `linear-gradient(90deg, ${colors.uformel} 0%, ${colors.personal} 25%, ${colors.neutral} 50%, ${colors.hoflig} 75%, ${colors.professional} 100%)`;
     }
   }
 
   function getHandleColor(percent) {
-    const colors = ['#2DB62D', '#A122A1', '#6262F5', '#F9AB1B'];
+    const colors = ['#E68A00', '#4CAF50', '#D6D6D6', '#B2E0F2', '#005F9E'];
     const index = STEP_POINTS.findIndex(point => percent <= point);
     return colors[index !== -1 ? index : colors.length - 1];
   }
@@ -3122,7 +3120,10 @@ document.addEventListener('DOMContentLoaded', () => {
       handle.style.left = `${percent}%`;
       progress.style.width = `${percent}%`;
       progress.style.background = getGradientForPosition(percent);
-      handle.style.borderColor = getHandleColor(percent);
+
+      // Set handle background to current position color
+      handle.style.backgroundColor = getHandleColor(percent);
+      handle.style.borderColor = 'white';
 
       // Then snap to nearest point
       percent = STEP_POINTS.reduce((prev, curr) =>
@@ -3139,7 +3140,10 @@ document.addEventListener('DOMContentLoaded', () => {
     handle.style.left = `${percent}%`;
     progress.style.width = `${percent}%`;
     progress.style.background = getGradientForPosition(percent);
-    handle.style.borderColor = getHandleColor(percent);
+
+    // Set handle background to current position color and border to white
+    handle.style.backgroundColor = getHandleColor(percent);
+    handle.style.borderColor = 'white';
 
     sliderValue = getSliderValue(percent);
     updateVoiceCardSubtitle(sliderValue);

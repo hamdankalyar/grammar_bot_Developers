@@ -5,14 +5,14 @@ let isOpeningPopup = false;
 let originalZIndex;
 
 // DOM selectors
-const sidebarSelector = '.elementor-element-3189719';
+const sidebarSelector = '.elementor-element-45ebb7b3';
 const popupSelector = '#savedResponsesPopup';
 const popupContentSelector = '.popup-content';
 
 // Function to save response
 function saveResponse(response) {
   response = response.replace(/\\/g, '');
-  fetch(SB_ajax_object.ajax_url, {
+  fetch(HGF_ajax_object.ajax_url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -41,7 +41,7 @@ function saveResponse(response) {
 function getSavedResponses() {
   // console.log('inside the saved responses function');
   return fetch(
-    SB_ajax_object.ajax_url +
+    HGF_ajax_object.ajax_url +
       '?action=hgf_korrektur_get_user_responses&nonce=' +
       HGF_ajax_object.nonce
   )
@@ -67,7 +67,7 @@ function deleteResponse(responseId) {
   const deleteButton = document.querySelector(`.delete-btns[data-id="${responseId}"]`);
   const buttonContainer = deleteButton.closest('.button-container');
 
-  fetch(SB_ajax_object.ajax_url, {
+  fetch(HGF_ajax_object.ajax_url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -659,43 +659,6 @@ function initializeHistory() {
   // Event listener for document clicks (outside popup)
   document.addEventListener('click', handleDocumentClick);
 
-  //   // Event listener for delete all history button
-  //   document.addEventListener("DOMContentLoaded", function () {
-  //     const clearHistoryButton = document.getElementById('deleteAllHistory');
-  //     if (clearHistoryButton) {
-  //       clearHistoryButton.addEventListener("click", function () {
-  //         console.log("Delete all history button was clicked!");
-  //         historyLoader(true);
-  //         const savedResponsesList =
-  //           document.getElementById("savedResponsesList");
-
-  //         fetch(SB_ajax_object.ajax_url, {
-  //           method: "POST",
-  //           headers: {
-  //             "Content-Type": "application/x-www-form-urlencoded",
-  //           },
-  //           body:
-  //             "action=hgf_korrektur_delete_all_user_responses&nonce=" +
-  //             HGF_ajax_object.nonce,
-  //         })
-  //           .then((response) => response.json())
-  //           .then((data) => {
-  //             if (data.success) {
-  //               // console.log('All responses deleted successfully');
-  //               if (
-  //                 document.getElementById("savedResponsesPopup").style.display ===
-  //                 "flex"
-  //               ) {
-  //                 displaySavedResponses(); // Refresh the list
-  //               }
-  //             } else {
-  //               console.error("Failed to delete responses:", data.data);
-  //             }
-  //           })
-  //           .catch((error) => console.error("Error:", error));
-  //       });
-  //     }
-  //   });
   document.addEventListener('click', function (e) {
     const deleteBtn = e.target.closest('#deleteAllHistory');
     if (!deleteBtn) return;
@@ -703,7 +666,7 @@ function initializeHistory() {
     console.log('Delete All History clicked'); // DEBUG
     historyLoader(true);
 
-    fetch(SB_ajax_object.ajax_url, {
+    fetch(HGF_ajax_object.ajax_url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'

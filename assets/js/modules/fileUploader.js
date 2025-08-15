@@ -546,7 +546,7 @@ function OCRImproveCall(text) {
       : 'Danish'
   );
 
-  fetch(deps.SB_ajax_object.ajax_url, {
+  fetch(HGF_ajax_object.ajax_url, {
     method: 'POST',
     credentials: 'same-origin',
     body: new URLSearchParams(formData)

@@ -1,20 +1,14 @@
 // selectionToolbar.js - Selection Toolbar Module
 
-// Import functions from global scope that this module depends on
-// These functions should be available globally or passed as dependencies
-const getDependencies = () => ({
-  removeHamDanTags: window.removeHamDanTags || (() => text => text),
-  removeMarkTags: window.removeMarkTags || (() => text => text),
-  processHtmlForCopy: window.processHtmlForCopy || (() => html => html),
-  isMobileDevice: window.isMobileDevice || (() => false),
-  processHtmlForMobile: window.processHtmlForMobile || (() => html => html),
-  processTextForMobile: window.processTextForMobile || (() => text => text),
-  quillHtmlToPlainTextWithParagraphs:
-    window.quillHtmlToPlainTextWithParagraphs || (() => html => html),
-  SB_ajax_object: window.SB_ajax_object,
-  HGF_ajax_object: window.HGF_ajax_object,
-  getCurrentLanguage: window.getCurrentLanguage || (() => 'da')
-});
+import {
+  isMobileDevice,
+  processHtmlForCopy,
+  processHtmlForMobile,
+  processTextForMobile,
+  quillHtmlToPlainTextWithParagraphs
+} from './copyPaste';
+import { getCurrentLanguage } from './languageDropdown';
+import { removeHamDanTags, removeMarkTags } from './utils';
 
 // QuillSelectionToolbar Class
 class QuillSelectionToolbar {
@@ -765,7 +759,6 @@ class QuillSelectionToolbar {
 
   getCleanTextForTTS() {
     try {
-      const deps = getDependencies();
       const domSelection = window.getSelection();
 
       if (domSelection.rangeCount === 0 || domSelection.isCollapsed) {
@@ -797,8 +790,9 @@ class QuillSelectionToolbar {
 
       console.log('Original HTML for TTS:', selectedHtml);
 
-      if (deps.removeHamDanTags && typeof deps.removeHamDanTags === 'function') {
-        selectedHtml = deps.removeHamDanTags(selectedHtml);
+      // Use the imported removeHamDanTags function directly
+      if (removeHamDanTags) {
+        selectedHtml = removeHamDanTags(selectedHtml);
         console.log('HTML after removeHamdanTags:', selectedHtml);
       } else {
         console.log('removeHamdanTags function not available');
@@ -844,10 +838,10 @@ class QuillSelectionToolbar {
         return;
       }
 
-      const deps = getDependencies();
+      // Use the imported getCurrentLanguage function directly
       let currentLanguage = 'da';
-      if (deps.getCurrentLanguage && typeof deps.getCurrentLanguage === 'function') {
-        currentLanguage = deps.getCurrentLanguage();
+      if (getCurrentLanguage) {
+        currentLanguage = getCurrentLanguage();
       }
 
       let lang;
@@ -888,19 +882,20 @@ class QuillSelectionToolbar {
 
   requestTTS(text, language, gender) {
     return new Promise((resolve, reject) => {
-      const deps = getDependencies();
+      // Get AJAX objects from global window (these are WordPress specific)
+      const HGF_ajax_object = window.HGF_ajax_object;
 
-      if (!deps.SB_ajax_object || !deps.HGF_ajax_object) {
+      if (HGF_ajax_object) {
         reject(new Error('Required AJAX objects not available'));
         return;
       }
 
       jQuery.ajax({
-        url: deps.SB_ajax_object.ajax_url,
+        url: HGF_ajax_object.ajax_url,
         type: 'POST',
         data: {
           action: 'hgf_grammar_bot_tts',
-          nonce: deps.HGF_ajax_object.nonce,
+          nonce: HGF_ajax_object.nonce,
           text: text,
           lang: language,
           gender: gender
@@ -1004,7 +999,6 @@ class QuillSelectionToolbar {
     console.log('Copying structured text:', this.selectedText);
 
     try {
-      const deps = getDependencies();
       const domSelection = window.getSelection();
 
       if (domSelection.rangeCount === 0 || domSelection.isCollapsed) {
@@ -1031,8 +1025,9 @@ class QuillSelectionToolbar {
       let selectedHtml = tempDiv.innerHTML;
 
       try {
-        if (deps.removeMarkTags && typeof deps.removeMarkTags === 'function') {
-          selectedHtml = deps.removeMarkTags(selectedHtml);
+        // Use the imported removeMarkTags function directly
+        if (removeMarkTags) {
+          selectedHtml = removeMarkTags(selectedHtml);
         }
       } catch (error) {
         console.log('removeMarkTags not available');
@@ -1054,8 +1049,9 @@ class QuillSelectionToolbar {
         return;
       }
 
-      if (deps.processHtmlForCopy && typeof deps.processHtmlForCopy === 'function') {
-        selectedHtml = deps.processHtmlForCopy(selectedHtml, 'selection');
+      // Use the imported processHtmlForCopy function directly
+      if (processHtmlForCopy) {
+        selectedHtml = processHtmlForCopy(selectedHtml, 'selection');
       }
 
       const processDiv = document.createElement('div');
@@ -1136,23 +1132,18 @@ class QuillSelectionToolbar {
       let htmlContent = processDiv.innerHTML;
       let textContent = selectedText;
 
-      if (
-        deps.quillHtmlToPlainTextWithParagraphs &&
-        typeof deps.quillHtmlToPlainTextWithParagraphs === 'function'
-      ) {
-        textContent = deps.quillHtmlToPlainTextWithParagraphs(htmlContent);
+      // Use the imported quillHtmlToPlainTextWithParagraphs function directly
+      if (quillHtmlToPlainTextWithParagraphs) {
+        textContent = quillHtmlToPlainTextWithParagraphs(htmlContent);
       }
 
-      if (
-        deps.isMobileDevice &&
-        typeof deps.isMobileDevice === 'function' &&
-        deps.isMobileDevice()
-      ) {
-        if (deps.processHtmlForMobile && typeof deps.processHtmlForMobile === 'function') {
-          htmlContent = deps.processHtmlForMobile(htmlContent);
+      // Use the imported mobile processing functions directly
+      if (isMobileDevice && isMobileDevice()) {
+        if (processHtmlForMobile) {
+          htmlContent = processHtmlForMobile(htmlContent);
         }
-        if (deps.processTextForMobile && typeof deps.processTextForMobile === 'function') {
-          textContent = deps.processTextForMobile(textContent);
+        if (processTextForMobile) {
+          textContent = processTextForMobile(textContent);
         }
       }
 
@@ -1360,45 +1351,6 @@ function addSelectionToolbarStyles() {
 
   const style = document.createElement('style');
   style.id = styleId;
-  style.textContent = `
-        /* Selection Toolbar Styles */
-        #selection-toolbar .loader4 {
-            display: inline-block;
-        }
-        
-        #selection-toolbar .dotted-loader {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        #selection-toolbar .dotted-loader .dot {
-            width: 3px;
-            height: 3px;
-            border-radius: 50%;
-            background-color: #E66B85;
-            margin: 0 1px;
-            animation: dotAnimation 1.4s infinite ease-in-out both;
-        }
-        
-        #selection-toolbar .dotted-loader .dot:nth-child(1) { animation-delay: -0.32s; }
-        #selection-toolbar .dotted-loader .dot:nth-child(2) { animation-delay: -0.16s; }
-        #selection-toolbar .dotted-loader .dot:nth-child(3) { animation-delay: 0s; }
-        #selection-toolbar .dotted-loader .dot:nth-child(4) { animation-delay: 0.16s; }
-        #selection-toolbar .dotted-loader .dot:nth-child(5) { animation-delay: 0.32s; }
-        #selection-toolbar .dotted-loader .dot:nth-child(6) { animation-delay: 0.48s; }
-        #selection-toolbar .dotted-loader .dot:nth-child(7) { animation-delay: 0.64s; }
-        #selection-toolbar .dotted-loader .dot:nth-child(8) { animation-delay: 0.8s; }
-        
-        @keyframes dotAnimation {
-            0%, 80%, 100% {
-                transform: scale(0);
-            }
-            40% {
-                transform: scale(1);
-            }
-        }
-    `;
 
   document.head.appendChild(style);
 }

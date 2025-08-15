@@ -70,11 +70,11 @@
   height: 0;
 }
 
-.switch-input:checked + .switch-slider {
+.switch-input:checked+.switch-slider {
   background-color: #141b34;
 }
 
-.switch-input:checked + .switch-slider:before {
+.switch-input:checked+.switch-slider:before {
   transform: translateX(13px);
 }
 
@@ -133,7 +133,7 @@
 .legend-item {
   display: flex;
   align-items: center;
-  gap: 3.75px;
+  gap: 12.75px;
 }
 
 .legend-dot {
@@ -180,7 +180,7 @@
 .inner-textarea-bottom {
   flex-basis: 74%;
   background: linear-gradient(179.63deg, #ffffff 56.57%, #f8f9fa 99.68%) !important;
-  padding: 25px 20px;
+  /* padding: 25px 20px; */
   border-radius: 10px;
 }
 
@@ -192,6 +192,9 @@
   height: auto;
   max-height: none;
   box-sizing: border-box;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 /* _____________________________________ header of left container ______________________ */
@@ -205,6 +208,7 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
   box-sizing: border-box;
+  margin-bottom: 0.5px;
 }
 
 /* Left Controls - no background, just flex container */
@@ -447,6 +451,10 @@
   width: 100%;
   margin-left: auto;
   margin-right: auto;
+  padding: 20px;
+  background-color: #F8F9FA;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 /* ================================= Generate Button =============================== */
@@ -1149,6 +1157,7 @@ div#style-response-navigation {
 }
 
 @keyframes fade {
+
   0%,
   100% {
     opacity: 0.3;
@@ -1355,12 +1364,12 @@ mark.word-highlight * {
   background-color: #fff1c2 !important;
 }
 
-.ql-editor > h1:first-child + p > br:only-child,
-.ql-editor > h2:first-child + p > br:only-child,
-.ql-editor > h3:first-child + p > br:only-child,
-.ql-editor > h4:first-child + p > br:only-child,
-.ql-editor > h5:first-child + p > br:only-child,
-.ql-editor > h6:first-child + p > br:only-child {
+.ql-editor>h1:first-child+p>br:only-child,
+.ql-editor>h2:first-child+p>br:only-child,
+.ql-editor>h3:first-child+p>br:only-child,
+.ql-editor>h4:first-child+p>br:only-child,
+.ql-editor>h5:first-child+p>br:only-child,
+.ql-editor>h6:first-child+p>br:only-child {
   display: none !important;
 }
 
