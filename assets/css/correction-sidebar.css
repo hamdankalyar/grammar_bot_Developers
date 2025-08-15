@@ -663,25 +663,27 @@
 .improvement-item-1 {
   display: flex;
   width: 100%;
-  
+
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 5px;
 }
+
 .improvement-item-2 {
   display: flex;
   width: 100%;
-  
+
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 5px;
 }
+
 .improvement-item-3 {
   display: flex;
   width: 100%;
-  
+
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -700,6 +702,7 @@
     0 1px 3px 0 rgba(0, 0, 0, 0.04),
     0 1px 1px 0 rgba(255, 255, 255, 0.9) inset;
 }
+
 .improvement-icon-3 {
   display: flex;
   padding: 11px;
@@ -816,17 +819,28 @@
 .style-option {
   display: flex;
   align-items: center;
-  /* transition: all 0.3s ease; */
   border-radius: clamp(7px, 3vw, 0px);
-  border: 1px solid rgba(222, 226, 230, 0.8);
-  background: #fff;
+  border: 1px solid rgba(228, 228, 228, 1);
   box-shadow:
     0px 1px 1px 0px rgba(255, 255, 255, 0.9) inset,
     0px 1px 3px 0px rgba(0, 0, 0, 0.08);
-  /* min-height: 10%; */
   gap: 3px;
   padding: 10px 10px;
   justify-content: flex-start;
+  font-family: Poppins;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 18px;
+  letter-spacing: 0%;
+}
+
+.style-option:hover {
+  border: 1px solid rgba(228, 228, 228, 1);
+  background: linear-gradient(138.61deg, #ffffff 12.36%, #f1f3f4 94.3%);
+  box-shadow:
+    0px 1px 1px 0px rgba(255, 255, 255, 0.9) inset,
+    0px 2px 8px 0px rgba(0, 0, 0, 0.06),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.04);
 }
 
 @media (max-width: 480px) {
@@ -834,26 +848,6 @@
     padding: 8px 10px;
   }
 }
-
-/* .style-option:last-child {
-  border-bottom: none;
-}
-
-.style-option:nth-child(1):hover {
-  background-color: rgba(59, 130, 246, 0.1);
-}
-
-.style-option:nth-child(2):hover {
-  background-color: rgba(16, 185, 129, 0.1);
-}
-
-.style-option:nth-child(3):hover {
-  background-color: rgba(236, 72, 153, 0.1);
-}
-
-.style-option:nth-child(4):hover {
-  background-color: rgba(124, 58, 237, 0.1);
-} */
 
 .style-icon {
   /* padding: clamp(2px, 0.5vw, 3px); */
@@ -982,6 +976,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
+  flex: 1;
 }
 
 .voice-card {
@@ -990,6 +985,7 @@
   padding: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 16px;
+  width: 100%;
 }
 
 .voice-card-title {
@@ -1079,6 +1075,7 @@
   color: #333333;
   cursor: pointer;
   margin-top: 16px;
+  margin-bottom: 16px;
   transition: all 0.2s ease;
 }
 

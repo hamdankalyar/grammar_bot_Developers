@@ -274,7 +274,7 @@
                   </clipPath>
                 </defs>
               </svg>
-              <span>Kopier</span>
+              <span class="options-container-buttons-text">Kopier</span>
             </button>
             <div class="tts-container" style="position: relative">
               <button
@@ -295,7 +295,7 @@
                   </div>
                 </div>
                 <svg
-                  class="correction-options-btn lucide-volume-2"
+                  class="correction-options-btn-2 lucide-volume-2"
                   width="20"
                   height="16"
                   viewBox="0 0 20 16"
@@ -344,7 +344,7 @@
                     stroke-width="1.5"
                   />
                 </svg>
-                <span>Læs højt</span>
+                <span class="options-container-buttons-text">Læs højt</span>
               </button>
             </div>
             <button class="option-btn" id="downloadBtnQuill">
@@ -380,7 +380,7 @@
                   ></path>
                 </g>
               </svg>
-              <span>Download</span>
+              <span class="options-container-buttons-text">Download</span>
             </button>
           </div>
         </div>
@@ -1258,7 +1258,40 @@
             <div class="style-description">Din tekst bliver uddybet med flere detaljer.</div>
           </div>
         </div>
+
+        <div class="response-navigation" id="style-response-navigation">
+          <button class="arrow-left nav-btn next-btn" id="style-arrow-left" aria-label="Next">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="15"
+              viewBox="0 0 18 15"
+              fill="none"
+            >
+              <path
+                d="M0.636048 6.79294C0.448577 6.98046 0.343262 7.23477 0.343262 7.49994C0.343262 7.7651 0.448577 8.01941 0.636048 8.20694L6.29305 13.8639C6.48165 14.0461 6.73425 14.1469 6.99645 14.1446C7.25865 14.1423 7.50946 14.0372 7.69487 13.8518C7.88027 13.6663 7.98544 13.4155 7.98772 13.1533C7.99 12.8911 7.88921 12.6385 7.70705 12.4499L3.75705 8.49994H17C17.2653 8.49994 17.5196 8.39458 17.7072 8.20704C17.8947 8.01951 18 7.76515 18 7.49994C18 7.23472 17.8947 6.98037 17.7072 6.79283C17.5196 6.60529 17.2653 6.49994 17 6.49994H3.75705L7.70705 2.54994C7.88921 2.36133 7.99 2.10873 7.98772 1.84653C7.98544 1.58434 7.88027 1.33353 7.69487 1.14812C7.50946 0.96271 7.25865 0.857541 6.99645 0.855262C6.73425 0.852984 6.48165 0.953778 6.29305 1.13594L0.636048 6.79294Z"
+                fill="#ADB5BD"
+              />
+            </svg>
+          </button>
+          <span class="response-counter" id="style-response-counter"> Tekst 1 ud af 1 </span>
+          <button class="arrow-right nav-btn prev-btn" id="style-arrow-right" aria-label="Previous">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="15"
+              viewBox="0 0 18 15"
+              fill="none"
+            >
+              <path
+                d="M17.364 6.79294C17.5514 6.98046 17.6567 7.23477 17.6567 7.49994C17.6567 7.7651 17.5514 8.01941 17.364 8.20694L11.707 13.8639C11.5183 14.0461 11.2657 14.1469 11.0036 14.1446C10.7414 14.1423 10.4905 14.0372 10.3051 13.8518C10.1197 13.6663 10.0146 13.4155 10.0123 13.1533C10.01 12.8911 10.1108 12.6385 10.293 12.4499L14.243 8.49994H0.999952C0.734735 8.49994 0.480381 8.39458 0.292845 8.20704C0.105309 8.01951 -4.76837e-05 7.76515 -4.76837e-05 7.49994C-4.76837e-05 7.23472 0.105309 6.98037 0.292845 6.79283C0.480381 6.60529 0.734735 6.49994 0.999952 6.49994H14.243L10.293 2.54994C10.1108 2.36133 10.01 2.10873 10.0123 1.84653C10.0146 1.58434 10.1197 1.33353 10.3051 1.14812C10.4905 0.96271 10.7414 0.857541 11.0036 0.855262C11.2657 0.852984 11.5183 0.953778 11.707 1.13594L17.364 6.79294Z"
+                fill="#6C757D"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
+      <!-- Only showing the voice-section part with updated IDs -->
       <div class="voice-section" style="display: none">
         <div class="voice-inner-section">
           <div class="voice-card">
@@ -1274,6 +1307,44 @@
             </div>
           </div>
           <button class="voice-change-btn" id="voiceChangeBtn">Change</button>
+
+          <!-- ✅ UPDATED: Navigation block with unique IDs but same classes -->
+
+          <div class="response-navigation" id="voice-response-navigation">
+            <button class="arrow-left nav-btn next-btn" id="voice-arrow-left" aria-label="Next">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="15"
+                viewBox="0 0 18 15"
+                fill="none"
+              >
+                <path
+                  d="M0.636048 6.79294C0.448577 6.98046 0.343262 7.23477 0.343262 7.49994C0.343262 7.7651 0.448577 8.01941 0.636048 8.20694L6.29305 13.8639C6.48165 14.0461 6.73425 14.1469 6.99645 14.1446C7.25865 14.1423 7.50946 14.0372 7.69487 13.8518C7.88027 13.6663 7.98544 13.4155 7.98772 13.1533C7.99 12.8911 7.88921 12.6385 7.70705 12.4499L3.75705 8.49994H17C17.2653 8.49994 17.5196 8.39458 17.7072 8.20704C17.8947 8.01951 18 7.76515 18 7.49994C18 7.23472 17.8947 6.98037 17.7072 6.79283C17.5196 6.60529 17.2653 6.49994 17 6.49994H3.75705L7.70705 2.54994C7.88921 2.36133 7.99 2.10873 7.98772 1.84653C7.98544 1.58434 7.88027 1.33353 7.69487 1.14812C7.50946 0.96271 7.25865 0.857541 6.99645 0.855262C6.73425 0.852984 6.48165 0.953778 6.29305 1.13594L0.636048 6.79294Z"
+                  fill="#ADB5BD"
+                />
+              </svg>
+            </button>
+            <span class="response-counter" id="voice-response-counter"> Tekst 1 ud af 1 </span>
+            <button
+              class="arrow-right nav-btn prev-btn"
+              id="voice-arrow-right"
+              aria-label="Previous"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="15"
+                viewBox="0 0 18 15"
+                fill="none"
+              >
+                <path
+                  d="M17.364 6.79294C17.5514 6.98046 17.6567 7.23477 17.6567 7.49994C17.6567 7.7651 17.5514 8.01941 17.364 8.20694L11.707 13.8639C11.5183 14.0461 11.2657 14.1469 11.0036 14.1446C10.7414 14.1423 10.4905 14.0372 10.3051 13.8518C10.1197 13.6663 10.0146 13.4155 10.0123 13.1533C10.01 12.8911 10.1108 12.6385 10.293 12.4499L14.243 8.49994H0.999952C0.734735 8.49994 0.480381 8.39458 0.292845 8.20704C0.105309 8.01951 -4.76837e-05 7.76515 -4.76837e-05 7.49994C-4.76837e-05 7.23472 0.105309 6.98037 0.292845 6.79283C0.480381 6.60529 0.734735 6.49994 0.999952 6.49994H14.243L10.293 2.54994C10.1108 2.36133 10.01 2.10873 10.0123 1.84653C10.0146 1.58434 10.1197 1.33353 10.3051 1.14812C10.4905 0.96271 10.7414 0.857541 11.0036 0.855262C11.2657 0.852984 11.5183 0.953778 11.707 1.13594L17.364 6.79294Z"
+                  fill="#6C757D"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
         <div
           class="dk-hamdan-input-container"
@@ -1325,30 +1396,6 @@
     </div>
   </div>
   <div class="counter-nav-div">
-    <div class="response-navigation">
-      <div class="response-backward">
-        <span class="response-counter"> Tekst 1 ud af 1 </span>
-      </div>
-      <div class="nav-icons-div">
-        <button class="arrow-left nav-btn next-btn" aria-label="Next">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 16 16">
-            <path fill="#ffffff" d="M12 13h-2L5 8l5-5h2L7 8z" />
-          </svg>
-        </button>
-        <button class="arrow-right nav-btn prev-btn" aria-label="Previous">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 16 16"
-            style="transform: rotate(180deg)"
-          >
-            <path fill="#ffffff" d="M12 13h-2L5 8l5-5h2L7 8z" />
-          </svg>
-        </button>
-      </div>
-    </div>
-
     <div class="word-counter-div">
       <p id="char-limit-warning" class="char-limit-warning">
         Fjern lidt tekst – så hjælper robotten bedre.

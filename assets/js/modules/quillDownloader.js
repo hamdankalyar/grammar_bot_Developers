@@ -499,13 +499,38 @@ function sanitizeHtmlForDocxOnly(rawHtml) {
   const tempDiv = document.createElement('div');
   tempDiv.innerHTML = rawHtml;
 
-  // Remove inline styles only
+  // 1. Remove grammar-correction-removed tags COMPLETELY (including text inside)
+  const grammarRemovedElements = tempDiv.querySelectorAll(
+    'ham-dan.grammar-correction-removed, [class*="grammar-correction-removed"]'
+  );
+  grammarRemovedElements.forEach(element => {
+    element.remove(); // Remove the entire element and its content
+  });
+
+  // 2. Remove other ham-dan tags but preserve text content
+  const remainingHamDanElements = tempDiv.querySelectorAll('ham-dan');
+  remainingHamDanElements.forEach(hamDan => {
+    const textContent = hamDan.textContent;
+    const textNode = document.createTextNode(textContent);
+    hamDan.parentNode.replaceChild(textNode, hamDan);
+  });
+
+  // 3. Remove all mark tags (if any) but preserve text content
+  const markElements = tempDiv.querySelectorAll('mark');
+  markElements.forEach(mark => {
+    const textContent = mark.textContent;
+    const textNode = document.createTextNode(textContent);
+    mark.parentNode.replaceChild(textNode, mark);
+  });
+
+  // 4. Remove inline styles from all elements
   const elements = tempDiv.querySelectorAll('*');
   elements.forEach(element => {
     element.removeAttribute('style');
+    element.removeAttribute('class'); // Also remove classes to be safe
   });
 
-  // Remove <p><br></p> after headings and strong tags
+  // 5. Remove <p><br></p> after headings and strong tags
   const importantElements = tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6, strong');
   importantElements.forEach(element => {
     const nextSibling = element.nextElementSibling;
@@ -524,7 +549,7 @@ function sanitizeHtmlForDocxOnly(rawHtml) {
     }
   });
 
-  // Handle bullet lists
+  // 6. Handle bullet lists
   const olElements = [...tempDiv.querySelectorAll('ol')];
   olElements.forEach(ol => {
     const ul = document.createElement('ul');

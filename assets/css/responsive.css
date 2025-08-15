@@ -355,6 +355,7 @@
   }
 
   .middle-controls {
+    display: none;
     width: fit-content;
     justify-content: center;
     align-items: center;
@@ -364,6 +365,7 @@
   }
 
   .right-controls {
+    display: none;
     order: 2;
     align-items: center;
   }

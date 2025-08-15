@@ -168,6 +168,8 @@ let isExplanations = false;
 let correctedResults = [];
 let diffHTMLParts = [];
 let isImproved;
+
+window.lastCorrectedText = lastCorrectedText;
 // ================================= Quill editor ====================================
 // * ------------------------------- Table fix  ----------------------------- *
 Quill.register(
@@ -1013,6 +1015,7 @@ document.querySelector('#genBtn').addEventListener('click', async () => {
   isSmartCalled = false;
   isExplanations = false;
   lastCorrectedText = '';
+  window.lastCorrectedText = lastCorrectedText;
   // NEW:
   textAreaLoader.showTextAreaLoader('.textarea-wrapper', 'Retter teksten...');
   correctionSidebarLoader.showCorrectionLoader('.correction-message', 'Analyzing...');
@@ -1793,6 +1796,7 @@ function formatCallingWithLoader(language, userInputText, correctedText) {
         formattedResponse = formattedResponse.replace(/```/g, '');
         // console.log("response from the formatter: ", formattedResponse);
         lastCorrectedText = formattedResponse;
+        window.lastCorrectedText = lastCorrectedText;
         onResponseGenerated(removeHamDanTags(formattedResponse));
         displayResponse(formattedResponse);
         document.querySelector('.correction-options').style.display = 'flex';
@@ -1838,6 +1842,7 @@ function formatCallingParallelWithLoader(language, formattingParts, fallbackDiff
       // console.log("Parallel formatting results:", formattingResults);
       const combinedResult = combineFormattingResults(formattingResults);
       lastCorrectedText = combinedResult;
+      window.lastCorrectedText = lastCorrectedText;
       // console.log("here are the combined results from parallel formatting: ", combinedResult);
       displayResponse(combinedResult);
       document.querySelector('.correction-options').style.display = 'flex';
@@ -1887,6 +1892,7 @@ function formatCalling(language, userInputText, correctedText) {
         formattedResponse = formattedResponse.replace(/```/g, '');
 
         lastCorrectedText = formattedResponse;
+        window.lastCorrectedText = lastCorrectedText;
         displayResponse(formattedResponse);
         onResponseGenerated(removeHamDanTags(formattedResponse));
         if (originalContent) {
@@ -2367,11 +2373,20 @@ function sendStyleChangeRequest(text, promptNumber) {
         showNavigation();
         // Store response and update counter
         // Add new response and update navigation
+        // Store response and update counter (sync ALL navs)
         getCurrentRewriteResponses()[getCurrentParagraphIndex()].responses.push(content);
         const responseCount =
           getCurrentRewriteResponses()[getCurrentParagraphIndex()].responses.length;
-        document.querySelector('.response-counter').textContent =
-          `Tekst ${responseCount} ud af ${responseCount}`;
+
+        // Update both counters
+        document.querySelectorAll('.response-counter').forEach(el => {
+          el.textContent = `Tekst ${responseCount} ud af ${responseCount}`;
+        });
+
+        // Recompute buttons (enable/disable + fills)
+        if (typeof updateNavigationButtonStates === 'function') {
+          updateNavigationButtonStates();
+        }
       } else {
         throw new Error(data.data?.message || 'Style change failed');
       }
@@ -3167,10 +3182,9 @@ document.addEventListener('DOMContentLoaded', () => {
   updateSliderPosition(50);
 
   // Add voice change button functionality
-  // Add voice change button functionality
   document.getElementById('voiceChangeBtn')?.addEventListener('click', () => {
-    // Check if text field has content
-    if (!quill1.getText().trim().length) {
+    // ✅ UPDATED: Check both text field AND lastCorrectedText (same as style options)
+    if (!quill1.getText().trim().length || !lastCorrectedText.trim().length) {
       return;
     }
 
@@ -3272,6 +3286,7 @@ function handleClear() {
   // NEW:
   correctionSidebarLoader.showReadyState();
   lastCorrectedText = '';
+  window.lastCorrectedText = lastCorrectedText;
   // Force placeholder update
   updatePlaceholder(getLanguageName(getCurrentLanguage()));
   // updateSelectedOption(dropdownOptions[0]);
@@ -3990,41 +4005,70 @@ window.dkHamdanOpenModal = dkHamdanOpenModal;
 window.dkHamdanCloseModal = dkHamdanCloseModal;
 
 document.addEventListener('DOMContentLoaded', () => {
-  const topControlsDiv = document.querySelector('.top-controls');
+  const leftControlsContainer = document.querySelector('.left-controls');
   const middleControlsDiv = document.querySelector('.middle-controls');
   const rightControlsDiv = document.querySelector('.right-controls');
-  const clearBtn = document.getElementById('clearBtn');
 
-  console.log('Left,Mid,Right--DOM loaded!!!');
+  const originalParents = new Map();
+  let isMobileLayout = false;
 
-  if (!middleControlsDiv || !rightControlsDiv || !clearBtn) {
-    console.warn('❌ Required elements not found in DOM');
-    return;
-  }
-
-  const originalParent = middleControlsDiv.parentElement;
-  const originalNextSibling = middleControlsDiv.nextElementSibling;
-  let isMoved = false;
-
-  // Function to handle the layout change based on screen size
   const handleResize = () => {
-    const screenWidth = window.innerWidth;
-    const isWithinRange = screenWidth >= 300 && screenWidth <= 426;
+    const width = window.innerWidth;
+    const mobile = width >= 300 && width <= 426;
 
-    if (isWithinRange && !isMoved) {
-      console.log('MOBILE SIZE IS ON!!');
-      // Move middle-controls into right-controls before clearBtn
-      rightControlsDiv.insertBefore(middleControlsDiv, clearBtn);
-      isMoved = true;
-    } else if (!isWithinRange && isMoved) {
-      console.log('PC SIZE IS ON!!');
-      // Move middle-controls back to its original position
-      originalParent.insertBefore(middleControlsDiv, originalNextSibling);
-      isMoved = false;
+    if (mobile && !isMobileLayout) {
+      // Move only from right-controls, skip middle-controls
+      document.querySelectorAll('.right-controls button').forEach(btn => {
+        originalParents.set(btn, btn.parentElement);
+        leftControlsContainer.appendChild(btn);
+      });
+
+      middleControlsDiv.style.display = 'none';
+      rightControlsDiv.style.display = 'none';
+      isMobileLayout = true;
+    } else if (!mobile && isMobileLayout) {
+      // Restore original parents
+      originalParents.forEach((parent, btn) => {
+        parent.appendChild(btn);
+      });
+      originalParents.clear();
+
+      middleControlsDiv.style.display = '';
+      rightControlsDiv.style.display = '';
+      isMobileLayout = false;
     }
   };
 
-  // Call on load and on resize
+  handleResize();
   window.addEventListener('resize', handleResize);
-  handleResize(); // Initial call
+});
+
+// Force re-initialization of style options after everything loads
+window.addEventListener('load', function () {
+  setTimeout(() => {
+    console.log('Re-initializing style options...');
+
+    document.querySelectorAll('.style-option').forEach((option, index) => {
+      // Remove existing listeners first
+      option.replaceWith(option.cloneNode(true));
+    });
+
+    // Re-add listeners
+    document.querySelectorAll('.style-option').forEach((option, index) => {
+      option.addEventListener('click', function () {
+        console.log('Style option clicked:', index + 1);
+
+        if (!quill1.getText().trim().length || !lastCorrectedText.trim().length) {
+          console.log('No text content available');
+          return;
+        }
+
+        const promptNumber = index + 1;
+        previousText = quill1.root.innerHTML;
+        let textToSent = removeHamDanTags(lastCorrectedText);
+
+        sendStyleChangeRequest(textToSent, promptNumber);
+      });
+    });
+  }, 2000);
 });

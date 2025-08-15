@@ -9,7 +9,6 @@ let originalZIndex;
 const sidebarSelector = '.elementor-element-3189719';
 
 // Initialize rewrite system
-// Initialize rewrite system
 function initializeRewriteSystem({
   displayResponse,
   onResponseGenerated,
@@ -39,7 +38,12 @@ function initializeRewriteSystem({
   };
 
   function validateTextForToneChange() {
-    if (!quill1.getText().trim().length) {
+    // ✅ UPDATED: Check both text field AND lastCorrectedText (same as style options)
+    if (
+      !quill1.getText().trim().length ||
+      !window.lastCorrectedText ||
+      !window.lastCorrectedText.trim().length
+    ) {
       return false;
     }
     return true;
@@ -96,26 +100,22 @@ function initializeRewriteSystem({
     console.warn('Element with ID "professional" not found');
   }
 
-  // Add navigation event listeners with null checks
-  const arrowLeft = document.querySelector('.arrow-left');
-  if (arrowLeft) {
-    arrowLeft.addEventListener('click', () => {
-      // console.log('Navigating to previous response...');
+  // ✅ NEW: Add navigation event listeners for ALL arrow buttons
+  const arrowLeftButtons = document.querySelectorAll('.arrow-left');
+  arrowLeftButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      console.log('Navigating to previous response...');
       navigateResponses('prev');
     });
-  } else {
-    console.warn('Element with class "arrow-left" not found');
-  }
+  });
 
-  const arrowRight = document.querySelector('.arrow-right');
-  if (arrowRight) {
-    arrowRight.addEventListener('click', () => {
-      // console.log('Navigating to next response...');
+  const arrowRightButtons = document.querySelectorAll('.arrow-right');
+  arrowRightButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      console.log('Navigating to next response...');
       navigateResponses('next');
     });
-  } else {
-    console.warn('Element with class "arrow-right" not found');
-  }
+  });
 
   // Handle custom rewrite input with null check
   const submitRewrite = document.getElementById('submint_rewrite');
@@ -131,7 +131,7 @@ function initializeRewriteSystem({
       const inputValue = customInput ? customInput.value.trim() : '';
 
       if (inputValue.length > 0) {
-        // console.log('Custom rewrite submitted.');
+        console.log('Custom rewrite submitted.');
         handleRewrite('custom');
       }
       // If custom input is empty, do nothing (button click has no effect)
@@ -144,7 +144,7 @@ function initializeRewriteSystem({
   const rewriteBtn = document.querySelector('#rewriteBtn');
   if (rewriteBtn) {
     rewriteBtn.addEventListener('click', () => {
-      // console.log("clicked the rewrite button")
+      console.log('clicked the rewrite button');
       window._rewriteSystem.clearHighlights();
       dkHamdanOpenModal(0);
     });
@@ -161,17 +161,62 @@ function initializeRewriteSystem({
   }
 }
 
+// Add this helper function
+function parseCounterText(text) {
+  const m = text.match(/\d+/g);
+  const current = m && m[0] ? parseInt(m[0], 10) : 1;
+  const total = m && m[1] ? parseInt(m[1], 10) : 1;
+  return [current, total];
+}
+
+function setBtnFill(btn, isDisabled) {
+  const path = btn.querySelector('svg path');
+  if (!path) return;
+  path.style.fill = isDisabled
+    ? 'var(--Text-Secondary, #ADB5BD)' // disabled
+    : 'var(--Text-Muted, #6C757D)'; // enabled
+}
+
+function updateNavigationButtonStates() {
+  document.querySelectorAll('.response-navigation').forEach(nav => {
+    const counterEl = nav.querySelector('.response-counter');
+    if (!counterEl) return;
+
+    const [current, total] = parseCounterText(counterEl.textContent);
+
+    const prevBtn = nav.querySelector('.arrow-left'); // previous
+    const nextBtn = nav.querySelector('.arrow-right'); // next
+
+    const atStart = current <= 1;
+    const atEnd = current >= total;
+
+    if (prevBtn) {
+      prevBtn.disabled = atStart;
+      setBtnFill(prevBtn, atStart);
+    }
+    if (nextBtn) {
+      nextBtn.disabled = atEnd;
+      setBtnFill(nextBtn, atEnd);
+    }
+  });
+}
+
 // Handle rewrite button clicks
 function handleRewrite(buttonId) {
-  // console.log(`Rewrite button clicked: ${buttonId}`);
-  // console.log('Sending rewrite request...');
+  console.log(`Rewrite button clicked: ${buttonId}`);
+  console.log('Sending rewrite request...');
   sendRewriteRequest(buttonId);
   window._rewriteSystem.dkHamdanCloseModal();
 }
 
 // Navigate through responses
 function navigateResponses(direction) {
-  const counter = document.querySelector('.response-counter');
+  // ✅ UPDATE: Get ALL counter elements and update them all
+  const counters = document.querySelectorAll('.response-counter');
+  if (counters.length === 0) return;
+
+  // Use the first counter to determine current state
+  const counter = counters[0];
   const matches = counter.textContent.match(/\d+/g);
   const [current, total] = matches ? matches.map(num => parseInt(num)) : [0, 0];
 
@@ -184,13 +229,14 @@ function navigateResponses(direction) {
 
 // Update content with specific response
 function updateContent(responseIndex) {
-  // console.log(`Updating content to response index: ${responseIndex}`);
+  console.log(`Updating content to response index: ${responseIndex}`);
 
   // Ensure rewriteResponses exists for current paragraph
   if (!rewriteResponses[currentParagraphIndex]) {
     rewriteResponses[currentParagraphIndex] = {
-      responses: []
+      responses: [window.lastCorrectedText] // ✅ Use lastCorrectedText as version 1
     };
+    console.log('Initialized response storage for the current paragraph index.');
   }
 
   const responses = rewriteResponses[currentParagraphIndex].responses;
@@ -203,11 +249,14 @@ function updateContent(responseIndex) {
       adjustHeights();
     }
 
-    // Update counter
-    const counter = document.querySelector('.response-counter');
-    counter.textContent = `Tekst ${responseIndex + 1} ud af ${responses.length}`;
+    // ✅ UPDATE: Update ALL counter elements
+    const counters = document.querySelectorAll('.response-counter');
+    counters.forEach(counter => {
+      counter.textContent = `Tekst ${responseIndex + 1} ud af ${responses.length}`;
+    });
 
-    // console.log('Content and counter updated successfully');
+    console.log('Content and all counters updated successfully');
+    updateNavigationButtonStates();
   } else {
     console.warn('Response not found for index:', responseIndex);
   }
@@ -215,30 +264,50 @@ function updateContent(responseIndex) {
 
 // Reset navigation text and state
 function resetNavText() {
-  const rewriteNavDiv = document.querySelector('.response-navigation');
-  const counterNav = document.querySelector('.counter-nav-div');
+  // ✅ UPDATE: Handle ALL navigation elements
+  const rewriteNavDivs = document.querySelectorAll('.response-navigation');
+  const counterNavs = document.querySelectorAll('.counter-nav-div');
 
-  rewriteNavDiv.style.display = 'none';
+  rewriteNavDivs.forEach(div => {
+    div.style.display = 'none';
+  });
+
   rewriteResponses = {};
-  counterNav.style.justifyContent = 'center';
-  const counter = document.querySelector('.response-counter');
-  counter.textContent = `Tekst 1 ud af 1`;
+
+  counterNavs.forEach(nav => {
+    nav.style.justifyContent = 'center';
+  });
+
+  // ✅ UPDATE: Reset ALL counters
+  const counters = document.querySelectorAll('.response-counter');
+  counters.forEach(counter => {
+    counter.textContent = `Tekst 1 ud af 1`;
+  });
+
+  updateNavigationButtonStates();
 }
 
 // Show navigation UI
 function showNavigation() {
-  const rewriteNavDiv = document.querySelector('.response-navigation');
-  const counterNav = document.querySelector('.counter-nav-div');
+  // ✅ UPDATE: Show ALL navigation elements
+  const rewriteNavDivs = document.querySelectorAll('.response-navigation');
+  const counterNavs = document.querySelectorAll('.counter-nav-div');
 
-  rewriteNavDiv.style.display = 'flex';
-  counterNav.style.display = 'flex';
-  counterNav.style.justifyContent = 'flex-start';
+  rewriteNavDivs.forEach(div => {
+    div.style.display = 'flex';
+  });
+
+  counterNavs.forEach(nav => {
+    nav.style.display = 'flex';
+    nav.style.justifyContent = 'flex-start';
+  });
+
   document.querySelector('.correction-options').style.marginTop = '1.5rem';
 }
 
 // Send rewrite request to server
 function sendRewriteRequest(buttonId) {
-  // console.log(`Sending rewrite request with buttonId: ${buttonId}`);
+  console.log(`Sending rewrite request with buttonId: ${buttonId}`);
 
   const {
     originalContent,
@@ -255,8 +324,8 @@ function sendRewriteRequest(buttonId) {
   const boundShowLoader = showLoader.bind(window.textAreaLoader);
   const boundHideLoader = hideLoader.bind(window.textAreaLoader);
 
-  const currentText = originalContent.html;
-  // console.log("Text sending to rewrite\n", currentText)
+  const currentText = window.lastCorrectedText; // ✅ Use the corrected text from generate button
+  console.log('Text sending to rewrite\n', currentText);
 
   boundShowLoader('.textarea-wrapper', 'Omskriver teksten...');
 
@@ -264,7 +333,7 @@ function sendRewriteRequest(buttonId) {
     rewriteResponses[currentParagraphIndex] = {
       responses: [currentText]
     };
-    // console.log('Initialized response storage for the current paragraph index.');
+    console.log('Initialized response storage for the current paragraph index.');
   }
 
   const formData = new FormData();
@@ -274,7 +343,7 @@ function sendRewriteRequest(buttonId) {
   let langForRewrite =
     Object.keys(languageMap).find(key => languageMap[key] === getCurrentLanguage()) ||
     getCurrentLanguage();
-  // console.log("language for rewrite", langForRewrite)
+  console.log('language for rewrite', langForRewrite);
   formData.append('language', langForRewrite);
 
   switch (buttonId) {
@@ -301,12 +370,12 @@ function sendRewriteRequest(buttonId) {
   const customInput = document.getElementById('custom_rewrite_input');
   if (customInput?.value) {
     formData.append('rewrite_prompt', customInput.value);
-    // console.log('Custom rewrite prompt provided:', customInput.value);
+    console.log('Custom rewrite prompt provided:', customInput.value);
   }
 
   // Debug form data
   for (var pair of formData.entries()) {
-    // console.log(pair[0] + ', ' + pair[1]);
+    console.log(pair[0] + ', ' + pair[1]);
   }
 
   fetch(HGF_ajax_object.ajax_url, {
@@ -315,11 +384,11 @@ function sendRewriteRequest(buttonId) {
     body: new URLSearchParams(formData)
   })
     .then(response => {
-      // console.log('Server response received.');
+      console.log('Server response received.');
       return response.text();
     })
     .then(text => {
-      // console.log('Response text:', text);
+      console.log('Response text:', text);
       try {
         return JSON.parse(text);
       } catch (error) {
@@ -328,12 +397,12 @@ function sendRewriteRequest(buttonId) {
       }
     })
     .then(data => {
-      // console.log('Parsed response data:', data);
+      console.log('Parsed response data:', data);
       if (data.success) {
         const content = data.data;
-        // console.log("rewrite content:\n", content);
+        console.log('rewrite content:\n', content);
         const removeRegex = content.replace(/\\/g, '');
-        // console.log("rewrite content after regex:\n", removeRegex);
+        console.log('rewrite content after regex:\n', removeRegex);
 
         displayResponse(removeRegex);
         onResponseGenerated(removeRegex);
@@ -342,10 +411,16 @@ function sendRewriteRequest(buttonId) {
         // Store response and update counter
         rewriteResponses[currentParagraphIndex].responses.push(content);
         const responseCount = rewriteResponses[currentParagraphIndex].responses.length;
-        document.querySelector('.response-counter').textContent =
-          `Tekst ${responseCount} ud af ${responseCount}`;
 
-        // console.log('Rewrite successful. Updated corrections display and counter.');
+        // ✅ UPDATE: Update ALL counter elements
+        const counters = document.querySelectorAll('.response-counter');
+        counters.forEach(counter => {
+          counter.textContent = `Tekst ${responseCount} ud af ${responseCount}`;
+        });
+
+        updateNavigationButtonStates();
+
+        console.log('Rewrite successful. Updated corrections display and counter.');
       } else {
         console.error('Error:', data.data?.message || 'Unknown error');
       }
@@ -355,7 +430,7 @@ function sendRewriteRequest(buttonId) {
     })
     .finally(() => {
       boundHideLoader('.textarea-wrapper');
-      // console.log('Request completed.');
+      console.log('Request completed.');
     });
 }
 
@@ -384,7 +459,7 @@ function resetRewriteResponses() {
 
 // Function to open the modal
 function dkHamdanOpenModal(index) {
-  // console.log("object index", index);
+  console.log('object index', index);
 
   const modal = document.querySelector('.dk-hamdan-modal-container');
   modal.style.display = 'block';

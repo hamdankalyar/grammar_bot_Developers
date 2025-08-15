@@ -576,6 +576,18 @@
   transition: all 0.2s;
 }
 
+.option-btn:hover {
+  background: linear-gradient(138.61deg, #ffffff 12.36%, #f1f3f4 94.3%);
+  box-shadow:
+    0px 1px 1px 0px rgba(255, 255, 255, 0.9) inset,
+    0px 2px 8px 0px rgba(0, 0, 0, 0.06),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.04);
+}
+
+.options-container-buttons-text {
+  color: rgba(108, 117, 125, 1);
+}
+
 #rewriteBtn {
   display: flex !important;
 }
@@ -590,8 +602,17 @@
   width: 15px;
 }
 
+.correction-options-btn-2 {
+  height: 17px;
+  width: 17px;
+}
+
 /* To apply the color to the SVG inside the button */
 .correction-options-btn svg path {
+  stroke: rgba(160, 160, 160, 1);
+}
+
+.correction-options-btn-2 svg path {
   stroke: rgba(160, 160, 160, 1);
 }
 
@@ -943,10 +964,11 @@
   display: flex;
   align-items: center;
   padding: 5px;
-  flex-basis: calc(50% - 63px);
   gap: 15px;
   justify-content: flex-start;
   display: none;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .nav-icons-div {
@@ -959,11 +981,18 @@
 }
 
 .response-navigation button {
-  border: none;
-  background-color: transparent;
-  display: flex;
+  width: 24px;
+  height: 24px;
+  padding: 1px;
+  justify-content: center;
   align-items: center;
-  padding: 0;
+  gap: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--Text-Primary-Dark, #e4e4e4);
+  background: linear-gradient(139deg, #fff 12.36%, #f1f3f4 94.3%);
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.15),
+    0 1px 1px 0 rgba(255, 255, 255, 0.9) inset;
 }
 
 .response-counter {
@@ -975,6 +1004,27 @@
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
   color: #414141;
+}
+
+/* New CSS  - Response Navigation*/
+
+div#style-response-navigation {
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+#voice-arrow-right {
+  justify-content: space-between;
+}
+
+.nav-btn svg path {
+  transition: fill 0.2s ease !important;
+}
+
+.nav-btn:disabled {
+  cursor: not-allowed;
+  opacity: 1;
+  /* Remove opacity since we're handling fill color directly */
 }
 
 /* --------------------------------- download-------------------------------- */
