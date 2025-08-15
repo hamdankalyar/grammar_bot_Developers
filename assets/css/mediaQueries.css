@@ -2,9 +2,7 @@
 
 /* Large Desktop (1200px and above) */
 @media screen and (min-width: 1200px) {
-  .options-container {
-    padding-bottom: 25px;
-  }
+  .options-container {}
 
   .options-row {
     gap: 15px;
@@ -115,7 +113,7 @@
     padding: clamp(12px, 1.5vw, 16px);
   }
 
-  .option-btn + .option-btn {
+  .option-btn+.option-btn {
     margin-top: 8px;
   }
 }
@@ -238,6 +236,7 @@
 }
 
 @media screen and (max-width: 767px) {
+
   /* Ensure options container has proper spacing */
   .correction-options {
     margin-bottom: env(safe-area-inset-bottom);
@@ -444,6 +443,7 @@
 
 /* Handle height adjustments for better touch targets on mobile */
 @media (hover: none) and (pointer: coarse) {
+
   .language-btn,
   .other-lang-input {
     min-height: 44px;

@@ -1,6 +1,5 @@
 .new-korrektur {
   font-family: 'Poppins';
-  padding: 20px;
 }
 
 /* =================================== top headings div ================================ */
@@ -70,11 +69,11 @@
   height: 0;
 }
 
-.switch-input:checked + .switch-slider {
+.switch-input:checked+.switch-slider {
   background-color: #141b34;
 }
 
-.switch-input:checked + .switch-slider:before {
+.switch-input:checked+.switch-slider:before {
   transform: translateX(13px);
 }
 
@@ -550,13 +549,15 @@
   gap: 0.5rem;
   justify-content: center;
   align-items: center;
+  background: white;
+  padding: 20px
 }
 
 .options-container {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding-bottom: 25px;
+
 }
 
 .options-row {
@@ -1157,6 +1158,7 @@ div#style-response-navigation {
 }
 
 @keyframes fade {
+
   0%,
   100% {
     opacity: 0.3;
@@ -1363,12 +1365,12 @@ mark.word-highlight * {
   background-color: #fff1c2 !important;
 }
 
-.ql-editor > h1:first-child + p > br:only-child,
-.ql-editor > h2:first-child + p > br:only-child,
-.ql-editor > h3:first-child + p > br:only-child,
-.ql-editor > h4:first-child + p > br:only-child,
-.ql-editor > h5:first-child + p > br:only-child,
-.ql-editor > h6:first-child + p > br:only-child {
+.ql-editor>h1:first-child+p>br:only-child,
+.ql-editor>h2:first-child+p>br:only-child,
+.ql-editor>h3:first-child+p>br:only-child,
+.ql-editor>h4:first-child+p>br:only-child,
+.ql-editor>h5:first-child+p>br:only-child,
+.ql-editor>h6:first-child+p>br:only-child {
   display: none !important;
 }
 

@@ -35,7 +35,7 @@ class TextAreaLoader {
     bubbleLoader.className = 'bubble-loader';
 
     // Create 4 bubbles
-    for (let i = 1; i <= 4; i++) {
+    for (let i = 1; i <= 1; i++) {
       const bubble = document.createElement('div');
       bubble.className = 'bubble';
       bubbleLoader.appendChild(bubble);
