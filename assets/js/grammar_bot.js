@@ -3967,7 +3967,8 @@ document.addEventListener('DOMContentLoaded', function () {
   // Show tutorial when button is clicked
   showTutorialBtn.addEventListener('click', () => {
     modal.hidden = false;
-    modal.style.display = 'block';
+    modal.style.display = 'flex';
+    modal.style.justifyContent = 'space-evenly';
     iframe.src = originalSrc; // Reset iframe src to start video
   });
 

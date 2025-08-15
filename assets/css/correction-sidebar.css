@@ -10,6 +10,7 @@
   border-radius: 10px;
   min-height: 520px;
   max-width: 25%;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
 }
 
 .correction-sidebar.hidden {
@@ -344,7 +345,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 10px;
+  padding: 0 20px;
   justify-content: center;
   overflow-x: hidden;
   overflow-y: auto;
@@ -525,7 +526,7 @@
 /* ================================= Correction Inner Section ================================= */
 .correction-inner {
   display: grid;
-  padding: 10px 10px 20px 10px;
+  padding: 10px 20px 20px 20px;
   row-gap: 10px;
   column-gap: 10px;
   flex: 1 0 0;
@@ -960,7 +961,7 @@
 .voice-section {
   flex-wrap: wrap;
   display: grid;
-  padding: 10px 10px 20px 10px;
+  padding: 10px 20px 20px 20px;
   row-gap: 10px;
   column-gap: 10px;
   flex: 1 0 0;
@@ -1267,7 +1268,7 @@
 /* ================================= Speech Bubble ================================= */
 .hamdan-speech-bubble {
   display: flex;
-  width: 170px;
+  width: 100%;
   padding: 12px 12px;
   flex-direction: row;
   justify-content: center;

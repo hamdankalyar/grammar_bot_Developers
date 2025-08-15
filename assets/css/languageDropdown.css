@@ -68,7 +68,8 @@
 
 .dk-dropdown {
   position: absolute;
-  top: 109%;
+  bottom: 109%;
+  /* top: 109%; */
   left: 0;
   right: 0;
   z-index: 1000;
@@ -115,7 +116,8 @@
   box-shadow:
     0px 1px 1px 0px rgba(255, 255, 255, 0.9) inset,
     0px 2px 8px 0px rgba(0, 0, 0, 0.06),
-    0px 1px 3px 0px rgba(0, 0, 0, 0.04); /* Combined box-shadows from previous modifications */
+    0px 1px 3px 0px rgba(0, 0, 0, 0.04);
+  /* Combined box-shadows from previous modifications */
   border-radius: 8px;
   /* Removed margin-bottom change to prevent layout shift */
 }

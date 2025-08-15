@@ -1,6 +1,10 @@
 /* ================================= TABLET RESPONSIVE (426px - 768px) ================================= */
 
 @media (min-width: 426px) and (max-width: 768px) {
+  .hamdan-header-title {
+    color: linear-gradient(90deg, #6c757d 0%, #e24668 100%) !important;
+  }
+
   /* Header adjustments for tablet */
   .hamdan-header {
     padding: 24px 20px;
@@ -260,6 +264,10 @@
 /* ================================= MOBILE RESPONSIVE (300px - 426px) ================================= */
 
 @media (min-width: 300px) and (max-width: 426px) {
+  .hamdan-header-title {
+    color: linear-gradient(90deg, #6c757d 0%, #e24668 100%) !important;
+  }
+
   /* Header mobile layout */
   .hamdan-header {
     padding: 16px 12px;
@@ -310,7 +318,7 @@
     width: 100%;
     justify-content: center;
     text-align: center;
-    min-height: 44px;
+    min-height: 35px;
   }
 
   /* Main content adjustments */
@@ -361,8 +369,7 @@
     align-items: center;
   }
 
-  .left-controls {
-  }
+  .left-controls {}
 
   .right-controls {
     display: none;
@@ -549,7 +556,7 @@
 
   /* Modal mobile */
   .modal-content {
-    width: 95%;
+    width: 90%;
     margin: 5% auto;
     padding: 12px;
     height: 60vh;
@@ -786,12 +793,13 @@
 /* ================================= TOUCH DEVICE OPTIMIZATIONS ================================= */
 
 @media (hover: none) and (pointer: coarse) {
-  .hamdan-header-btn,
+
+  /* .hamdan-header-btn, */
   .copy-btn1,
   .delete-btns,
   #show-tutorial-btn,
   .del-history-text,
-  .grammar-history-close,
+  /* .grammar-history-close, */
   .control-btn,
   .option-btn,
   .dk-language-select,
@@ -826,7 +834,9 @@
 
 /* ================================= HIGH DPI SCREENS ================================= */
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+
   .hamdan-header,
   .saved-response,
   .popup-content,
@@ -881,6 +891,7 @@
 /* ================================= PRINT STYLES ================================= */
 
 @media print {
+
   .hamdan-header-right,
   .correction-options,
   .correction-sidebar,
@@ -910,6 +921,7 @@
 /* ================================= ACCESSIBILITY IMPROVEMENTS ================================= */
 
 @media (prefers-reduced-motion: reduce) {
+
   .hamdan-header,
   .control-btn,
   .option-btn,
@@ -931,6 +943,7 @@
 }
 
 @media (prefers-contrast: high) {
+
   .hamdan-header,
   .control-btn,
   .option-btn,
@@ -951,6 +964,7 @@
 
 /* Prevent zoom on input focus */
 @media (max-width: 768px) {
+
   input[type='text'],
   textarea,
   select {
@@ -965,6 +979,7 @@
 
 /* iOS Safari specific fixes */
 @supports (-webkit-touch-callout: none) {
+
   .modal-content,
   .popup-content {
     -webkit-overflow-scrolling: touch;

@@ -227,7 +227,7 @@ function updateMicIcon(buttonId, listening) {
       if (listening) {
         path.setAttribute('stroke', '#28a745'); // Green color for listening
       } else {
-        path.setAttribute('stroke', '#929292'); // Default gray color
+        path.setAttribute('stroke', '#6C757D'); // Default gray color
       }
     });
 

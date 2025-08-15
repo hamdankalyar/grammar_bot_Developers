@@ -6,7 +6,7 @@ let currentParagraphIndex = 0;
 
 // Modal management variables
 let originalZIndex;
-const sidebarSelector = '.elementor-element-45ebb7b3';
+const sidebarSelector = '.elementor-element-3abd86dc';
 
 // Initialize rewrite system
 function initializeRewriteSystem({

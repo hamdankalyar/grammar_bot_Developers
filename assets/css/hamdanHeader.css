@@ -24,7 +24,7 @@
   font-weight: 700;
   font-style: Bold;
   font-size: 28px;
-  leading-trim: NONE;
+
   line-height: 32px;
   letter-spacing: 0%;
 }
@@ -42,6 +42,7 @@
 }
 
 #show-tutorial-btn {
+  display: none !important;
   font-family: Poppins;
   font-weight: 400;
   font-style: normal;
@@ -146,4 +147,10 @@
 
 .tutorial-close-btn {
   display: none;
+}
+
+#tutorial-popup {
+  display: none;
+  /* Hide the popup by default */
+  /* Add other styles for the popup here */
 }

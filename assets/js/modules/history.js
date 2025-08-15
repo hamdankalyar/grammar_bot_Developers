@@ -5,7 +5,7 @@ let isOpeningPopup = false;
 let originalZIndex;
 
 // DOM selectors
-const sidebarSelector = '.elementor-element-45ebb7b3';
+const sidebarSelector = '.elementor-element-3abd86dc';
 const popupSelector = '#savedResponsesPopup';
 const popupContentSelector = '.popup-content';
 

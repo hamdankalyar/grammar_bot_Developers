@@ -16,6 +16,19 @@
   }
 }
 
+@media screen and (max-width: 1122px) {
+  .voice-slider-labels {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .hk-dropdown-container {
+    width: 90%;
+    max-width: 90%;
+  }
+}
+
 /* Tablet Landscape (768px to 991px) */
 @media screen and (max-width: 991px) {
   .options-row {
@@ -30,6 +43,15 @@
 
   .divider {
     display: none;
+  }
+
+  .voice-slider-labels {
+    display: none;
+  }
+
+  .hk-dropdown-container {
+    width: 90%;
+    max-width: 90%;
   }
 }
 
