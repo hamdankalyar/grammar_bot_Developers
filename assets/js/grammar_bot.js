@@ -724,7 +724,7 @@ function callSidebar() {
     const dropDownValue = document.querySelector('.hk-dropdown-text').textContent;
     // console.log("dropDownValue", dropDownValue);
 
-    if (dropDownValue === 'Grammatik') {
+    if (dropDownValue === 'Se rettelser') {
       // ✅ Show loader if explanations will be processed
       if (noOfChanges > 0 && !isExplanations) {
         correctionSidebarLoader.showCorrectionLoader('.correction-message', 'Analyzing...');
@@ -2914,7 +2914,7 @@ function adjustHeights() {
 
   // const totalContainerHeight =
   //   mainTextAreaSectionHeight + bottomControlsHeight + correctionOptionsHeight + innerPadding;
-const totalContainerHeight =
+  const totalContainerHeight =
     mainTextAreaSectionHeight + bottomControlsHeight + correctionOptionsHeight;
   // Final height is the maximum of all requirements
   let finalHeight = Math.max(totalContainerHeight, styleInnerTotalHeight, minHeight);
