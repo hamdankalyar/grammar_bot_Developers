@@ -9,7 +9,7 @@
   flex-shrink: 0;
   border-radius: 10px;
   min-height: 520px;
-  max-width: 25%;
+  max-width: 30%;
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
 }
 
@@ -720,7 +720,7 @@
 }
 
 .improvement-text {
-  font-size: 11px;
+  font-size: 12px !important;
   font-family: Poppins;
   margin-bottom: -1px;
   color: rgba(108, 117, 125, 1) !important;
@@ -806,7 +806,7 @@
 /* ||||||||||||||||||||||||||||||||| style-inner |||||||||||||||||||||||||||||||| */
 .style-inner {
   display: grid;
-  padding: 10px 10px 20px 10px;
+  padding: 20px;
   row-gap: 10px;
   column-gap: 10px;
   flex: 1 0 0;
@@ -942,7 +942,8 @@
 }
 
 /* High DPI screens */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
   .correction-content::-webkit-scrollbar {
     width: 6px;
   }
@@ -1029,14 +1030,12 @@
   left: 0;
   top: 0;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    #e68a00 0%,
-    #4caf50 25%,
-    #d6d6d6 50%,
-    #b2e0f2 75%,
-    #005f9e 100%
-  );
+  background: linear-gradient(90deg,
+      #e68a00 0%,
+      #4caf50 25%,
+      #d6d6d6 50%,
+      #b2e0f2 75%,
+      #005f9e 100%);
   border-radius: 3px;
   width: 100%;
 }
@@ -1291,6 +1290,7 @@
   line-height: 16px;
   /* 133.333% */
   align-self: center;
+  backdrop-filter: blur(20px) saturate(1.2);
 }
 
 .hamdan-speech-bubble::before {
@@ -1300,15 +1300,27 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.3) 0%,
-    rgba(255, 255, 255, 0.1) 50%,
-    transparent 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 100%);
   pointer-events: none;
   border-radius: 28px;
   opacity: 0.8;
+}
+
+.hamdan-speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #ffffff;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.03)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.02));
 }
 
 .hamdan-robot-container {

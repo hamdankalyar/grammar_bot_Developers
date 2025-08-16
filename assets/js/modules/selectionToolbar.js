@@ -885,7 +885,7 @@ class QuillSelectionToolbar {
       // Get AJAX objects from global window (these are WordPress specific)
       const HGF_ajax_object = window.HGF_ajax_object;
 
-      if (HGF_ajax_object) {
+      if (!HGF_ajax_object) {  // ✅ Fixed: Check if NOT available
         reject(new Error('Required AJAX objects not available'));
         return;
       }

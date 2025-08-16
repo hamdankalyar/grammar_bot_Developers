@@ -125,6 +125,7 @@
   justify-self: center;
   border-radius: 10px;
   border: 1px solid rgba(222, 226, 230, 0.07);
+  border: 1px solid rgba(222, 226, 230, 0.07);
   background: linear-gradient(303deg, #f8f9fa 9.17%, #fff 90.83%);
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
 }
@@ -177,7 +178,7 @@
 }
 
 .inner-textarea-bottom {
-  flex-basis: 74%;
+  flex-basis: 70%;
   background: linear-gradient(179.63deg, #ffffff 56.57%, #f8f9fa 99.68%) !important;
   /* padding: 25px 20px; */
   border-radius: 10px;

@@ -338,7 +338,7 @@ const quill1 = new Quill('#inputText', {
     // Note: The 'matchVisual: false' key was duplicated, I have removed it from here.
     // It correctly belongs inside the 'clipboard' options.
   },
-  placeholder: 'Skriv eller indtal din tekst for at rette grammatikken på dansk…'
+  placeholder: 'Skriv, indsæt eller tal - så retter jeg grammatikken på dansk...'
 });
 window.quill1 = quill1;
 /* ------------------------------------------------------------------ 4  Clipboard matchers */
@@ -387,7 +387,7 @@ quill1.on('text-change', updateGenerateButtonState);
 
 function updatePlaceholder(lang) {
   if (quill1) {
-    const placeholderText = `Skriv eller indtal din tekst for at rette grammatikken på ${lang.toLowerCase()}...`;
+    const placeholderText = `Skriv, indsæt eller tal - så retter jeg grammatikken på ${lang.toLowerCase()}...`;
     quill1.root.setAttribute('data-placeholder', placeholderText);
   } else {
     console.error('Quill editor not initialized.');
@@ -472,8 +472,8 @@ function actionOnToggle(toggleState) {
 
   if (!isMobileToggle) {
     if (toggleState) {
-      mainTextAreaToggle.style.flexBasis = '74%';
-      correctionSidebarToggle.style.flexBasis = '25%';
+      mainTextAreaToggle.style.flexBasis = '70%';
+      correctionSidebarToggle.style.flexBasis = '30%';
       correctionSidebarToggle.style.display = 'flex';
       correctionSidebarToggle.classList.remove('collapsed');
     } else {
@@ -973,8 +973,7 @@ function htmlToTextWithSpacing(html) {
     }
 
     console.log(
-      `Processing <${el.tagName.toLowerCase()}>: ${
-        isHeading ? 'heading-like' : 'block'
+      `Processing <${el.tagName.toLowerCase()}>: ${isHeading ? 'heading-like' : 'block'
       } – spacing "${JSON.stringify(spacing)}"`
     );
   });
@@ -2852,7 +2851,7 @@ function adjustHeights() {
   }
 
   // Set minimum height
-  const minHeight = 520;
+  const minHeight = 450;
 
   // Get heights of fixed elements
   const topControlsHeight = topControls ? topControls.offsetHeight : 0;
@@ -3258,14 +3257,14 @@ function updateUndoRedoButtonState() {
     const hasText = quill1.getText().trim().length > 0;
     // Undo requires both text and undo history
     revertBtn.disabled = !hasText || !canUndo;
-    revertBtn.title = canUndo && hasText ? 'Fortryd (Ctrl+Z)' : 'Intet at fortryde';
+    revertBtn.title = canUndo && hasText ? 'Fortryd ændring' : 'Fortryd ændring';
   }
 
   if (redoBtn) {
     const canRedo = quill1.history.stack.redo.length > 0;
     // Redo only requires redo history, not current text
     redoBtn.disabled = !canRedo;
-    redoBtn.title = canRedo ? 'Gentag (Ctrl+Y)' : 'Intet at gentage';
+    redoBtn.title = canRedo ? 'Gentag ændring' : 'Gentag ændring';
   }
 }
 
