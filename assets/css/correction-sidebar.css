@@ -1431,3 +1431,31 @@ span#micButton2 {
   border: none;
   box-shadow: none;
 }
+
+
+/* --------------------- circle loader ------------------- */
+.gradient-loader {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-right: 0px !important;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(90deg,
+      rgba(226, 70, 104, 0.2),
+      rgba(226, 70, 104, 1),
+      rgba(226, 70, 104, 0.2));
+  background-size: 200% 100%;
+  animation: gradient-move 1.5s ease-in-out infinite;
+}
+
+@keyframes gradient-move {
+  0% {
+    background-position: 100% 0;
+  }
+
+  100% {
+    background-position: -100% 0;
+  }
+}

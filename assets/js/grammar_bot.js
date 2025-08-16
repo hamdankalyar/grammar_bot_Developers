@@ -87,30 +87,78 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-function lottieLoadAnimation() {
-  lottie.loadAnimation({
-    container: document.getElementById('gif'),
-    renderer: 'svg',
-    loop: true,
-    autoplay: true,
-    path: 'https://login.skrivsikkert.dk/wp-content/uploads/2025/06/robot-wave.json'
-  });
+function lottieLoadAnimation(container = document.getElementById('gif'), animationPath = 'https://login.skrivsikkert.dk/wp-content/uploads/2025/06/robot-wave.json') {
+  // Handle container parameter
+  let containerElement;
+  if (typeof container === 'string') {
+    containerElement = document.querySelector(container);
+  } else {
+    containerElement = container;
+  }
+
+  if (!containerElement) {
+    console.warn('Lottie container not found:', container);
+    return;
+  }
+
+  // Clear any existing animation and destroy previous instance
+  containerElement.innerHTML = '';
+  if (containerElement._lottieInstance) {
+    containerElement._lottieInstance.destroy();
+  }
+
+  // Load new animation
+  try {
+    const instance = lottie.loadAnimation({
+      container: containerElement,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: animationPath
+    });
+
+    // Store instance for cleanup later
+    containerElement._lottieInstance = instance;
+  } catch (error) {
+    console.error('Error loading lottie animation:', error);
+  }
 }
 
 // Add this line to inject the function into the correction loader
 correctionSidebarLoader.setLottieFunction(lottieLoadAnimation);
+document.addEventListener('DOMContentLoaded', function () {
+  // ... your existing code ...
 
-lottieLoadAnimation();
+  // Initialize sidebar with ready state
+  correctionSidebarLoader.showReadyState();
 
-function lottieLoadAnimationByAddress(div) {
-  lottie.loadAnimation({
-    container: div,
-    renderer: 'svg',
-    loop: true,
-    autoplay: true,
-    path: 'https://login.skrivsikkert.dk/wp-content/uploads/2025/06/robot-wave.json'
-  });
+  // ... rest of your code ...
+});
+
+function lottieLoadAnimationByAddress(div, animationPath = 'https://login.skrivsikkert.dk/wp-content/uploads/2025/06/robot-wave.json') {
+  if (!div) {
+    console.warn('Lottie container element not provided');
+    return;
+  }
+
+  // Clear any existing animation
+  div.innerHTML = '';
+
+  try {
+    lottie.loadAnimation({
+      container: div,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: animationPath
+    });
+  } catch (error) {
+    console.error('Error loading lottie animation by address:', error);
+  }
 }
+
+
+
 
 let activeMember = true;
 
@@ -2042,7 +2090,7 @@ function processGrammarExplanations(explanationResults) {
       sidebarContent.innerHTML = `
             <div id="gif" ></div>
             <div class="correction-message">
-                <span style="color:#2DB62D" >Teksten er korrekt</span>
+                <span style="color:#2DB62D" >Teksten er korrekt!</span>
             </div>
             `;
       lottieLoadAnimation();
@@ -2069,7 +2117,7 @@ const displayExplanations = explanations => {
     sidebarContent.innerHTML = `
         <div id="gif" ></div>
         <div class="correction-message">
-            <span style="color:#2DB62D" >Teksten er korrekt</span>
+            <span style="color:#2DB62D" >Teksten er korrekt!</span>
         </div>
         `;
     lottieLoadAnimation();

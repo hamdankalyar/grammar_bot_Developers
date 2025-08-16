@@ -128,6 +128,7 @@
   border: 1px solid rgba(222, 226, 230, 0.07);
   background: linear-gradient(303deg, #f8f9fa 9.17%, #fff 90.83%);
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+  padding-left: 16px;
 }
 
 .legend-item {
@@ -143,9 +144,10 @@
 }
 
 .legend-text {
-  font-size: 11px;
+  font-size: 14px;
   font-family: Poppins;
   margin-bottom: -1px;
+  color: #495057 !important;
 }
 
 .legend-dot.change {
@@ -179,7 +181,8 @@
 
 .inner-textarea-bottom {
   flex-basis: 70%;
-  background: linear-gradient(179.63deg, #ffffff 56.57%, #f8f9fa 99.68%) !important;
+  /* background: linear-gradient(179.63deg, #ffffff 56.57%, #f8f9fa 99.68%) !important; */
+  background-color: white !important;
   /* padding: 25px 20px; */
   border-radius: 10px;
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
@@ -551,7 +554,7 @@
   gap: 0.5rem;
   justify-content: center;
   align-items: center;
-  background: white;
+  background: white !important;
   padding: 20px;
 }
 

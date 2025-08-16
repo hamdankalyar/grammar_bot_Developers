@@ -7,6 +7,13 @@ class CorrectionSidebarLoader {
   constructor() {
     this.activeLoaders = new Map();
     this.lottieLoadAnimation = null; // Will be injected from main app
+
+    // Animation URLs for different states
+    this.animationUrls = {
+      ready: 'https://login.skrivsikkert.dk/wp-content/uploads/2025/06/robot-wave.json',
+      loading: 'https://login.skrivsikkert.dk/wp-content/uploads/2025/08/robot-loading-loop-1.json',
+      success: 'https://login.skrivsikkert.dk/wp-content/uploads/2025/08/robot-comfirmed.json'
+    };
   }
 
   /**
@@ -15,6 +22,38 @@ class CorrectionSidebarLoader {
    */
   setLottieFunction(lottieFunc) {
     this.lottieLoadAnimation = lottieFunc;
+  }
+
+  /**
+   * Load specific animation based on state
+   * @param {string} state - Animation state ('ready', 'loading', 'success')
+   * @param {HTMLElement|string} container - Container element or selector
+   */
+  loadAnimationByState(state = 'ready', container = '#gif') {
+    if (!this.lottieLoadAnimation) return;
+
+    // Get container element
+    const containerEl = typeof container === 'string'
+      ? document.querySelector(container)
+      : container;
+
+    if (!containerEl) {
+      console.warn(`Animation container not found: ${container}`);
+      return;
+    }
+
+    // Clear existing animation and any previous lottie instances
+    containerEl.innerHTML = '';
+
+    // Also destroy any existing lottie instance
+    if (containerEl._lottieInstance) {
+      containerEl._lottieInstance.destroy();
+      containerEl._lottieInstance = null;
+    }
+
+    // Load new animation
+    const animationUrl = this.animationUrls[state] || this.animationUrls.ready;
+    this.lottieLoadAnimation(containerEl, animationUrl);
   }
 
   /**
@@ -42,9 +81,12 @@ class CorrectionSidebarLoader {
       correctionContent.classList.remove('has-explanations');
     }
 
-    // Set the loader content
+    // Set the loader content with loading state
     correctionContent.innerHTML = `
-  <div class="hamdan-speech-bubble">Arbejder...</div>
+  <div class="hamdan-speech-bubble">
+    <div class="gradient-loader"></div>
+    <span>Arbejder...</span>
+  </div>
   <div class="hamdan-robot-container">
     <div id="gif"></div>
   </div>
@@ -67,10 +109,8 @@ class CorrectionSidebarLoader {
   </div>
 `;
 
-    // Load lottie animation if function is available
-    if (this.lottieLoadAnimation) {
-      this.lottieLoadAnimation();
-    }
+    // Load loading animation
+    this.loadAnimationByState('loading', '#gif');
 
     this.activeLoaders.set(selector, { element, text });
   }
@@ -87,7 +127,11 @@ class CorrectionSidebarLoader {
 
     // Change text back to "Jeg er klar!" when hiding correction-message loader
     const messageSpan = document.querySelector('.hamdan-speech-bubble');
-    if (messageSpan) messageSpan.textContent = 'Jeg er klar!';
+    if (messageSpan) {
+      messageSpan.textContent = 'Jeg er klar!';
+      // Load ready animation when text changes back
+      this.loadAnimationByState('ready', '#gif');
+    }
     document.getElementById('genBtn').disabled = false;
     this.activeLoaders.delete(selector);
   }
@@ -112,14 +156,43 @@ class CorrectionSidebarLoader {
 
     if (flag) {
       // Show working state
-      if (demoInnerBubble) demoInnerBubble.textContent = 'Arbejder...';
-      if (mainBubble) mainBubble.textContent = 'Arbejder...';
+      if (demoInnerBubble) {
+        demoInnerBubble.textContent = 'Arbejder...';
+        // Find gif container in demo-inner and load loading animation
+        const demoGifContainer = document.querySelector('.correction-inner .demo-inner #gif');
+        if (demoGifContainer) {
+          this.loadAnimationByState('loading', demoGifContainer);
+        }
+      }
+      if (mainBubble) {
+        mainBubble.textContent = 'Arbejder...';
+        // Find gif container in correction-inner-main and load loading animation
+        const mainGifContainer = document.querySelector('.correction-inner-main .hamdan-robot-container #gif');
+        if (mainGifContainer) {
+          this.loadAnimationByState('loading', mainGifContainer);
+        }
+      }
     } else {
       // Hide working state
-      if (demoInnerBubble) demoInnerBubble.textContent = 'Jeg er klar!';
-      if (mainBubble) mainBubble.textContent = 'Jeg er klar!';
+      if (demoInnerBubble) {
+        demoInnerBubble.textContent = 'Jeg er klar!';
+        // Load ready animation
+        const demoGifContainer = document.querySelector('.correction-inner .demo-inner #gif');
+        if (demoGifContainer) {
+          this.loadAnimationByState('ready', demoGifContainer);
+        }
+      }
+      if (mainBubble) {
+        mainBubble.textContent = 'Jeg er klar!';
+        // Load ready animation
+        const mainGifContainer = document.querySelector('.correction-inner-main .hamdan-robot-container #gif');
+        if (mainGifContainer) {
+          this.loadAnimationByState('ready', mainGifContainer);
+        }
+      }
     }
   }
+
   /**
    * Update correction content with "ready" state
    */
@@ -133,32 +206,33 @@ class CorrectionSidebarLoader {
     }
 
     correctionContent.innerHTML = `
-  <div class="hamdan-speech-bubble">Jeg er klar!</div>
-  <div class="hamdan-robot-container">
-    <div id="gif"></div>
+<div class="hamdan-speech-bubble">Jeg er klar!</div>
+<div class="hamdan-robot-container">
+  <div id="gif"></div>
+</div>
+<div class="legend-section" id="legend-section">
+  <div class="legend-item">
+    <div class="legend-dot change"></div>
+    <span class="legend-text">Rettet eller tilføjet</span>
   </div>
-  <div class="legend-section" id="legend-section">
-    <div class="legend-item">
-      <div class="legend-dot change"></div>
-      <span class="legend-text">Rettet eller tilføjet</span>
-    </div>
-    <div class="legend-item">
-      <div class="legend-dot add"></div>
-      <span class="legend-text">Komma og punktum</span>
-    </div>
-    <div class="legend-item">
-      <div class="legend-dot remove"></div>
-      <span class="legend-text">Slettet</span>
-    </div>
+  <div class="legend-item">
+    <div class="legend-dot add"></div>
+    <span class="legend-text">Komma og punktum</span>
   </div>
-  <div class="correction-message" style="display: none">
-    <span>Jeg er klar!</span>
+  <div class="legend-item">
+    <div class="legend-dot remove"></div>
+    <span class="legend-text">Slettet</span>
   </div>
+</div>
+<div class="correction-message" style="display: none">
+  <span>Jeg er klar!</span>
+</div>
 `;
 
-    // Load lottie animation if function is available
-    if (this.lottieLoadAnimation) {
-      this.lottieLoadAnimation();
+    // Load ready animation specifically in the correction-content gif container
+    const gifContainer = correctionContent.querySelector('#gif');
+    if (gifContainer) {
+      this.loadAnimationByState('ready', gifContainer);
     }
   }
 
@@ -175,39 +249,19 @@ class CorrectionSidebarLoader {
 
     correctionContent.innerHTML = `
   <div class="hamdan-speech-bubble">
-  <svg width="24px" height="24px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 87.98 88.05">
-                      <g>
-                          <path d="M41.57.34c6.69-1.76,7.85,3.87,12.64,4.85,3.28.67,7.09-.29,10.29.13,4.97.65,4.75,6.88,7.75,10.12,2.7,2.92,8.88,3.67,10.07,6.31,1.25,2.78-.16,8.61.56,12.1.77,3.76,4.95,5.52,5.12,9.83.19,5.12-4.28,6.51-5.12,10.6-.79,3.86,1.02,10.07-1.23,12.91-1.76,2.21-6.31,2.54-9.02,5.12-2.86,2.72-3.73,8.91-6.31,10.07-2.78,1.25-8.61-.16-12.1.56-3.76.77-5.52,4.95-9.83,5.12-5.12.19-6.51-4.28-10.6-5.12-3.86-.79-10.07,1.02-12.91-1.23-2.21-1.76-2.54-6.31-5.12-9.02-2.72-2.86-8.91-3.73-10.07-6.31-1.25-2.78.16-8.61-.56-12.1C4.35,50.51.17,48.76,0,44.45c-.19-5.12,4.28-6.51,5.12-10.6.67-3.28-.29-7.09.13-10.29.65-4.97,6.88-4.75,10.12-7.75,2.92-2.7,3.67-8.88,6.31-10.07,2.78-1.25,8.61.16,12.1-.56,3.11-.64,5.45-4.24,7.79-4.85Z" style="fill:#096;" />
-                          <path d="M58.67,29.32c-3.81.84-17.48,17.7-18.77,17.7-3.08-2.28-7.5-9.17-11.23-9.65-4.36-.56-7.31,2.39-5.94,6.72.33,1.04,12.97,14.21,14.15,14.89,1.55.89,3.35,1.08,5.1.55,3.46-1.05,18.85-19.76,23.03-23.11,2.05-4.73-1.53-8.17-6.34-7.11Z" style="fill:#fff;" />
-                      </g>
-                  </svg><span>Teksten er korrekt</span>
+    <span>Teksten er korrekt!</span>
   </div>
   <div class="hamdan-robot-container">
     <div id="gif"></div>
   </div>
-  <div class="legend-section" id="legend-section">
-    <div class="legend-item">
-      <div class="legend-dot change"></div>
-      <span class="legend-text">Rettet eller tilføjet</span>
-    </div>
-    <div class="legend-item">
-      <div class="legend-dot add"></div>
-      <span class="legend-text">Komma og punktum</span>
-    </div>
-    <div class="legend-item">
-      <div class="legend-dot remove"></div>
-      <span class="legend-text">Slettet</span>
-    </div>
-  </div>
+  
   <div class="correction-message" style="display: none">
     <span>Jeg er klar!</span>
   </div>
 `;
 
-    // Load lottie animation if function is available
-    if (this.lottieLoadAnimation) {
-      this.lottieLoadAnimation();
-    }
+    // Load success animation for "Teksten er korrekt" state
+    this.loadAnimationByState('success', '#gif');
   }
 
   /**

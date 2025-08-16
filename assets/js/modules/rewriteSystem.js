@@ -371,7 +371,7 @@ function sendRewriteRequest(buttonId) {
       formData.append('prompt_index', '4');
       break;
     default:
-      formData.append('prompt_index', '2'); // Default to Neutral
+      formData.append('prompt_index', '5'); // Default to Neutral
       break;
   }
 

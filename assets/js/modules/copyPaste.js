@@ -1190,7 +1190,7 @@ async function handlePaste(clearExisting = false, moveToEnd = true) {
               }
             }
             // Scroll to show the pasted content
-            setTimeout(() => scrollAfterPaste(), 100);
+            // setTimeout(() => scrollAfterPaste(), 100);
             window.quill1.focus();
             processedContent = true;
             break; // done with HTML branch
@@ -1257,7 +1257,7 @@ async function handlePaste(clearExisting = false, moveToEnd = true) {
         }
       }
       // Scroll to show the pasted content
-      setTimeout(() => scrollAfterPaste(), 100);
+      // setTimeout(() => scrollAfterPaste(), 100);
       window.quill1.focus();
     }
 
